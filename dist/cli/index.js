@@ -126,7 +126,7 @@ function generate() {
     for (const [name, command] of Object.entries({ dev: 'davipress dev', build: 'davipress build', start: 'davipress start', clean: 'davipress clean' }))
         pkg.scripts[name] ??= command;
     fs.writeFileSync(packageFile, `${JSON.stringify(pkg, null, 2)}\n`);
-    writeIfMissing(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'] }\nexport default nextConfig\n");
+    fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'], turbopack: { root: process.cwd() } }\nexport default nextConfig\n");
     const globalsCss = ['globals.css', 'src/globals.css'].find(file => fs.existsSync(path.join(cwd, file)));
     const globalsImport = globalsCss ? `\nimport '../../${globalsCss}'` : '';
     fs.mkdirSync(path.join(generated, 'app'), { recursive: true });
