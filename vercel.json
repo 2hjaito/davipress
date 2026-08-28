@@ -1,0 +1,5 @@
+{
+  "installCommand": "npm install --prefix demo/basic",
+  "buildCommand": "npm run build --prefix demo/basic",
+  "framework": "nextjs"
+}
