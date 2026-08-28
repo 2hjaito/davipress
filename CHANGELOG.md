@@ -4,6 +4,12 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.4] - 2026-08-28
+
+### Fixed
+
+- Remove the accidental self-dependency that could break dependency resolution on Vercel.
+
 ## [0.1.3] - 2026-08-28
 
 ### Fixed

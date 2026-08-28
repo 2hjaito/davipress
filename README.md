@@ -1,5 +1,9 @@
 # Davipress
 
+[![npm version](https://img.shields.io/npm/v/davipress.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/davipress)
+[![npm downloads](https://img.shields.io/npm/dm/davipress.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/davipress)
+[![npm package](https://img.shields.io/badge/npm-davipress-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/davipress)
+
 Davipress is a Markdown-first documentation and personal site framework built on Next.js App Router. It turns a `docs/` folder into a fast server-rendered website while keeping content, assets, navigation, and theme configuration in the project.
 
 The default theme is designed for technical documentation and portfolio-style home pages. It includes a responsive navigation bar, light/dark mode, automatic sidebars, expandable home sections, GitHub contributions, Giscus comments, click-to-zoom images, syntax highlighting, math, and generated SEO files.
@@ -18,15 +22,40 @@ The complete reference site is available in [`demo/basic`](demo/basic).
 
 ## Quick start
 
+### Requirements
+
+- [Node.js](https://nodejs.org/) 20.9 or newer
+- npm 10 or newer is recommended
+
+### Create a project
+
+Create an empty directory, initialize npm, install Davipress, and generate the starter files:
+
 ```bash
 mkdir my-docs && cd my-docs
 npm init -y
-npm install davipress
+npm install davipress@latest
 npx davipress init
 npm run dev
 ```
 
 Open `http://localhost:3000`, then edit `docs/index.md`. Add `docs/guide/getting-started.md` to create the `/guide/getting-started` route.
+
+`npx davipress init` creates the starter content, `davipress.config.ts`, sample SVG assets, and the generated Next.js runtime. Existing files are preserved.
+
+### Run without installing globally
+
+Use `npx` or `npm exec` to run the CLI from the local project:
+
+```bash
+npx davipress@latest init
+npx davipress dev
+
+# Equivalent npm command
+npm exec davipress -- dev
+```
+
+For a new project, install Davipress first so the generated `npm run dev` script can resolve the local CLI.
 
 ## Project structure
 
@@ -121,16 +150,36 @@ npm run clean    # Remove generated files
 
 The same commands are available as `npx davipress <command>`.
 
+To run a specific published version:
+
+```bash
+npx davipress@0.1.3 init
+npm install davipress@0.1.3
+```
+
 ## Development
+
+Clone the repository and install its dependencies:
 
 ```bash
 git clone https://github.com/danqth/davipress.git
 cd davipress
 npm install
-npm run build
-npm test
-cd demo/basic
-npm run build
 ```
 
-For a local visual preview, run `npm run dev` from `demo/basic`.
+Build and test the package:
+
+```bash
+npm run build
+npm test
+```
+
+Build or preview the reference demo:
+
+```bash
+cd demo/basic
+npm run build
+npm run dev
+```
+
+The `demo/` directory is a development example and is not included in the published npm package.

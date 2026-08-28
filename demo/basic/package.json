@@ -9,6 +9,6 @@
     "clean": "davipress clean"
   },
   "dependencies": {
-    "davipress": "file:../.."
+    "davipress": "0.1.3"
   }
 }
