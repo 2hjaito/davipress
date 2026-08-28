@@ -48,12 +48,20 @@ export interface DavipressConfig {
     description?: string;
     url?: string;
     lang?: string;
+    repository?: {
+        url?: string;
+        editLink?: string;
+    };
     themeConfig?: {
         logo?: string;
         nav?: NavItem[];
         sidebar?: 'auto' | Record<string, SidebarItem[]>;
         socialLinks?: Record<string, string>;
         footer?: string | FooterConfig;
+        navbar?: {
+            showThemeToggle?: boolean;
+            showThemeSeparator?: boolean;
+        };
     };
     giscus?: {
         enabled: boolean;

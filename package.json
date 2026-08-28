@@ -1,7 +1,8 @@
 {
   "name": "davipress",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "A Markdown documentation framework built on Next.js App Router",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "davipress": "dist/cli/index.js"
@@ -24,7 +25,8 @@
     "templates",
     "README.md",
     "CHANGELOG.md",
-    "ARCHITECTURE.md"
+    "ARCHITECTURE.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc && cp src/runtime/theme.css dist/runtime/theme.css && cp src/runtime/theme-dark.css dist/runtime/theme-dark.css",
@@ -35,6 +37,7 @@
     "clean": "davipress clean"
   },
   "dependencies": {
+    "davipress": "^0.1.7",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "katex": "^0.16.22",

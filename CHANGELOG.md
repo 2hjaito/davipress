@@ -4,6 +4,24 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.7] - 2026-08-28
+
+### Fixed
+
+- Include configurable navbar types in the published package.
+
+## [0.1.6] - 2026-08-28
+
+### Added
+
+- Add configurable navbar theme toggle and macOS-style separator.
+- Add MIT license metadata and file.
+
+### Fixed
+
+- Anchor image zoom transitions to the source image position.
+- Keep navbar active state stable without a looping spinner.
+
 ## [0.1.4] - 2026-08-28
 
 ### Added

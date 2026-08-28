@@ -79,6 +79,10 @@ export default defineConfig({
   description: 'A useful guide',
   url: 'https://example.com',
   lang: 'en',
+  repository: {
+    url: 'https://github.com/owner/repository',
+    editLink: 'https://github.com/owner/repository/edit/main'
+  },
   themeConfig: {
     nav: [{ text: 'Guide', link: '/guide' }],
     sidebar: 'auto',

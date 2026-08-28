@@ -19,6 +19,17 @@ export function ImageZoomClient() {
     const openZoom = (image: HTMLImageElement) => {
       closeZoom()
       const bounds = image.getBoundingClientRect()
+      const ratio = image.naturalWidth > 0 && image.naturalHeight > 0
+        ? image.naturalWidth / image.naturalHeight
+        : bounds.width / bounds.height
+      const maxWidth = window.innerWidth - 32
+      const maxHeight = window.innerHeight - 32
+      let targetWidth = Math.min(image.naturalWidth || bounds.width, maxWidth)
+      let targetHeight = targetWidth / ratio
+      if (targetHeight > maxHeight) {
+        targetHeight = maxHeight
+        targetWidth = targetHeight * ratio
+      }
       const clone = image.cloneNode(true) as HTMLImageElement
       const overlay = document.createElement('button')
       overlay.type = 'button'
@@ -29,13 +40,20 @@ export function ImageZoomClient() {
       clone.style.left = `${bounds.left}px`
       clone.style.width = `${bounds.width}px`
       clone.style.height = `${bounds.height}px`
+      clone.dataset.targetTop = `${(window.innerHeight - targetHeight) / 2}px`
+      clone.dataset.targetLeft = `${(window.innerWidth - targetWidth) / 2}px`
+      clone.dataset.targetWidth = `${targetWidth}px`
+      clone.dataset.targetHeight = `${targetHeight}px`
       document.body.append(overlay, clone)
       activeClone = clone
       activeOverlay = overlay
       overlay.addEventListener('click', closeZoom)
       clone.addEventListener('click', closeZoom)
       requestAnimationFrame(() => {
-        clone.classList.add('dp-image-zoom-clone-open')
+        clone.style.top = clone.dataset.targetTop ?? clone.style.top
+        clone.style.left = clone.dataset.targetLeft ?? clone.style.left
+        clone.style.width = clone.dataset.targetWidth ?? clone.style.width
+        clone.style.height = clone.dataset.targetHeight ?? clone.style.height
       })
     }
 

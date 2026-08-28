@@ -22,6 +22,13 @@ function formatDate(value: unknown) {
   return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString()
 }
 
+function editLink(config: DavipressConfig, source: string) {
+  const base = config.repository?.editLink?.replace(/\/$/, '')
+  if (!base) return undefined
+  const filePath = source.replace(/^.*?docs[\\/]/, 'docs/').replace(/\\/g, '/')
+  return `${base}/${filePath}`
+}
+
 function PostView({ page, pages, config }: { page: Page; pages: Page[]; config: DavipressConfig }) {
   const tags = Array.isArray(page.frontmatter.tags) ? page.frontmatter.tags as string[] : []
   const index = pages.findIndex(item => item.route === page.route)
@@ -32,6 +39,7 @@ function PostView({ page, pages, config }: { page: Page; pages: Page[]; config: 
   const commentsEnabled = Boolean(giscus?.enabled && page.frontmatter.comments !== false)
   const updated = String(page.frontmatter.updated ?? page.frontmatter.date ?? '')
   const contentHtml = page.html.replace(/^\s*<h1\b[^>]*>[\s\S]*?<\/h1>\s*/, '')
+  const sourceEditLink = editLink(config, page.source)
 
   return <PostChrome footer={<Footer footer={config.themeConfig?.footer} />} headings={page.headings} title={String(page.frontmatter.title ?? '')} hasComments={commentsEnabled} route={page.route}>
     <div className="dp-post">
@@ -45,7 +53,7 @@ function PostView({ page, pages, config }: { page: Page; pages: Page[]; config: 
         </div>
         <div className="dp-post-content" dangerouslySetInnerHTML={{ __html: contentHtml }} />
         <div className="dp-post-update">
-          <a href={`https://github.com/danqth/davipress/edit/main/${page.source.replace(/^.*?docs[\\/]/, 'docs/').replace(/\\/g, '/')}`} target="_blank" rel="noopener noreferrer"><MdRebaseEdit aria-hidden="true" /> Chỉnh sửa trên GitHub</a>
+          {sourceEditLink && <a href={sourceEditLink} target="_blank" rel="noopener noreferrer"><MdRebaseEdit aria-hidden="true" /> Chỉnh sửa trên GitHub</a>}
           {updated && <div><MdHistory aria-hidden="true" /><span>Cập nhật: {formatDate(updated)}</span></div>}
         </div>
         {(previous || next) && <nav className="dp-post-nav" aria-label="Post navigation"><div>{previous && <Link href={previous.route}>← {String(previous.frontmatter.title)}</Link>}</div><div>{next && <Link href={next.route}>{String(next.frontmatter.title)} →</Link>}</div></nav>}
@@ -61,6 +69,7 @@ function DocView({ page, config, previous, next }: { page: Page; config: Davipre
   const readingTime = Math.max(1, Math.ceil(page.text.trim().split(/\s+/).filter(Boolean).length / 200))
   const commentsEnabled = Boolean(config.giscus?.enabled && page.frontmatter.comments !== false)
   const updated = String(page.frontmatter.updated ?? page.frontmatter.date ?? '')
+  const sourceEditLink = editLink(config, page.source)
 
   return <div className="dp-post">
     <article className="dp-post-article dp-tutorial-detail markdown-body">
@@ -74,7 +83,7 @@ function DocView({ page, config, previous, next }: { page: Page; config: Davipre
       </div>
       <div className="dp-post-content" dangerouslySetInnerHTML={{ __html: contentHtml }} />
       <div className="dp-post-update">
-        <a href={`https://github.com/danqth/davipress/edit/main/${page.source.replace(/^.*?docs[\\/]/, 'docs/').replace(/\\/g, '/')}`} target="_blank" rel="noopener noreferrer"><MdRebaseEdit aria-hidden="true" /> Chỉnh sửa trên GitHub</a>
+        {sourceEditLink && <a href={sourceEditLink} target="_blank" rel="noopener noreferrer"><MdRebaseEdit aria-hidden="true" /> Chỉnh sửa trên GitHub</a>}
         {updated && <div><MdHistory aria-hidden="true" /><span>Cập nhật: {formatDate(updated)}</span></div>}
       </div>
       {(previous || next) && <nav className="dp-post-nav" aria-label="Section navigation"><div>{previous && <Link href={previous.route}>← {String(previous.frontmatter.title ?? previous.route)}</Link>}</div><div>{next && <Link href={next.route}>{String(next.frontmatter.title ?? next.route)} →</Link>}</div></nav>}
@@ -114,7 +123,7 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
   const pages = await loadPages()
   if (page.route === '/') {
     const home = await loadHome()
-    return <div className="davipress-shell"><HomeView blocks={home.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} /></div>
+    return <div className="davipress-shell"><HomeView blocks={home.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
   }
   const layout = String(page.frontmatter.layout ?? '').toLowerCase()
   const isPostList = layout === 'post-list'
@@ -122,18 +131,18 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
   const isPost = posts.some(post => post.source === page.source)
 
   if (isPostList) {
-    return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} /></div>
+    return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
   }
 
   if (isPost) {
-    return <div className="davipress-shell"><PostView page={page} pages={posts} config={config} /><NavBar items={nav} /></div>
+    return <div className="davipress-shell"><PostView page={page} pages={posts} config={config} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
   }
 
   const sectionNav = [...nav].sort((a, b) => b.link.length - a.link.length).find(item => matchesNavRoute(page.route, item.link))
   const sidebar = sectionNav?.items ?? sidebarForPage(config, pages, page.route)
 
   if (sidebar.length === 0) {
-    return <div className="davipress-shell"><SimplePage page={page} footer={config.themeConfig?.footer} /><NavBar items={nav} /></div>
+    return <div className="davipress-shell"><SimplePage page={page} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
   }
 
   const ordered = flattenSidebarLinks(sidebar).map(link => pages.find(item => normalizeRoute(item.route) === link)).filter((item): item is Page => Boolean(item))
@@ -143,6 +152,6 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
     <DocsChrome sidebar={sidebar} headings={page.headings} activeRoute={page.route} title={String(page.frontmatter.title ?? page.headings[0]?.text ?? '')} hasComments={hasComments} sectionLabel={sectionNav?.text} sectionIcon={sectionNav?.icon} footer={null} reveal>
       <DocView page={page} config={config} previous={index > 0 ? ordered[index - 1] : undefined} next={index >= 0 ? ordered[index + 1] : undefined} />
     </DocsChrome>
-    <NavBar items={nav} />
+    <NavBar items={nav} navbar={config.themeConfig?.navbar} />
   </div>
 }

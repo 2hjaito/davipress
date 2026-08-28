@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   url: 'https://davipress.vercel.app',
-  githubRepo: 'https://github.com/2hjaito/davipress',
+  githubRepo: 'https://github.com/danqth/davipress',
   githubBranch: 'main', // Hoặc 'dev', 'next' tùy bạn
   postDir: 'demo/basic/docs/posts',
   tutorialDir: 'docs/tutorials',

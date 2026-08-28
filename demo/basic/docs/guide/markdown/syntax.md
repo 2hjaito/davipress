@@ -25,7 +25,7 @@ This is a paragraph with **bold text**, *italic text*, and `inline code`.
 Use normal Markdown links. Images can point to files in the `public/` directory.
 
 ```md
-[Davipress](https://github.com/danqth/davipress)
+[Davipress](https://www.npmjs.com/package/davipress)
 
 ![A profile image](/images/profile.png)
 ```

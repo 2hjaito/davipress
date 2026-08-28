@@ -59,15 +59,21 @@ function resolveIcon(icon: string | undefined): NavIcon {
   return resolveNavIcon(icon) ?? iconMap.GiSpellBook
 }
 
-export function NavBar({ items = defaultItems }: { items?: readonly NavBarItem[] }) {
+export function NavBar({ items = defaultItems, navbar }: { items?: readonly NavBarItem[]; navbar?: { showThemeToggle?: boolean; showThemeSeparator?: boolean } }) {
   const [dark, setDark] = useState(false)
-  const [active, setActive] = useState<string | null>(null)
+  const [pathname, setPathname] = useState('')
   useEffect(() => {
     const saved = localStorage.getItem('dark-mode')
     const enabled = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches)
     setDark(enabled); document.documentElement.classList.toggle('dark', enabled)
   }, [])
+  useEffect(() => {
+    const syncPathname = () => setPathname(window.location.pathname)
+    syncPathname()
+    window.addEventListener('popstate', syncPathname)
+    return () => window.removeEventListener('popstate', syncPathname)
+  }, [])
   useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
   function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light') }
-  return <div className="dp-navbar"><div className="dp-navbar-items">{items.map(item => { const { label, href, icon } = navItemInfo(item); const Icon = resolveIcon(icon); return <Link key={href} href={href} title={label} onClick={() => setActive(href)} className="dp-nav-item">{active === href ? <FaIcons.FaSpinner className="dp-nav-icon dp-spin" aria-hidden="true" /> : <Icon className="dp-nav-icon" aria-hidden={true} />}</Link> })}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaIcons.FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaIcons.FaSun className="dp-nav-icon" aria-hidden="true" />}</button></div></div>
+  return <div className="dp-navbar"><div className="dp-navbar-items">{items.map(item => { const { label, href, icon } = navItemInfo(item); const Icon = resolveIcon(icon); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={href} href={href} title={label} aria-current={active ? 'page' : undefined} onClick={() => setPathname(href)} className={`dp-nav-item${active ? ' dp-nav-item-active' : ''}`}><Icon className="dp-nav-icon" aria-hidden={true} /></Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaIcons.FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaIcons.FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
 }

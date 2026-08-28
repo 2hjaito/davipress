@@ -1,5 +1,5 @@
 'use client';
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import * as FaIcons from 'react-icons/fa';
@@ -49,16 +49,22 @@ export function resolveNavIcon(icon) {
 function resolveIcon(icon) {
     return resolveNavIcon(icon) ?? iconMap.GiSpellBook;
 }
-export function NavBar({ items = defaultItems }) {
+export function NavBar({ items = defaultItems, navbar }) {
     const [dark, setDark] = useState(false);
-    const [active, setActive] = useState(null);
+    const [pathname, setPathname] = useState('');
     useEffect(() => {
         const saved = localStorage.getItem('dark-mode');
         const enabled = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches);
         setDark(enabled);
         document.documentElement.classList.toggle('dark', enabled);
     }, []);
+    useEffect(() => {
+        const syncPathname = () => setPathname(window.location.pathname);
+        syncPathname();
+        window.addEventListener('popstate', syncPathname);
+        return () => window.removeEventListener('popstate', syncPathname);
+    }, []);
     useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY; }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll); }, []);
     function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light'); }
-    return _jsx("div", { className: "dp-navbar", children: _jsxs("div", { className: "dp-navbar-items", children: [items.map(item => { const { label, href, icon } = navItemInfo(item); const Icon = resolveIcon(icon); return _jsx(Link, { href: href, title: label, onClick: () => setActive(href), className: "dp-nav-item", children: active === href ? _jsx(FaIcons.FaSpinner, { className: "dp-nav-icon dp-spin", "aria-hidden": "true" }) : _jsx(Icon, { className: "dp-nav-icon", "aria-hidden": true }) }, href); }), _jsx("button", { type: "button", onClick: toggle, title: "Toggle theme", className: "dp-nav-item", children: dark ? _jsx(FaIcons.FaMoon, { className: "dp-nav-icon", "aria-hidden": "true" }) : _jsx(FaIcons.FaSun, { className: "dp-nav-icon", "aria-hidden": "true" }) })] }) });
+    return _jsx("div", { className: "dp-navbar", children: _jsxs("div", { className: "dp-navbar-items", children: [items.map(item => { const { label, href, icon } = navItemInfo(item); const Icon = resolveIcon(icon); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return _jsx(Link, { href: href, title: label, "aria-current": active ? 'page' : undefined, onClick: () => setPathname(href), className: `dp-nav-item${active ? ' dp-nav-item-active' : ''}`, children: _jsx(Icon, { className: "dp-nav-icon", "aria-hidden": true }) }, href); }), navbar?.showThemeToggle !== false && _jsxs(_Fragment, { children: [navbar?.showThemeSeparator !== false && _jsx("span", { className: "dp-nav-separator", "aria-hidden": "true" }), _jsx("button", { type: "button", onClick: toggle, title: "Toggle theme", className: "dp-nav-item", children: dark ? _jsx(FaIcons.FaMoon, { className: "dp-nav-icon", "aria-hidden": "true" }) : _jsx(FaIcons.FaSun, { className: "dp-nav-icon", "aria-hidden": "true" }) })] })] }) });
 }
