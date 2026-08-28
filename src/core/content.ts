@@ -4,6 +4,7 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import remarkAdmonition from './remarkAdmonition.js'
 import remarkRehype from 'remark-rehype'
 import rehypeRaw from 'rehype-raw'
 import rehypeKatex from 'rehype-katex'
@@ -32,7 +33,7 @@ function resolveRoute(root: string, file: string) {
 }
 export function discover(root = path.resolve(process.cwd(), 'docs')) { return files(root).map(source => ({ source, route: resolveRoute(root, source) })) }
 export async function markdownToHtml(content: string) {
-  const result = await remark().use(remarkGfm).use(remarkMath).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeStringify, { allowDangerousHtml: true }).process(content)
+  const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeStringify, { allowDangerousHtml: true }).process(content)
   return result.toString()
 }
 export async function compile(source: string, root = path.resolve(process.cwd(), 'docs')): Promise<Page> {

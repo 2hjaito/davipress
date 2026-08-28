@@ -56,7 +56,7 @@ function PostView({ page, pages, config }: { page: Page; pages: Page[]; config: 
           {sourceEditLink && <a href={sourceEditLink} target="_blank" rel="noopener noreferrer"><MdRebaseEdit aria-hidden="true" /> Chỉnh sửa trên GitHub</a>}
           {updated && <div><MdHistory aria-hidden="true" /><span>Cập nhật: {formatDate(updated)}</span></div>}
         </div>
-        {(previous || next) && <nav className="dp-post-nav" aria-label="Post navigation"><div>{previous && <Link href={previous.route}>← {String(previous.frontmatter.title)}</Link>}</div><div>{next && <Link href={next.route}>{String(next.frontmatter.title)} →</Link>}</div></nav>}
+        {(previous || next) && <nav className="dp-post-nav" aria-label="Post navigation"><div>{previous && <Link href={previous.route}><span className="dp-post-nav-arrow" aria-hidden="true">←</span><span className="dp-post-nav-label">{String(previous.frontmatter.title)}</span></Link>}</div><div>{next && <Link href={next.route}><span className="dp-post-nav-label">{String(next.frontmatter.title)}</span><span className="dp-post-nav-arrow" aria-hidden="true">→</span></Link>}</div></nav>}
         {commentsEnabled && giscus ? <GiscusComments giscus={giscus} /> : <div id="comments" className="dp-comments">Comments</div>}
       </article>
     </div>
@@ -86,7 +86,7 @@ function DocView({ page, config, previous, next }: { page: Page; config: Davipre
         {sourceEditLink && <a href={sourceEditLink} target="_blank" rel="noopener noreferrer"><MdRebaseEdit aria-hidden="true" /> Chỉnh sửa trên GitHub</a>}
         {updated && <div><MdHistory aria-hidden="true" /><span>Cập nhật: {formatDate(updated)}</span></div>}
       </div>
-      {(previous || next) && <nav className="dp-post-nav" aria-label="Section navigation"><div>{previous && <Link href={previous.route}>← {String(previous.frontmatter.title ?? previous.route)}</Link>}</div><div>{next && <Link href={next.route}>{String(next.frontmatter.title ?? next.route)} →</Link>}</div></nav>}
+      {(previous || next) && <nav className="dp-post-nav" aria-label="Section navigation"><div>{previous && <Link href={previous.route}><span className="dp-post-nav-arrow" aria-hidden="true">←</span><span className="dp-post-nav-label">{String(previous.frontmatter.title ?? previous.route)}</span></Link>}</div><div>{next && <Link href={next.route}><span className="dp-post-nav-label">{String(next.frontmatter.title ?? next.route)}</span><span className="dp-post-nav-arrow" aria-hidden="true">→</span></Link>}</div></nav>}
       {commentsEnabled && config.giscus ? <GiscusComments giscus={config.giscus} /> : <div id="comments" className="dp-comments">Comments</div>}
     </article>
   </div>

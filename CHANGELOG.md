@@ -4,6 +4,25 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.10] - 2026-08-28
+
+### Added
+
+- Add GitHub-style alerts with icons and light/dark theme styling.
+- Set Markdown body typography to a readable 16px base size.
+
+## [0.1.9] - 2026-08-28
+
+### Fixed
+
+- Keep mobile post navigation horizontal and clamp long labels without hiding arrows.
+
+## [0.1.8] - 2026-08-28
+
+### Fixed
+
+- Apply the light GitHub contributions palette consistently.
+
 ## [0.1.7] - 2026-08-28
 
 ### Fixed

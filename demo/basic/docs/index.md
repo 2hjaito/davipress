@@ -74,12 +74,12 @@ org: Uzumaki Clan Seal Knowledge
 date: Oct 10, 1987
 
 title: Chứng chỉ Tiên Thuật Lôi Đình & Tiên Nhân Mô Thức (Sage Mode Master)
-img: /images/cert/myoboku.jpg
+img: /images/cert/myoboku.png
 org: Diệu Mộc Sơn (Mount Myōboku)
 date: Sep 15, 1985
 
 title: Bằng Sáng chế & Đăng ký Cấm thuật Cấp S (Rasengan Creation)
-img: /images/cert/konoha.jpg
+img: /images/cert/konoha.png
 org: Hội đồng Làng Lá (Konoha High Council)
 date: Jul 03, 1982
 :::

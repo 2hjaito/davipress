@@ -210,3 +210,11 @@
 .dark .dp-github-calendar .react-activity-calendar__block:hover {
   stroke: #5a606b;
 }
+
+.dark .markdown-body .admonition {
+  background: #404d61;
+}
+
+.dark .markdown-body .admonition-title {
+  color: #e5e7eb;
+}

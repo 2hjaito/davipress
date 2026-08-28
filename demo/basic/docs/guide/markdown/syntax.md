@@ -1,87 +1,162 @@
 ---
 title: Markdown Syntax
-description: Common Markdown features supported by Davipress.
+description: Hướng dẫn cú pháp Markdown được hỗ trợ trong Davipress.
 sidebar_position: 1
 ---
 
 # Markdown Syntax
 
-Davipress supports GitHub-flavored Markdown together with syntax highlighting, math, heading links, tables, task lists, and raw HTML.
+Davipress hỗ trợ Markdown, MDX, GitHub Flavored Markdown, syntax highlighting, công thức toán, heading anchor, bảng, task list và GitHub-style alerts.
 
-## Headings and paragraphs
+## Heading và đoạn văn
 
-Use one or more `#` characters for headings. Keep one blank line between paragraphs.
-
-```md
-# Page title
-
-## Section title
-
-This is a paragraph with **bold text**, *italic text*, and `inline code`.
-```
-
-## Links and images
-
-Use normal Markdown links. Images can point to files in the `public/` directory.
+Dùng các ký tự `#` để tạo heading. Nên giữ thứ tự heading từ `h1` đến `h2`, `h3` để tài liệu dễ đọc và hỗ trợ accessibility.
 
 ```md
-[Davipress](https://www.npmjs.com/package/davipress)
+# Tiêu đề trang
 
-![A profile image](/images/profile.png)
+## Tiêu đề phần
+
+### Tiêu đề mục nhỏ
+
+Đây là một đoạn văn có **chữ đậm**, *chữ nghiêng* và `inline code`.
 ```
 
-Images can be clicked to open the built-in zoom view.
-
-## Lists and task lists
+## Link và hình ảnh
 
 ```md
-- First item
-- Second item
-	- Nested item
+[Trang chủ Davipress](https://github.com/2hjaito/davipress)
 
-- [x] Completed task
-- [ ] Open task
+![Ảnh minh hoạ](/images/example.png)
 ```
 
-## Code blocks
+File hình ảnh cần nằm trong thư mục `public/`. Đường dẫn trong Markdown bắt đầu từ `/`, tương ứng với thư mục `public/`.
 
-Add a language after the opening fence to enable syntax highlighting.
+Hình ảnh trong nội dung có thể click để mở chế độ zoom. Nhấn vào nền tối hoặc phím `Escape` để đóng ảnh.
+
+## GitHub-style alerts
+
+Alert dùng blockquote với marker ở dòng đầu tiên:
+
+```md
+> [!INFO]
+> Đây là thông tin cần biết.
+
+> [!TIP]
+> Đây là một mẹo hữu ích.
+
+> [!WARNING]
+> Hãy kiểm tra cấu hình trước khi build production.
+```
+
+Davipress hỗ trợ `INFO`, `NOTE`, `TIP`, `IMPORTANT`, `WARNING` và `CAUTION`.
+
+> [!INFO]
+> Alert có thể chứa **Markdown**, link và `inline code`.
+
+> [!NOTE]
+> Dùng NOTE để bổ sung ngữ cảnh mà không làm gián đoạn nội dung chính.
+
+> [!TIP]
+> Chạy `npm run dev` để xem thay đổi ngay khi đang viết tài liệu.
+
+> [!IMPORTANT]
+> Luôn kiểm tra frontmatter trước khi xuất bản một trang mới.
+
+> [!WARNING]
+> Không commit token hoặc thông tin bí mật vào repository.
+
+> [!CAUTION]
+> Không chỉnh sửa trực tiếp thư mục `.davipress/` vì đây là output được generate.
+
+## Danh sách
+
+```md
+- Mục thứ nhất
+- Mục thứ hai
+	- Mục con
+
+1. Bước đầu tiên
+2. Bước thứ hai
+
+- [x] Công việc đã hoàn thành
+- [ ] Công việc chưa hoàn thành
+```
+
+## Code block
+
+Thêm tên ngôn ngữ sau dấu mở fence để bật syntax highlighting:
 
 ```ts
 export function greet(name: string) {
-	return `Hello, ${name}`
+	return `Xin chào, ${name}`
 }
 ```
 
-## Tables
-
-```md
-| Feature | Supported |
-| --- | --- |
-| Tables | Yes |
-| Task lists | Yes |
-| Math | Yes |
+```bash
+npm install davipress
+npm run dev
 ```
 
-## Math
+Code block dài có thể cuộn ngang trên màn hình nhỏ. Nút copy được hiển thị ở góc của code block.
 
-Inline math uses single dollar signs: `$a^2 + b^2 = c^2$`.
+## Bảng
 
-Display math uses a pair of dollar signs:
+```md
+| Tính năng | Trạng thái | Ghi chú |
+| --- | --- | --- |
+| Markdown | Hỗ trợ | CommonMark |
+| Alerts | Hỗ trợ | GitHub-style |
+| Math | Hỗ trợ | KaTeX |
+```
+
+## Blockquote
+
+Blockquote thông thường không có marker alert:
+
+```md
+> Đây là một trích dẫn thông thường.
+```
+
+## Công thức toán
+
+Công thức inline dùng một cặp `$`: `$E = mc^2$`.
+
+```md
+$$
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+$$
+```
+
+Kết quả hiển thị:
 
 $$
-\int_0^1 x^2\,dx = \frac{1}{3}
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
 $$
 
 ## Frontmatter
 
-Add YAML frontmatter at the beginning of a file to control its metadata and navigation.
+Frontmatter nằm ở đầu file và dùng YAML:
 
 ```md
 ---
-title: My page
-description: A short page description.
+title: Tên trang
+description: Mô tả trang.
+date: 2026-08-28
+updated: 2026-08-28
 sidebar_position: 2
+sidebar_label: Tên trong sidebar
 comments: true
+draft: false
 ---
 ```
+
+Các trường thường dùng là `title`, `description`, `date`, `updated`, `sidebar_position`, `sidebar_label`, `image`, `keywords`, `comments` và `draft`.
+
+## Quy tắc viết tốt
+
+- Mỗi trang nên có `title` và `description` rõ ràng.
+- Dùng heading theo thứ tự, không nhảy trực tiếp từ `h2` sang `h4`.
+- Dùng alert cho thông tin thật sự cần nhấn mạnh.
+- Đặt asset trong `public/` và kiểm tra link trước khi deploy.
+- Chạy `npm run build` để phát hiện lỗi trước khi xuất bản.
