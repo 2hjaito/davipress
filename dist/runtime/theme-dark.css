@@ -1,0 +1,211 @@
+:root.dark,
+.dark {
+  --background-color: #374151;
+  --text-color: #e5e7eb;
+  --navbar-background: #404b5d;
+  --navbar-border: #5a5a5a;
+  --nav-item-background: #4a5363;
+  --nav-item-color: #9a9a9a;
+}
+
+.dark .dp-home-view,
+.dark .markdown-body {
+  background: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+.dark .dp-navbar-items {
+  background: var(--navbar-background);
+  border-color: var(--navbar-border);
+}
+
+.dark .dp-nav-item {
+  background: var(--nav-item-background);
+  color: var(--nav-item-color);
+}
+
+.dark .dp-socials a,
+.dark .dp-cert-image {
+  background: var(--contact-bc-dark);
+  color: #fff;
+}
+
+.dark .dp-sidebar {
+  background: rgb(55 65 81 / 82%);
+  border-color: rgb(75 85 99 / 70%);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 35%);
+}
+
+.dark .dp-sidebar-list-nested {
+  border-color: #1f2937;
+}
+
+.dark .dp-sidebar-section-title {
+  color: #6b7280;
+}
+
+.dark .dp-sidebar-group-button {
+  color: #9ca3af;
+}
+
+.dark .dp-sidebar-group-button:hover {
+  background: rgb(31 41 55 / 70%);
+  color: #fff;
+}
+
+.dark .dp-sidebar-link {
+  color: #d1d5db;
+}
+
+.dark .dp-sidebar-link:hover {
+  background: rgb(31 41 55 / 70%);
+  color: #fff;
+}
+
+.dark .dp-sidebar-link-active {
+  background: rgb(23 37 84 / 70%);
+  color: #93c5fd;
+}
+
+.dark .dp-expand-heading small,
+.dark .dp-expand-details-inner,
+.dark .dp-certification small {
+  color: #d1d5db;
+}
+
+.dark .dp-toc-trigger,
+.dark .dp-toc-card,
+.dark .dp-sticky-title p {
+  border-color: rgb(29 78 216 / 70%);
+  background: rgb(55 65 81 / 92%);
+  color: #e5e7eb;
+}
+
+.dark .dp-toc-trigger {
+  color: #93c5fd;
+}
+
+.dark .dp-toc-trigger:hover,
+.dark .dp-toc-list a:hover {
+  color: #bfdbfe;
+}
+
+.dark .dp-toc-header strong {
+  color: #93c5fd;
+}
+
+.dark .dp-toc-list a {
+  color: #e5e7eb;
+}
+
+.dark .dp-toc-list a.dp-toc-active {
+  background: rgb(23 37 84 / 50%);
+  color: #93c5fd;
+}
+
+.dark .dp-post,
+.dark .dp-post h2 {
+  color: var(--text-color-dark);
+}
+
+.dark .dp-post-tags span {
+  border-color: #b1b1b1;
+  color: #cfcfcf;
+}
+
+.dark .dp-post-update,
+.dark .dp-post-nav {
+  border-color: hsl(0 0% 100% / 33%);
+}
+
+.dark .dp-post-meta,
+.dark .dp-post-update,
+.dark .dp-post-nav,
+.dark .dp-comments,
+.dark .dp-tutorial-subtitle,
+.dark .dp-tutorial-meta {
+  color: #e5e7eb;
+}
+
+.dark .dp-home-view footer,
+.dark .davipress-body footer,
+.dark .dp-site-footer {
+  border-color: rgb(154 154 154 / 49%);
+  color: #d1d5db;
+}
+
+.dark .dp-home-view footer a,
+.dark .davipress-body footer a,
+.dark .dp-site-footer a {
+  color: #e5e7eb;
+}
+
+.dark .dp-home-view footer a:hover,
+.dark .davipress-body footer a:hover,
+.dark .dp-site-footer a:hover {
+  color: #93c5fd;
+}
+
+.dark .dp-mobile-sidebar,
+.dark .dp-mobile-sidebar-open,
+.dark .dp-mobile-sidebar-close {
+  border-color: rgb(55 65 81 / 70%);
+  background: rgb(55 65 81 / 86%);
+  color: #e5e7eb;
+}
+
+/* GitHub contribution colors match the dangth reference palette. */
+.dark .dp-github-calendar rect[data-level="0"] {
+  fill: #374151 !important;
+}
+
+.dark .dp-github-calendar rect[data-level="1"] {
+  fill: #1e4429 !important;
+}
+
+.dark .dp-github-calendar rect[data-level="2"] {
+  fill: #2d6d32 !important;
+}
+
+.dark .dp-github-calendar rect[data-level="3"] {
+  fill: #3fa641 !important;
+}
+
+.dark .dp-github-calendar rect[data-level="4"] {
+  fill: #53d353 !important;
+}
+
+.dark .dp-github-calendar .react-activity-calendar__legend-colors svg:nth-child(2) rect {
+  fill: #374151 !important;
+}
+
+.dark .dp-github-calendar .react-activity-calendar__legend-colors svg:nth-child(3) rect {
+  fill: #1e4429 !important;
+}
+
+.dark .dp-github-calendar .react-activity-calendar__legend-colors svg:nth-child(4) rect {
+  fill: #2d6d32 !important;
+}
+
+.dark .dp-github-calendar .react-activity-calendar__legend-colors svg:nth-child(5) rect {
+  fill: #3fa641 !important;
+}
+
+.dark .dp-github-calendar .react-activity-calendar__legend-colors svg:nth-child(6) rect {
+  fill: #53d353 !important;
+}
+
+.dark .dp-github-calendar,
+.dark .dp-github-calendar .react-activity-calendar,
+.dark .dp-github-calendar .react-activity-calendar__footer,
+.dark .dp-github-calendar .react-activity-calendar__count,
+.dark .dp-github-calendar svg text,
+.dark .dp-github-calendar .react-activity-calendar__legend-months text,
+.dark .dp-github-calendar .react-activity-calendar__legend-weekday {
+  color: #f0f0f0 !important;
+  fill: #f0f0f0 !important;
+}
+
+.dark .dp-github-calendar .react-activity-calendar__block:hover {
+  stroke: #5a606b;
+}

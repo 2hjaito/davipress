@@ -1,0 +1,14 @@
+{
+  "name": "davipress-demo-basic",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "davipress dev",
+    "build": "davipress build",
+    "start": "davipress start",
+    "clean": "davipress clean"
+  },
+  "dependencies": {
+    "davipress": "file:../.."
+  }
+}

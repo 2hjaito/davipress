@@ -1,0 +1,5 @@
+node_modules
+.next
+.davipress
+.env
+.env*.local
