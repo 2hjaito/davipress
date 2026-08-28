@@ -2,7 +2,7 @@
 
 Davipress is a Markdown-first documentation and personal site framework built on Next.js App Router. It turns a `docs/` folder into a fast server-rendered website while keeping content, assets, navigation, and theme configuration in the project.
 
-The default theme is designed for technical documentation and portfolio-style home pages. It includes a responsive navigation bar, light/dark mode, automatic sidebars, expandable home sections, GitHub contributions, Giscus comments, syntax highlighting, math, and generated SEO files.
+The default theme is designed for technical documentation and portfolio-style home pages. It includes a responsive navigation bar, light/dark mode, automatic sidebars, expandable home sections, GitHub contributions, Giscus comments, click-to-zoom images, syntax highlighting, math, and generated SEO files.
 
 ## Preview
 
@@ -99,7 +99,7 @@ Both `.md` and `.mdx` files are discovered. A file's path becomes its route: `in
 ![Diagram](/images/diagram.png)
 ```
 
-Davipress supports GitHub-flavored Markdown, tables, task lists, fenced code blocks, math delimiters, raw HTML, heading IDs, anchor links, KaTeX, and server-side syntax highlighting.
+Davipress supports GitHub-flavored Markdown, tables, task lists, fenced code blocks, math delimiters, raw HTML, heading IDs, anchor links, KaTeX, server-side syntax highlighting, and click-to-zoom images.
 
 ## Generated files
 

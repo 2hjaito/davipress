@@ -1,6 +1,7 @@
 import type { DavipressConfig } from '../config.js';
 export { loadPosts } from '../core/posts.js';
 export { CodeBlockControls } from './CodeBlockControls.js';
+export { ImageZoomClient } from './ImageZoomClient.js';
 export { NotFoundView } from './NotFoundView.js';
 export declare function generateStaticParams(): Promise<{
     slug: string[];

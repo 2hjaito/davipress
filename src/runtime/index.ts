@@ -6,6 +6,7 @@ import { DocsTheme } from './theme.js'
 export { loadPosts } from '../core/posts.js'
 
 export { CodeBlockControls } from './CodeBlockControls.js'
+export { ImageZoomClient } from './ImageZoomClient.js'
 export { NotFoundView } from './NotFoundView.js'
 
 export async function generateStaticParams() { return discover().map(({ route }) => ({ slug: route === '/' ? [] : route.slice(1).split('/') })) }

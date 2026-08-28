@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { FaCertificate, FaMoon, FaSpinner, FaSun, FaUser } from 'react-icons/fa'
 import { GiEvilBook, GiMagicPortal, GiSpellBook } from 'react-icons/gi'
 import { Projects } from './Projects.js'
@@ -29,5 +30,5 @@ export function NavBar({ items = defaultItems }: { items?: readonly (readonly [s
   }, [])
   useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
   function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light') }
-  return <div className="dp-navbar"><div className="dp-navbar-items">{items.map(item => { const label = 'text' in item ? item.text : item[0]; const href = 'text' in item ? item.link : item[1]; const Icon = iconMap[label] ?? GiSpellBook; return <a key={href} href={href} title={label} onClick={() => setActive(href)} className="dp-nav-item">{active === href ? <FaSpinner className="dp-spin" aria-hidden="true" /> : <Icon aria-hidden="true" />}</a> })}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaMoon aria-hidden="true" /> : <FaSun aria-hidden="true" />}</button></div></div>
+  return <div className="dp-navbar"><div className="dp-navbar-items">{items.map(item => { const label = 'text' in item ? item.text : item[0]; const href = 'text' in item ? item.link : item[1]; const Icon = iconMap[label] ?? GiSpellBook; return <Link key={href} href={href} title={label} onClick={() => setActive(href)} className="dp-nav-item">{active === href ? <FaSpinner className="dp-spin" aria-hidden="true" /> : <Icon aria-hidden="true" />}</Link> })}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaMoon aria-hidden="true" /> : <FaSun aria-hidden="true" />}</button></div></div>
 }

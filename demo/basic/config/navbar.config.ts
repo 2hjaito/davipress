@@ -4,8 +4,8 @@ export const navbarConfig = {
     // { label: 'Projects', href: '/project', icon: 'projects' },
     // { label: 'Certs', href: '/cert', icon: 'certificate' },
     { label: 'Tutorials', href: '/tutorials', icon: 'tutorials' },
+    { label: 'Guide', href: '/guide', icon: 'guide' },
     { label: 'Posts', href: '/posts', icon: 'posts' },
-    { label: 'Docs', href: '/docs', icon: 'docs' },
   ],
   themeToggle: {
     title: 'Toggle theme',

@@ -30,6 +30,10 @@ export default defineConfig({
   themeConfig: {
     nav: navbarConfig.items.map(item => ({ text: item.label, link: item.href })),
     sidebar: {
+      '/guide': [
+        { text: 'Guide', link: '/guide' },
+        { text: 'Creating Pages', link: '/guide/creating-pages' },
+      ],
       '/tutorial': tutorialSidebarItems,
       '/tutorials': tutorialSidebarItems,
     },

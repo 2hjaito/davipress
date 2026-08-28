@@ -10,4 +10,4 @@ Welcome to the guide section.
 
 ## Pages
 
-Continue with [Getting Started](/guide/getting-started).
+Continue with [Creating Pages](/guide/creating-pages) to learn how to create your own pages.
