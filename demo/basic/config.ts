@@ -1,24 +1,23 @@
 export const SITE_CONFIG = {
-  url: 'dangth.dev',
-  githubRepo: 'https://github.com/2hjaito/dangth',
+  url: 'https://davipress.vercel.app',
+  githubRepo: 'https://github.com/danqth/davipress',
   githubBranch: 'main', // Hoặc 'dev', 'next' tùy bạn
   postDir: 'docs/posts',
   tutorialDir: 'docs/tutorials',
 }
 
 export const GISCUS = {
-  termPrefix: "dangth",
+  termPrefix: "davipress",
   id: "comments",
-  repo: "dangth12/blog-giscus-comments" as `${string}/${string}`,
-  repoId: "R_kgDOJpeyjQ",
+  repo: "2hjaito/davipress" as `${string}/${string}`,
+  repoId: "R_kgDOT_faxA",
   category: "Announcements",
-  categoryId: "DIC_kwDOJpeyjc4CW2KO",
+  categoryId: "DIC_kwDOT_faxM4DEXW0",
   mapping: 'pathname' as const,
-  light: "light",
-  dark: "transparent_dark"
+  theme: "preferred_color_scheme"
 }
 
 export const GITHUB = {
-  username: "2hjaito",
+  username: "danqth",
   topic: "featured"
 }
