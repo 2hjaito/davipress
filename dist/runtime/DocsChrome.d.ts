@@ -4,21 +4,24 @@ type Heading = {
     text: string;
     level: number;
 };
-export declare function PostChrome({ children, headings, title, hasComments, route }: {
+export declare function PostChrome({ children, footer, headings, title, hasComments, route }: {
     children: React.ReactNode;
+    footer: React.ReactNode;
     headings: Heading[];
     title: string;
     hasComments: boolean;
     route: string;
 }): import("react").JSX.Element;
-export declare function DocsChrome({ children, footer, headings, sidebar, activeRoute, title, hasComments, reveal }: {
+export declare function DocsChrome({ children, footer, headings, sidebar, activeRoute, title, hasComments, sectionLabel, sectionIcon, reveal }: {
     children: React.ReactNode;
     footer: React.ReactNode;
     headings: Heading[];
-    sidebar: SidebarItem[];
+    sidebar: readonly SidebarItem[];
     activeRoute: string;
     title: string;
     hasComments: boolean;
+    sectionLabel?: string;
+    sectionIcon?: string;
     reveal?: boolean;
 }): import("react").JSX.Element;
 export {};

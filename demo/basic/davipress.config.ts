@@ -1,26 +1,8 @@
-import { defineConfig, type SidebarItem } from 'davipress'
+import { defineConfig } from 'davipress'
 import { SITE_CONFIG } from './config'
 import { navbarConfig } from './config/navbar.config'
 import { footerConfig } from './config/footer.config'
 import { layoutMetadata } from './config/layout.config'
-import { tutorialSidebar, type TutorialConfigItem } from './config/tutorial.config'
-
-function tutorialLink(link?: string) {
-  return link?.replace(/^\/tutorial\//, '/tutorials/')
-}
-
-function toSidebarItem(item: TutorialConfigItem): SidebarItem & { collapsible?: boolean; icon?: string } {
-  return {
-    text: item.text,
-    link: tutorialLink(item.link),
-    icon: item.icon,
-    collapsed: item.collapsible === false ? false : undefined,
-    collapsible: item.collapsible,
-    items: item.children?.map(toSidebarItem),
-  }
-}
-
-const tutorialSidebarItems = tutorialSidebar.map(toSidebarItem)
 
 export default defineConfig({
   title: typeof layoutMetadata.title === 'object' && layoutMetadata.title && 'default' in layoutMetadata.title ? String(layoutMetadata.title.default) : 'Davipress UI Demo',
@@ -28,15 +10,7 @@ export default defineConfig({
   lang: 'vi',
   url: `https://${SITE_CONFIG.url}`,
   themeConfig: {
-    nav: navbarConfig.items.map(item => ({ text: item.label, link: item.href })),
-    sidebar: {
-      '/guide': [
-        { text: 'Guide', link: '/guide' },
-        { text: 'Creating Pages', link: '/guide/creating-pages' },
-      ],
-      '/tutorial': tutorialSidebarItems,
-      '/tutorials': tutorialSidebarItems,
-    },
+    nav: navbarConfig.items.map(item => ({ text: item.label, link: item.href, icon: item.icon, items: 'items' in item ? item.items : undefined })),
     footer: footerConfig
   },
   giscus: {

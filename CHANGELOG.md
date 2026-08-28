@@ -6,9 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [0.1.4] - 2026-08-28
 
+### Added
+
+- Add Vietnamese labels for the post list and empty state.
+- Add a Markdown syntax guide to the basic demo.
+
 ### Fixed
 
 - Remove the accidental self-dependency that could break dependency resolution on Vercel.
+- Keep post-card typography aligned with the home page on mobile and desktop.
+- Hide the footer on documentation and tutorial pages that use nested navigation.
 
 ## [0.1.3] - 2026-08-28
 

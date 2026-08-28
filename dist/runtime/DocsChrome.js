@@ -2,40 +2,10 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import * as FaIcons from 'react-icons/fa';
-import * as Fa6Icons from 'react-icons/fa6';
-import * as FiIcons from 'react-icons/fi';
-import * as GiIcons from 'react-icons/gi';
-import * as IoIcons from 'react-icons/io';
-import * as Io5Icons from 'react-icons/io5';
-import * as LuIcons from 'react-icons/lu';
-import * as MdIcons from 'react-icons/md';
-import * as RiIcons from 'react-icons/ri';
-import * as SiIcons from 'react-icons/si';
-import * as TbIcons from 'react-icons/tb';
-import * as TiIcons from 'react-icons/ti';
-import { GiEvilBook, GiHamburgerMenu } from 'react-icons/gi';
-import { FaJava, FaJs } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
 import { MdOutlineFormatListBulleted } from 'react-icons/md';
-import { RiJavaLine } from 'react-icons/ri';
-const sidebarIcons = {
-    ...FaIcons,
-    ...Fa6Icons,
-    ...FiIcons,
-    ...GiIcons,
-    ...IoIcons,
-    ...Io5Icons,
-    ...LuIcons,
-    ...MdIcons,
-    ...RiIcons,
-    ...SiIcons,
-    ...TbIcons,
-    ...TiIcons,
-    FaJava,
-    FaJs,
-    RiJavaLine,
-};
+import { resolveNavIcon } from './NavBar.js';
 function childItems(item) { return (item.items ?? item.children ?? []); }
 function normalizeLink(link) {
     if (!link)
@@ -43,7 +13,7 @@ function normalizeLink(link) {
     return link.replace(/\/$/, '') || '/';
 }
 function SidebarIcon({ icon }) {
-    const Icon = icon ? sidebarIcons[icon] : undefined;
+    const Icon = resolveNavIcon(icon);
     return Icon ? _jsx(Icon, { className: "dp-sidebar-icon" }) : _jsx("span", { className: "dp-sidebar-icon" });
 }
 function openKeysForRoute(items, route, trail = []) {
@@ -127,7 +97,7 @@ function FloatingToc({ headings, hasComments, initiallyCollapsed = true }) {
         return null;
     return _jsxs(_Fragment, { children: [isCenterZoom && _jsx("button", { type: "button", className: "dp-toc-backdrop", "aria-label": "Close table of contents", onClick: () => setZoomed(false) }), _jsx("div", { className: isCenterZoom ? 'dp-toc-wrap dp-toc-wrap-center' : 'dp-toc-wrap', children: _jsx("div", { className: `dp-toc-panel${collapsed ? ' dp-toc-panel-collapsed' : ''}${zoomed ? ' dp-toc-panel-zoomed' : ''}`, children: collapsed ? _jsx("button", { type: "button", className: "dp-toc-trigger", "aria-label": "Open table of contents", title: "M\u1EDF m\u1EE5c l\u1EE5c", onClick: () => setCollapsed(false), children: _jsx(MdOutlineFormatListBulleted, { "aria-hidden": "true" }) }) : _jsxs("aside", { className: "dp-toc-card", children: [_jsxs("div", { className: "dp-toc-header", children: [_jsxs("div", { className: "dp-toc-window-buttons", children: [_jsx("button", { type: "button", className: "dp-toc-dot dp-toc-dot-red", "aria-label": "\u0110\u00F3ng m\u1EE5c l\u1EE5c", title: "\u0110\u00F3ng m\u1EE5c l\u1EE5c", onClick: () => { setCollapsed(true); setZoomed(false); }, children: "x" }), _jsx("button", { type: "button", className: "dp-toc-dot dp-toc-dot-yellow", "aria-label": "Thu nh\u1ECF m\u1EE5c l\u1EE5c", title: "Thu nh\u1ECF m\u1EE5c l\u1EE5c", onClick: () => { setCollapsed(true); setZoomed(false); }, children: "-" }), _jsx("button", { type: "button", className: "dp-toc-dot dp-toc-dot-green", "aria-label": zoomed ? 'Thu nhỏ mục lục' : 'Phóng to mục lục', title: zoomed ? 'Thu nhỏ mục lục' : 'Phóng to mục lục', onClick: () => setZoomed(value => !value), children: "+" })] }), _jsx("strong", { children: "M\u1EE5c l\u1EE5c" })] }), _jsxs("ul", { className: "dp-toc-list", children: [headings.map(heading => _jsx("li", { style: { marginLeft: `${Math.max(heading.level - 2, 0) * 16}px` }, children: _jsx("a", { href: `#${heading.id}`, className: activeId === heading.id ? 'dp-toc-active' : '', children: heading.text }) }, heading.id)), hasComments && _jsx("li", { children: _jsx("a", { href: "#comments", className: activeId === 'comments' ? 'dp-toc-active' : '', children: "Th\u1EA3o lu\u1EADn" }) })] })] }) }) })] });
 }
-export function PostChrome({ children, headings, title, hasComments, route }) {
+export function PostChrome({ children, footer, headings, title, hasComments, route }) {
     const [stickyVisible, setStickyVisible] = useState(false);
     const [progress, setProgress] = useState(0);
     const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
@@ -153,13 +123,14 @@ export function PostChrome({ children, headings, title, hasComments, route }) {
         observer.observe(heading);
         return () => observer.disconnect();
     }, []);
-    return _jsxs("div", { className: "dp-post-chrome", children: [_jsx("div", { className: "dp-reading-progress", children: _jsx("div", { style: { transform: `scaleX(${progress})` } }) }), _jsx(FloatingToc, { headings: tocHeadings, hasComments: hasComments, initiallyCollapsed: false }), stickyVisible && title && _jsx("div", { className: "dp-sticky-title", children: _jsx("p", { children: title }) }), _jsx("div", { className: "dp-page-reveal", children: children }, route)] });
+    return _jsxs("div", { className: "dp-post-chrome", children: [_jsx("div", { className: "dp-reading-progress", children: _jsx("div", { style: { transform: `scaleX(${progress})` } }) }), _jsx(FloatingToc, { headings: tocHeadings, hasComments: hasComments, initiallyCollapsed: false }), stickyVisible && title && _jsx("div", { className: "dp-sticky-title", children: _jsx("p", { children: title }) }), _jsxs("div", { className: "dp-page-reveal", children: [children, footer] }, route)] });
 }
-export function DocsChrome({ children, footer, headings, sidebar, activeRoute, title, hasComments, reveal = false }) {
+export function DocsChrome({ children, footer, headings, sidebar, activeRoute, title, hasComments, sectionLabel = 'Docs', sectionIcon, reveal = false }) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [stickyVisible, setStickyVisible] = useState(false);
     const [progress, setProgress] = useState(0);
     const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
+    const SectionIcon = resolveNavIcon(sectionIcon) ?? resolveNavIcon('GiSpellBook');
     useEffect(() => {
         const updateProgress = () => {
             const doc = document.documentElement;
@@ -182,5 +153,5 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
         observer.observe(firstHeading);
         return () => observer.disconnect();
     }, [activeRoute]);
-    return _jsxs("div", { className: "davipress-body", children: [_jsx("div", { className: "dp-reading-progress", children: _jsx("div", { style: { transform: `scaleX(${progress})` } }) }), _jsx(FloatingToc, { headings: tocHeadings, hasComments: hasComments }), stickyVisible && title && _jsx("div", { className: "dp-sticky-title", children: _jsx("p", { children: title }) }), _jsx("div", { className: "dp-sidebar-spacer" }), _jsx("aside", { className: "dp-sidebar", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) }), mobileOpen && _jsxs("div", { className: "dp-mobile-sidebar", children: [_jsx("button", { type: "button", className: "dp-mobile-sidebar-close", onClick: () => setMobileOpen(false), children: _jsxs("span", { children: [_jsx(IoMdClose, { "aria-hidden": "true" }), " ", _jsx(GiEvilBook, { "aria-hidden": "true" }), " Tutorials"] }) }), _jsx("div", { className: "dp-mobile-sidebar-inner", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) })] }), _jsxs("main", { id: "tutorial-main-content", children: [!mobileOpen && _jsx("button", { type: "button", className: "dp-mobile-sidebar-open", onClick: () => setMobileOpen(true), children: _jsxs("span", { children: [_jsx(GiHamburgerMenu, { "aria-hidden": "true" }), " ", _jsx(GiEvilBook, { "aria-hidden": "true" }), " Tutorials"] }) }), _jsxs("div", { className: reveal ? 'dp-page-reveal' : undefined, children: [children, footer] }, reveal ? activeRoute : undefined)] })] });
+    return _jsxs("div", { className: `davipress-body${reveal ? ' dp-tutorial-chrome' : ''}`, children: [_jsx("div", { className: "dp-reading-progress", children: _jsx("div", { style: { transform: `scaleX(${progress})` } }) }), _jsx(FloatingToc, { headings: tocHeadings, hasComments: hasComments }), !reveal && stickyVisible && title && _jsx("div", { className: "dp-sticky-title", children: _jsx("p", { children: title }) }), _jsx("div", { className: "dp-sidebar-spacer" }), _jsx("aside", { className: "dp-sidebar", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) }), mobileOpen && _jsxs("div", { className: "dp-mobile-sidebar", children: [_jsx("button", { type: "button", className: "dp-mobile-sidebar-close", onClick: () => setMobileOpen(false), children: _jsxs("span", { children: [_jsx(IoMdClose, { "aria-hidden": "true" }), " ", SectionIcon && _jsx(SectionIcon, {}), " ", sectionLabel] }) }), _jsx("div", { className: "dp-mobile-sidebar-inner", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) })] }), _jsxs("main", { id: "tutorial-main-content", className: reveal ? 'dp-tutorial-main' : undefined, children: [!mobileOpen && _jsx("button", { type: "button", className: "dp-mobile-sidebar-open", onClick: () => setMobileOpen(true), children: _jsxs("span", { children: [_jsx(GiHamburgerMenu, { "aria-hidden": "true" }), " ", SectionIcon && _jsx(SectionIcon, {}), " ", sectionLabel] }) }), _jsxs("div", { className: reveal ? 'dp-page-reveal' : undefined, children: [children, footer] }, reveal ? activeRoute : undefined)] })] });
 }

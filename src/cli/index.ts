@@ -116,7 +116,8 @@ function generate() {
   pkg.scripts ??= {}
   for (const [name, command] of Object.entries({ dev: 'davipress dev', build: 'davipress build', start: 'davipress start', clean: 'davipress clean' })) pkg.scripts[name] ??= command
   fs.writeFileSync(packageFile, `${JSON.stringify(pkg, null, 2)}\n`)
-  fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'], turbopack: { root: process.cwd() } }\nexport default nextConfig\n")
+  fs.mkdirSync(generated, { recursive: true })
+  fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'] }\nexport default nextConfig\n")
   const globalsCss = ['globals.css', 'src/globals.css'].find(file => fs.existsSync(path.join(cwd, file)))
   const globalsImport = globalsCss ? `\nimport '../../${globalsCss}'` : ''
   fs.mkdirSync(path.join(generated, 'app'), { recursive: true })
@@ -138,5 +139,12 @@ function runNext(command: string, args: string[]) {
 const command = process.argv[2] ?? 'help'
 if (command === 'init') { generate(); console.log('Davipress: initialized docs, config, and generated runtime.') }
 else if (['dev', 'build', 'start'].includes(command)) runNext(command, process.argv.slice(3))
-else if (command === 'clean') { if (fs.existsSync(generated)) fs.rmSync(generated, { recursive: true }); console.log('Davipress: removed generated runtime.') }
+else if (command === 'clean') {
+  if (fs.existsSync(generated)) {
+    const removing = `${generated}.removing-${Date.now()}`
+    fs.renameSync(generated, removing)
+    fs.rmSync(removing, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 })
+  }
+  console.log('Davipress: removed generated runtime.')
+}
 else console.log('Usage: davipress init | dev | build | start | clean')

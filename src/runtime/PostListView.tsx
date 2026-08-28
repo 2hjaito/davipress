@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { Page } from '../core/content.js'
 import { FaUserEdit } from 'react-icons/fa'
 import { MdDateRange } from 'react-icons/md'
+import Link from 'next/link'
 
 export function PostListView({ posts }: { posts: Page[] }) {
   const [selectedTag, setSelectedTag] = useState<string>('')
@@ -29,14 +30,14 @@ export function PostListView({ posts }: { posts: Page[] }) {
 
   return (
     <div className="dp-post-list">
-      <h1>Post</h1>
+      <h1>Bài viết</h1>
 
       <div className="dp-post-filter">
         <button
           onClick={() => setSelectedTag('')}
           className={`dp-post-filter-button${selectedTag === '' ? ' dp-post-filter-button-active' : ''}`}
         >
-          Show All <span>{posts.length}</span>
+          Tất cả <span>{posts.length}</span>
         </button>
 
         {allTags.map(([tag, count]) => (
@@ -50,7 +51,7 @@ export function PostListView({ posts }: { posts: Page[] }) {
         ))}
       </div>
 
-      {filteredPosts.length === 0 && <p className="dp-post-list-empty">No posts found.</p>}
+      {filteredPosts.length === 0 && <p className="dp-post-list-empty">Không tìm thấy bài viết.</p>}
 
       {filteredPosts.map((post) => {
         const tags = Array.isArray(post.frontmatter.tags) ? post.frontmatter.tags as string[] : []
@@ -61,22 +62,22 @@ export function PostListView({ posts }: { posts: Page[] }) {
           >
             {post.frontmatter.image && (
               <div className="dp-post-card-image">
-                <a href={post.route}>
+                <Link href={post.route}>
                   <img
                     src={String(post.frontmatter.image)}
                     alt={String(post.frontmatter.title ?? '')}
                   />
-                </a>
+                </Link>
               </div>
             )}
 
             <div className="dp-post-card-content">
-              <a
+              <Link
                 href={post.route}
                 className="dp-post-card-title"
               >
                 {String(post.frontmatter.title ?? post.route)}
-              </a>
+              </Link>
 
               {Boolean(post.frontmatter.subtitle) && (
                 <p className="dp-post-card-subtitle">

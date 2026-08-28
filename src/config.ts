@@ -5,8 +5,8 @@ export interface DavipressFrontmatter {
   [key: string]: unknown
 }
 
-export interface NavItem { text: string; link: string }
-export interface SidebarItem { text: string; link?: string; items?: SidebarItem[]; collapsed?: boolean }
+export interface SidebarItem { text: string; link?: string; icon?: string; items?: readonly SidebarItem[]; children?: readonly SidebarItem[]; collapsed?: boolean; collapsible?: boolean }
+export interface NavItem { text: string; link: string; icon?: string; items?: readonly SidebarItem[] }
 export interface FooterConfig { copyright: string; attribution?: { label: string; text: string; href: string; external?: boolean }; links?: ReadonlyArray<{ type: 'source' | 'rss'; label: string; href: string; ariaLabel: string; external?: boolean }> }
 export interface DavipressConfig {
   title?: string; description?: string; url?: string; lang?: string

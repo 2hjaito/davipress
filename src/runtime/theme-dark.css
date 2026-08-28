@@ -75,7 +75,8 @@
 
 .dark .dp-toc-trigger,
 .dark .dp-toc-card,
-.dark .dp-sticky-title p {
+.dark .dp-sticky-title p,
+.dark .dp-tutorial-sticky-title p {
   border-color: rgb(29 78 216 / 70%);
   background: rgb(55 65 81 / 92%);
   color: #e5e7eb;

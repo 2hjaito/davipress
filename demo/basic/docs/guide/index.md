@@ -1,13 +1,14 @@
 ---
-title: Guide
-description: The Davipress guide section.
-sidebar_position: 2
+title: Hướng dẫn sử dụng Davipress
+description: Hướng dẫn sử dụng Davipress và cú pháp Markdown.
 ---
 
 # Guide
 
-Welcome to the guide section.
+Chọn một mục ở menu bên trái để bắt đầu.
 
-## Pages
+## Danh mục
 
-Continue with [Creating Pages](/guide/creating-pages) to learn how to create your own pages.
+- [Markdown Syntax](./markdown/syntax)
+- [Bắt đầu với Davipress](./davipress/getting-started)
+- [Tạo trang mới](./davipress/creating-pages)

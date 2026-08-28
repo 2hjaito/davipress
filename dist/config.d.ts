@@ -12,15 +12,20 @@ export interface DavipressFrontmatter {
     comments?: boolean;
     [key: string]: unknown;
 }
-export interface NavItem {
-    text: string;
-    link: string;
-}
 export interface SidebarItem {
     text: string;
     link?: string;
-    items?: SidebarItem[];
+    icon?: string;
+    items?: readonly SidebarItem[];
+    children?: readonly SidebarItem[];
     collapsed?: boolean;
+    collapsible?: boolean;
+}
+export interface NavItem {
+    text: string;
+    link: string;
+    icon?: string;
+    items?: readonly SidebarItem[];
 }
 export interface FooterConfig {
     copyright: string;

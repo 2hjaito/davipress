@@ -1,6 +1,6 @@
 {
   "name": "davipress",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Markdown documentation framework built on Next.js App Router",
   "type": "module",
   "bin": {

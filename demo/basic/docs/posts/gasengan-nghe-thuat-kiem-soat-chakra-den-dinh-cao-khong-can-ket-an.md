@@ -4,9 +4,9 @@ layout: Post
 title: Rasengan - Nghệ thuật kiểm soát Chakra đến đỉnh cao không cần kết ấn
 slug: rasengan-nghe-thuat-kiem-soat-chakra-den-dinh-cao-khong-can-ket-an
 subtitle: Sáng tạo Nhẫn thuật trong Giới Nhẫn Giả
-author: Nam Phong Hoàng Kim
+author: Minato Namikaze
 date: "2025-08-20"
-image: /images/post/rasengan-guide/1.png
+image: /post/2.png
 tags:
   - Nhẫn thuật
   - Sáng chế Nhẫn thuật

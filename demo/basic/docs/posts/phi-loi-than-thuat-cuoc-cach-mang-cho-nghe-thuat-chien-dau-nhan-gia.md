@@ -4,9 +4,9 @@ layout: Post
 title: Phi Lôi Thần Thuật - Cuộc cách mạng cho nghệ thuật chiến đấu Nhẫn Giả
 slug: phi-loi-than-thuat-cuoc-cach-mang-cho-nghe-thuat-chien-dau-nhan-gia
 subtitle: Không - Thời Gian Thuật trong Giới Nhẫn Giả
-author: Nam Phong Hoàng Kim
+author: Minato Namikaze
 date: "2025-08-15"
-image: /images/post/flying-thunder-god/1.png
+image: /post/1.png
 tags:
  Nhẫn thuật
  Lịch sử Làng Lá

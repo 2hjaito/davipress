@@ -3,45 +3,15 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { SidebarItem } from '../config.js'
-import * as FaIcons from 'react-icons/fa'
-import * as Fa6Icons from 'react-icons/fa6'
-import * as FiIcons from 'react-icons/fi'
-import * as GiIcons from 'react-icons/gi'
-import * as IoIcons from 'react-icons/io'
-import * as Io5Icons from 'react-icons/io5'
-import * as LuIcons from 'react-icons/lu'
-import * as MdIcons from 'react-icons/md'
-import * as RiIcons from 'react-icons/ri'
-import * as SiIcons from 'react-icons/si'
-import * as TbIcons from 'react-icons/tb'
-import * as TiIcons from 'react-icons/ti'
-import { GiEvilBook, GiHamburgerMenu } from 'react-icons/gi'
-import { FaJava, FaJs } from 'react-icons/fa'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import { IoMdClose } from 'react-icons/io'
 import { MdOutlineFormatListBulleted } from 'react-icons/md'
-import { RiJavaLine } from 'react-icons/ri'
+import { resolveNavIcon } from './NavBar.js'
 
 type Heading = { id: string; text: string; level: number }
-type SidebarNode = SidebarItem & { children?: SidebarNode[]; collapsible?: boolean; icon?: string }
-const sidebarIcons = {
-  ...FaIcons,
-  ...Fa6Icons,
-  ...FiIcons,
-  ...GiIcons,
-  ...IoIcons,
-  ...Io5Icons,
-  ...LuIcons,
-  ...MdIcons,
-  ...RiIcons,
-  ...SiIcons,
-  ...TbIcons,
-  ...TiIcons,
-  FaJava,
-  FaJs,
-  RiJavaLine,
-} as unknown as Record<string, React.ComponentType<{ className?: string }>>
+type SidebarNode = SidebarItem & { children?: readonly SidebarNode[]; collapsible?: boolean; icon?: string }
 
-function childItems(item: SidebarNode) { return (item.items ?? item.children ?? []) as SidebarNode[] }
+function childItems(item: SidebarNode) { return (item.items ?? item.children ?? []) as readonly SidebarNode[] }
 
 function normalizeLink(link?: string) {
   if (!link) return ''
@@ -49,11 +19,11 @@ function normalizeLink(link?: string) {
 }
 
 function SidebarIcon({ icon }: { icon?: string }) {
-  const Icon = icon ? sidebarIcons[icon] : undefined
+  const Icon = resolveNavIcon(icon)
   return Icon ? <Icon className="dp-sidebar-icon" /> : <span className="dp-sidebar-icon" />
 }
 
-function openKeysForRoute(items: SidebarNode[], route: string, trail: string[] = []): string[] {
+function openKeysForRoute(items: readonly SidebarNode[], route: string, trail: string[] = []): string[] {
   for (let index = 0; index < items.length; index++) {
     const item = items[index]
     const key = `${trail.join('/')}/${item.text}-${index}`
@@ -67,11 +37,11 @@ function openKeysForRoute(items: SidebarNode[], route: string, trail: string[] =
   return []
 }
 
-function SidebarTree({ items, activeRoute }: { items: SidebarNode[]; activeRoute: string }) {
+function SidebarTree({ items, activeRoute }: { items: readonly SidebarNode[]; activeRoute: string }) {
   const [openMap, setOpenMap] = useState<Record<string, boolean>>({})
   const activeTrail = openKeysForRoute(items, activeRoute)
 
-  function renderItems(nodes: SidebarNode[], level = 0, trail: string[] = []) {
+  function renderItems(nodes: readonly SidebarNode[], level = 0, trail: string[] = []) {
     return <ul className={`dp-sidebar-list ${level > 1 ? 'dp-sidebar-list-nested' : ''}`}>{nodes.map((item, index) => {
       const key = `${trail.join('/')}/${item.text}-${index}`
       const children = childItems(item)
@@ -173,7 +143,7 @@ function FloatingToc({ headings, hasComments, initiallyCollapsed = true }: { hea
   </>
 }
 
-export function PostChrome({ children, headings, title, hasComments, route }: { children: React.ReactNode; headings: Heading[]; title: string; hasComments: boolean; route: string }) {
+export function PostChrome({ children, footer, headings, title, hasComments, route }: { children: React.ReactNode; footer: React.ReactNode; headings: Heading[]; title: string; hasComments: boolean; route: string }) {
   const [stickyVisible, setStickyVisible] = useState(false)
   const [progress, setProgress] = useState(0)
   const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4)
@@ -205,15 +175,16 @@ export function PostChrome({ children, headings, title, hasComments, route }: { 
     <div className="dp-reading-progress"><div style={{ transform: `scaleX(${progress})` }} /></div>
     <FloatingToc headings={tocHeadings} hasComments={hasComments} initiallyCollapsed={false} />
     {stickyVisible && title && <div className="dp-sticky-title"><p>{title}</p></div>}
-    <div key={route} className="dp-page-reveal">{children}</div>
+    <div key={route} className="dp-page-reveal">{children}{footer}</div>
   </div>
 }
 
-export function DocsChrome({ children, footer, headings, sidebar, activeRoute, title, hasComments, reveal = false }: { children: React.ReactNode; footer: React.ReactNode; headings: Heading[]; sidebar: SidebarItem[]; activeRoute: string; title: string; hasComments: boolean; reveal?: boolean }) {
+export function DocsChrome({ children, footer, headings, sidebar, activeRoute, title, hasComments, sectionLabel = 'Docs', sectionIcon, reveal = false }: { children: React.ReactNode; footer: React.ReactNode; headings: Heading[]; sidebar: readonly SidebarItem[]; activeRoute: string; title: string; hasComments: boolean; sectionLabel?: string; sectionIcon?: string; reveal?: boolean }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [stickyVisible, setStickyVisible] = useState(false)
   const [progress, setProgress] = useState(0)
   const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4)
+  const SectionIcon = resolveNavIcon(sectionIcon) ?? resolveNavIcon('GiSpellBook')
 
   useEffect(() => {
     const updateProgress = () => {
@@ -238,18 +209,18 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
     return () => observer.disconnect()
   }, [activeRoute])
 
-  return <div className="davipress-body">
+  return <div className={`davipress-body${reveal ? ' dp-tutorial-chrome' : ''}`}>
     <div className="dp-reading-progress"><div style={{ transform: `scaleX(${progress})` }} /></div>
     <FloatingToc headings={tocHeadings} hasComments={hasComments} />
-    {stickyVisible && title && <div className="dp-sticky-title"><p>{title}</p></div>}
+    {!reveal && stickyVisible && title && <div className="dp-sticky-title"><p>{title}</p></div>}
     <div className="dp-sidebar-spacer" />
-    <aside className="dp-sidebar"><SidebarTree items={sidebar as SidebarNode[]} activeRoute={activeRoute} /></aside>
+    <aside className="dp-sidebar"><SidebarTree items={sidebar as readonly SidebarNode[]} activeRoute={activeRoute} /></aside>
     {mobileOpen && <div className="dp-mobile-sidebar">
-      <button type="button" className="dp-mobile-sidebar-close" onClick={() => setMobileOpen(false)}><span><IoMdClose aria-hidden="true" /> <GiEvilBook aria-hidden="true" /> Tutorials</span></button>
-      <div className="dp-mobile-sidebar-inner"><SidebarTree items={sidebar as SidebarNode[]} activeRoute={activeRoute} /></div>
+      <button type="button" className="dp-mobile-sidebar-close" onClick={() => setMobileOpen(false)}><span><IoMdClose aria-hidden="true" /> {SectionIcon && <SectionIcon />} {sectionLabel}</span></button>
+      <div className="dp-mobile-sidebar-inner"><SidebarTree items={sidebar as readonly SidebarNode[]} activeRoute={activeRoute} /></div>
     </div>}
-    <main id="tutorial-main-content">
-      {!mobileOpen && <button type="button" className="dp-mobile-sidebar-open" onClick={() => setMobileOpen(true)}><span><GiHamburgerMenu aria-hidden="true" /> <GiEvilBook aria-hidden="true" /> Tutorials</span></button>}
+    <main id="tutorial-main-content" className={reveal ? 'dp-tutorial-main' : undefined}>
+      {!mobileOpen && <button type="button" className="dp-mobile-sidebar-open" onClick={() => setMobileOpen(true)}><span><GiHamburgerMenu aria-hidden="true" /> {SectionIcon && <SectionIcon />} {sectionLabel}</span></button>}
       <div key={reveal ? activeRoute : undefined} className={reveal ? 'dp-page-reveal' : undefined}>
         {children}
         {footer}
