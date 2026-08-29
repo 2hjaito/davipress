@@ -30,10 +30,10 @@ Thiết lập `davipress.config.ts`, navbar, sidebar, icon, footer, repository, 
 Sử dụng frontmatter, heading, link, ảnh, alert, code block, bảng, task list và công thức toán.
 
 ### [Theme và giao diện](./theme/)
-Cấu hình light/dark mode, navbar, sidebar, responsive layout, ảnh zoom và cách tùy biến CSS an toàn.
+Cấu hình chế độ sáng/tối, navbar, sidebar, bố cục responsive, ảnh phóng to và cách tùy biến CSS an toàn.
 
 ### [Build và deploy](./deployment/)
-Chạy development server, build production, deploy lên Vercel và kiểm tra lỗi thường gặp.
+Chạy máy chủ phát triển, build bản production, deploy lên Vercel và kiểm tra lỗi thường gặp.
 
 ## Cấu trúc ví dụ
 

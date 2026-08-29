@@ -64,8 +64,8 @@ Nếu `package.json` chưa có scripts, thêm vào:
 Ý nghĩa từng lệnh:
 
 - `npm run dev`: chạy môi trường viết nội dung
-- `npm run build`: build production
-- `npm run start`: chạy bản production sau khi build
+- `npm run build`: build bản production
+- `npm run start`: chạy bản production sau khi build xong
 - `npm run clean`: xóa output tạm của Davipress
 
 ## Chạy website local
@@ -74,7 +74,7 @@ Nếu `package.json` chưa có scripts, thêm vào:
 npm run dev
 ```
 
-Mở `http://localhost:3000` để xem website. Khi sửa file trong `docs/`, trang sẽ tự cập nhật trong development server.
+Mở `http://localhost:3000` để xem website. Khi sửa file trong `docs/`, trang sẽ tự cập nhật trong máy chủ phát triển.
 
 ## Tạo trang đầu tiên
 

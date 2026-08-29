@@ -1,12 +1,12 @@
 ---
 title: Build và deploy
-description: Chạy production build và triển khai website Davipress.
+description: Build bản production và triển khai website Davipress.
 sidebar_position: 6
 ---
 
 # Build và deploy
 
-Davipress tạo ứng dụng Next.js từ nội dung trong `docs/`. Trước khi đưa website lên production, hãy kiểm tra build và các URL quan trọng.
+Davipress tạo ứng dụng Next.js từ nội dung trong `docs/`. Trước khi đưa website lên môi trường production, hãy kiểm tra build và các URL quan trọng.
 
 ## Chạy môi trường phát triển
 
@@ -14,16 +14,16 @@ Davipress tạo ứng dụng Next.js từ nội dung trong `docs/`. Trước khi
 npm run dev
 ```
 
-Môi trường phát triển phù hợp để viết nội dung, kiểm tra layout và theo dõi thay đổi frontmatter. Mặc định website chạy ở `http://localhost:3000` nếu cổng này chưa bị chiếm.
+Môi trường phát triển phù hợp để viết nội dung, kiểm tra bố cục và theo dõi thay đổi frontmatter. Mặc định website chạy ở `http://localhost:3000` nếu cổng này chưa bị chiếm.
 
-## Build production
+## Build bản production
 
 ```bash
 npm run build
 npm run start
 ```
 
-Build sẽ kiểm tra TypeScript, biên dịch Markdown, tạo các route cần thiết và generate `rss.xml` cùng `robots.txt`.
+Build sẽ kiểm tra TypeScript, biên dịch Markdown, tạo các route cần thiết và sinh `rss.xml` cùng `robots.txt`.
 
 Nên chạy build trước khi deploy để phát hiện sớm:
 
@@ -49,13 +49,13 @@ Lệnh `clean` xóa output tạm do Davipress tạo ra.
 1. Push project lên GitHub.
 2. Import repository vào Vercel.
 3. Chọn framework Next.js nếu Vercel hỏi.
-4. Đặt build command là `npm run build`.
-5. Đặt install command là `npm install` nếu cần.
-6. Khai báo production URL trong `davipress.config.ts`.
+4. Đặt lệnh build là `npm run build`.
+5. Đặt lệnh cài dependency là `npm install` nếu cần.
+6. Khai báo URL production trong `davipress.config.ts`.
 
 Vercel thường tự nhận diện output Next.js nên không cần commit thư mục `.davipress/`.
 
-Ví dụ config production:
+Ví dụ config cho production:
 
 ```ts
 export default defineConfig({
@@ -74,7 +74,7 @@ npm run build
 npm run start
 ```
 
-Cần đảm bảo server dùng Node.js 20.9 trở lên. Với production thực tế, nên chạy sau reverse proxy như Nginx hoặc dịch vụ tương đương.
+Cần đảm bảo server dùng Node.js 20.9 trở lên. Với môi trường production thực tế, nên chạy sau reverse proxy như Nginx hoặc dịch vụ tương đương.
 
 ## RSS và robots
 

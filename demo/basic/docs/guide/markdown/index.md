@@ -173,7 +173,7 @@ Giữ bảng ngắn để dễ đọc trên điện thoại. Nếu bảng quá r
 ```md
 - [x] Tạo project
 - [x] Viết trang đầu tiên
-- [ ] Chạy build production
+- [ ] Chạy build bản production
 ```
 
 ## Công thức

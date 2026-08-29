@@ -1,33 +1,33 @@
 ---
-title: Creating Pages
-description: Create and publish your own Markdown pages with Davipress.
+title: Tạo trang
+description: Tạo và xuất bản trang Markdown trong Davipress.
 sidebar_position: 1
 ---
 
-# Creating Pages
+# Tạo trang
 
-Davipress turns files inside `docs/` into pages. You do not need to register each page in a router.
+Davipress biến các file trong `docs/` thành page. Bạn không cần khai báo từng page trong router.
 
-## 1. Create a Markdown file
+## 1. Tạo file Markdown
 
-Create a file such as `docs/about.md`:
+Tạo file `docs/about.md`:
 
 ```md
 ---
-title: About me
-description: A short introduction.
+title: Giới thiệu
+description: Một trang giới thiệu ngắn.
 ---
 
-# About me
+# Giới thiệu
 
-Write your page content here.
+Viết nội dung trang ở đây.
 ```
 
-The page is available at `/about`.
+Page này sẽ có route `/about`.
 
-## 2. Create nested pages
+## 2. Tạo page lồng trong thư mục
 
-Folders become URL segments. For example:
+Thư mục sẽ trở thành một phần của URL. Ví dụ:
 
 ```text
 docs/
@@ -37,13 +37,22 @@ docs/
   about.md
 ```
 
-These files become `/guide`, `/guide/creating-pages`, and `/about`.
+Các file trên tương ứng với `/guide`, `/guide/creating-pages` và `/about`.
 
-A file named `index.md` represents its folder route. A custom `slug` in frontmatter can override the filename route.
+File `index.md` đại diện cho route của thư mục. Nếu muốn đổi route khác tên file, dùng `slug` trong frontmatter.
 
-## 3. Add images and files
+```md
+---
+title: Trang tùy chỉnh
+slug: custom-page
+---
+```
 
-Put static assets in `public/`:
+Route khi đó sẽ là `/custom-page`.
+
+## 3. Thêm ảnh và file tĩnh
+
+Đặt asset trong `public/`:
 
 ```text
 public/
@@ -51,54 +60,54 @@ public/
     profile.png
 ```
 
-Reference them from Markdown with an absolute public path:
+Dùng đường dẫn public tuyệt đối trong Markdown:
 
 ```md
-![Profile](/images/profile.png)
+![Ảnh đại diện](/images/profile.png)
 ```
 
-The same rule applies to downloads, icons, and other static files.
+Quy tắc này cũng áp dụng cho file tải xuống, icon và các file tĩnh khác.
 
-## 4. Configure page metadata
+## 4. Cấu hình metadata cho page
 
-Frontmatter controls metadata and navigation:
+Frontmatter điều khiển metadata và thứ tự điều hướng:
 
 ```md
 ---
-title: Project notes
-description: Notes about a project.
-date: 2026-08-28
-updated: 2026-08-28
+title: Ghi chú dự án
+description: Ghi chú ngắn về một dự án.
+date: 2026-08-29
+updated: 2026-08-29
 sidebar_position: 2
-sidebar_label: Project notes
+sidebar_label: Ghi chú
 comments: true
 ---
 ```
 
-Useful fields include `title`, `description`, `date`, `updated`, `sidebar_position`, `sidebar_label`, `image`, `keywords`, `layout`, `draft`, and `comments`.
+Các field thường dùng gồm `title`, `description`, `date`, `updated`, `sidebar_position`, `sidebar_label`, `image`, `keywords`, `layout`, `draft` và `comments`.
 
-Set `draft: true` to keep a page out of the published page list.
+Dùng `draft: true` để đánh dấu page chưa sẵn sàng xuất bản.
 
-## 5. Add the page to a sidebar
+## 5. Thêm page vào sidebar
 
-With `sidebar: 'auto'`, Davipress discovers pages and sorts them by `sidebar_position`.
+Với `sidebar: 'auto'`, Davipress tự tìm page và sắp xếp theo `sidebar_position`.
 
-For a custom sidebar, add the route to `davipress.config.ts`:
+Với sidebar thủ công, thêm route vào `davipress.config.ts`:
 
 ```ts
 export default defineConfig({
   themeConfig: {
     sidebar: {
       '/guide': [
-        { text: 'Guide', link: '/guide' },
-        { text: 'Creating Pages', link: '/guide/creating-pages' }
-      ]
-    }
-  }
+        { text: 'Hướng dẫn', link: '/guide' },
+        { text: 'Tạo trang', link: '/guide/davipress/creating-pages' },
+      ],
+    },
+  },
 })
 ```
 
-## 6. Preview and build
+## 6. Xem trước và build
 
 ```bash
 npm run dev
@@ -106,12 +115,12 @@ npm run build
 npm run start
 ```
 
-The development server previews changes at `http://localhost:3000`. The build command also prepares `/rss.xml` and `/robots.txt` for the configured site URL.
+Máy chủ phát triển hiển thị thay đổi tại `http://localhost:3000`. Khi build, Davipress cũng chuẩn bị `/rss.xml` và `/robots.txt` theo URL đã cấu hình.
 
-## Page checklist
+## Checklist tạo page
 
-- Create a `.md` or `.mdx` file under `docs/`.
-- Add frontmatter when the page needs metadata or sidebar ordering.
-- Put images and downloads under `public/`.
-- Use absolute paths such as `/images/example.png`.
-- Run `npm run dev` to preview and `npm run build` before deployment.
+- Tạo file `.md` hoặc `.mdx` trong `docs/`.
+- Thêm frontmatter nếu page cần metadata hoặc thứ tự sidebar.
+- Đặt ảnh và file tải xuống trong `public/`.
+- Dùng đường dẫn tuyệt đối như `/images/example.png`.
+- Chạy `npm run dev` để xem trước và `npm run build` trước khi deploy.

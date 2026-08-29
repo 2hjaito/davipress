@@ -1,12 +1,12 @@
 ---
 title: Theme và giao diện
-description: Tìm hiểu theme mặc định, responsive layout và navbar.
+description: Tìm hiểu theme mặc định, bố cục responsive và navbar.
 sidebar_position: 5
 ---
 
 # Theme và giao diện
 
-Davipress cung cấp theme mặc định cho website tài liệu với chế độ sáng/tối, navbar, sidebar, mục lục trong trang, ảnh zoom và responsive layout.
+Davipress cung cấp theme mặc định cho website tài liệu với chế độ sáng/tối, navbar, sidebar, mục lục trong trang, ảnh phóng to và bố cục responsive.
 
 ## Chế độ sáng và tối
 
@@ -39,7 +39,7 @@ Các mục điều hướng được khai báo trong `themeConfig.nav`:
 nav: [
   { text: 'Trang chủ', link: '/', icon: 'FaHouse' },
   { text: 'Hướng dẫn', link: '/guide', icon: 'FaBook' },
-  { text: 'Tutorial', link: '/tutorials', icon: 'FaGraduationCap' },
+  { text: 'Bài học', link: '/tutorials', icon: 'FaGraduationCap' },
 ]
 ```
 

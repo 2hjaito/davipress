@@ -48,7 +48,7 @@ Alert dùng blockquote với marker ở dòng đầu tiên:
 > Đây là một mẹo hữu ích.
 
 > [!WARNING]
-> Hãy kiểm tra cấu hình trước khi build production.
+> Hãy kiểm tra cấu hình trước khi build bản production.
 ```
 
 Davipress hỗ trợ `INFO`, `NOTE`, `TIP`, `IMPORTANT`, `WARNING` và `CAUTION`.
@@ -108,7 +108,7 @@ Code block dài có thể cuộn ngang trên màn hình nhỏ. Nút copy đượ
 | Tính năng | Trạng thái | Ghi chú |
 | --- | --- | --- |
 | Markdown | Hỗ trợ | CommonMark |
-| Alerts | Hỗ trợ | GitHub-style |
+| Alert | Hỗ trợ | Kiểu GitHub |
 | Math | Hỗ trợ | KaTeX |
 ```
 
@@ -155,7 +155,7 @@ draft: false
 
 Các trường thường dùng là `title`, `description`, `date`, `updated`, `sidebar_position`, `sidebar_label`, `image`, `keywords`, `comments` và `draft`.
 
-## Layout trong frontmatter
+## Bố cục trong frontmatter
 
 Một số trang có thể dùng layout riêng:
 
