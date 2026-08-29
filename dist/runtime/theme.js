@@ -8,6 +8,8 @@ import { loadHome } from '../core/home.js';
 import { HomeView } from './HomeView.js';
 import { loadPosts } from '../core/posts.js';
 import { PostListView } from './PostListView.js';
+import { loadProjects } from '../core/projects.js';
+import { ProjectsView } from './ProjectsView.js';
 import { DocsChrome, PostChrome } from './DocsChrome.js';
 import { GiscusComments } from './GiscusComments.js';
 import { Footer } from './Footer.js';
@@ -82,10 +84,15 @@ export async function DocsTheme({ page, config }) {
     }
     const layout = String(page.frontmatter.layout ?? '').toLowerCase();
     const isPostList = layout === 'post-list';
+    const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || page.route === '/project' || page.route === '/projects';
     const posts = await loadPosts();
     const isPost = posts.some(post => post.source === page.source);
     if (isPostList) {
         return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostListView, { posts: posts }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+    }
+    if (isProjectList) {
+        const projectData = await loadProjects(page, config);
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(ProjectsView, { blocks: projectData.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
     }
     if (isPost) {
         return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostView, { page: page, pages: posts, config: config }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });

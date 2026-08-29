@@ -13,6 +13,10 @@ export default defineConfig({
     url: SITE_CONFIG.githubRepo,
     editLink: `${SITE_CONFIG.githubRepo}/edit/${SITE_CONFIG.githubBranch}`,
   },
+  github: {
+    username: '2hjaito',
+    topic: 'featured',
+  },
   themeConfig: {
     nav: navbarConfig.items.map(item => ({ text: item.label, link: item.href, icon: item.icon, items: 'items' in item ? item.items : undefined })),
     navbar: {

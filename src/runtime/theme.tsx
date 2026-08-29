@@ -9,6 +9,8 @@ import { loadHome } from '../core/home.js'
 import { HomeView } from './HomeView.js'
 import { loadPosts } from '../core/posts.js'
 import { PostListView } from './PostListView.js'
+import { loadProjects } from '../core/projects.js'
+import { ProjectsView } from './ProjectsView.js'
 import { DocsChrome, PostChrome } from './DocsChrome.js'
 import { GiscusComments } from './GiscusComments.js'
 import { Footer } from './Footer.js'
@@ -127,11 +129,17 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
   }
   const layout = String(page.frontmatter.layout ?? '').toLowerCase()
   const isPostList = layout === 'post-list'
+  const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || page.route === '/project' || page.route === '/projects'
   const posts = await loadPosts()
   const isPost = posts.some(post => post.source === page.source)
 
   if (isPostList) {
     return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
+  }
+
+  if (isProjectList) {
+    const projectData = await loadProjects(page, config)
+    return <div className="davipress-shell"><ProjectsView blocks={projectData.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
   }
 
   if (isPost) {

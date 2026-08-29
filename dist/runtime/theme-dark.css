@@ -119,6 +119,71 @@
   border-color: hsl(0 0% 100% / 33%);
 }
 
+.dark .dp-projects-title,
+.dark .dp-project-name,
+.dark .dp-tools-title,
+.dark .dp-tool-name,
+.dark .dp-tool-icon-col {
+  color: #e5e7eb;
+}
+
+.dark .dp-project-card,
+.dark .dp-tools-details,
+.dark .dp-tool-card {
+  border-color: #4b5563;
+}
+
+.dark .dp-tool-icon-col {
+  border-color: #4b5563;
+}
+
+.dark .dp-project-card:hover,
+.dark .dp-tool-card:hover {
+  background: #4b5362;
+}
+
+.dark .dp-project-desc,
+.dark .dp-project-updated,
+.dark .dp-tool-desc {
+  color: #9ca3af;
+}
+
+.dark .dp-project-license {
+  border-color: #4b5563;
+  color: #9ca3af;
+}
+
+.dark .dp-project-topic-badge {
+  background: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
+}
+
+.dark .dp-project-topic-badge:hover {
+  background: #4b5563;
+  color: #fff;
+}
+
+.dark .dp-project-topic-active {
+  background: #1e3a8a;
+  color: #93c5fd;
+  border-color: #3b82f6;
+}
+
+.dark .dp-project-filter-more {
+  background: #4b5563;
+  color: #e5e7eb;
+  border-color: #6b7280;
+}
+
+.dark .dp-project-filter-more:hover {
+  background: #6b7280;
+}
+
+.dark .dp-project-tag-active {
+  outline-color: #60a5fa;
+}
+
 .dark .dp-post-meta,
 .dark .dp-post-update,
 .dark .dp-post-nav,

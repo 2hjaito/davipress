@@ -1,16 +1,16 @@
 ---
-title: Markdown Syntax
-description: Hướng dẫn cú pháp Markdown được hỗ trợ trong Davipress.
+title: Cú pháp Markdown
+description: Bảng cú pháp Markdown được hỗ trợ trong Davipress.
 sidebar_position: 1
 ---
 
-# Markdown Syntax
+# Cú pháp Markdown
 
-Davipress hỗ trợ Markdown, MDX, GitHub Flavored Markdown, syntax highlighting, công thức toán, heading anchor, bảng, task list và GitHub-style alerts.
+Davipress hỗ trợ Markdown, MDX, Markdown kiểu GitHub, tô màu cú pháp, công thức toán, anchor cho heading, bảng, task list và alert.
 
 ## Heading và đoạn văn
 
-Dùng các ký tự `#` để tạo heading. Nên giữ thứ tự heading từ `h1` đến `h2`, `h3` để tài liệu dễ đọc và hỗ trợ accessibility.
+Dùng các ký tự `#` để tạo heading. Nên giữ thứ tự heading từ `h1` đến `h2`, `h3` để tài liệu dễ đọc và hỗ trợ khả năng truy cập.
 
 ```md
 # Tiêu đề trang
@@ -22,6 +22,8 @@ Dùng các ký tự `#` để tạo heading. Nên giữ thứ tự heading từ 
 Đây là một đoạn văn có **chữ đậm**, *chữ nghiêng* và `inline code`.
 ```
 
+Không nên có nhiều hơn một `# Tiêu đề trang` trong cùng một file.
+
 ## Link và hình ảnh
 
 ```md
@@ -32,9 +34,9 @@ Dùng các ký tự `#` để tạo heading. Nên giữ thứ tự heading từ 
 
 File hình ảnh cần nằm trong thư mục `public/`. Đường dẫn trong Markdown bắt đầu từ `/`, tương ứng với thư mục `public/`.
 
-Hình ảnh trong nội dung có thể click để mở chế độ zoom. Nhấn vào nền tối hoặc phím `Escape` để đóng ảnh.
+Hình ảnh trong nội dung có thể click để mở chế độ phóng to. Nhấn vào nền tối hoặc phím `Escape` để đóng ảnh.
 
-## GitHub-style alerts
+## Alert
 
 Alert dùng blockquote với marker ở dòng đầu tiên:
 
@@ -85,7 +87,7 @@ Davipress hỗ trợ `INFO`, `NOTE`, `TIP`, `IMPORTANT`, `WARNING` và `CAUTION`
 
 ## Code block
 
-Thêm tên ngôn ngữ sau dấu mở fence để bật syntax highlighting:
+Thêm tên ngôn ngữ sau dấu mở fence để bật tô màu cú pháp:
 
 ```ts
 export function greet(name: string) {
@@ -152,6 +154,25 @@ draft: false
 ```
 
 Các trường thường dùng là `title`, `description`, `date`, `updated`, `sidebar_position`, `sidebar_label`, `image`, `keywords`, `comments` và `draft`.
+
+## Layout trong frontmatter
+
+Một số trang có thể dùng layout riêng:
+
+```md
+---
+title: Bài viết
+description: Danh sách bài viết.
+layout: post-list
+---
+```
+
+Các layout thường dùng:
+
+- `post-list`: danh sách bài viết
+- `project-list`: danh sách project
+
+Nếu không khai báo `layout`, Davipress sẽ render như trang tài liệu thông thường.
 
 ## Quy tắc viết tốt
 

@@ -7,14 +7,16 @@ export const SITE_CONFIG = {
 }
 
 export const GISCUS = {
-  termPrefix: "davipress",
-  id: "comments",
-  repo: "2hjaito/davipress" as `${string}/${string}`,
-  repoId: "R_kgDOT_faxA",
-  category: "Announcements",
-  categoryId: "DIC_kwDOT_faxM4DEXW0",
+  termPrefix: 'davipress',
+  id: 'comments',
+  repo: '2hjaito/davipress' as `${string}/${string}`,
+  repoId: 'R_kgDOT_faxA',
+  category: 'Announcements',
+  categoryId: 'DIC_kwDOT_faxM4DEXW0',
   mapping: 'pathname' as const,
-  theme: "preferred_color_scheme"
+  theme: 'preferred_color_scheme',
+  lightTheme: 'light',
+  darkTheme: 'transparent_dark',
 }
 
 export const GITHUB = {

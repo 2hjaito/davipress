@@ -1,7 +1,7 @@
 export const navbarConfig = {
   items: [
     { label: 'Home', href: '/', icon: 'FaUser' },
-    // { label: 'Projects', href: '/project', icon: 'Projects' },
+    { label: 'Dự án', href: '/project', icon: 'Projects' },
     // { label: 'Certs', href: '/cert', icon: 'FaCertificate' },
     {
       label: 'Tutorials',

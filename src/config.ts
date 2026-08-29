@@ -11,6 +11,7 @@ export interface FooterConfig { copyright: string; attribution?: { label: string
 export interface DavipressConfig {
   title?: string; description?: string; url?: string; lang?: string
   repository?: { url?: string; editLink?: string }
+  github?: { username?: string; topic?: string }
   themeConfig?: { logo?: string; nav?: NavItem[]; sidebar?: 'auto' | Record<string, SidebarItem[]>; socialLinks?: Record<string, string>; footer?: string | FooterConfig; navbar?: { showThemeToggle?: boolean; showThemeSeparator?: boolean } }
   giscus?: {
     enabled: boolean
@@ -29,6 +30,7 @@ export interface DavipressConfig {
     lang?: string
   }
   seo?: { defaultImage?: string; twitterCard?: 'summary' | 'summary_large_image' }
+  [key: string]: unknown
 }
 
 export function defineConfig(config: DavipressConfig): DavipressConfig { return config }

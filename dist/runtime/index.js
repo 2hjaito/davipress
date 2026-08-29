@@ -1,9 +1,13 @@
 import { compile, discover } from '../core/content.js';
 import { DocsTheme } from './theme.js';
 export { loadPosts } from '../core/posts.js';
+export { loadProjects } from '../core/projects.js';
 export { CodeBlockControls } from './CodeBlockControls.js';
 export { ImageZoomClient } from './ImageZoomClient.js';
 export { NotFoundView } from './NotFoundView.js';
+export { ProjectsView } from './ProjectsView.js';
+export { LangBadge } from './LangBadge.js';
+export { ToolsSection } from './ToolsSection.js';
 export async function generateStaticParams() { return discover().map(({ route }) => ({ slug: route === '/' ? [] : route.slice(1).split('/') })); }
 export async function DocsPage({ slug, config }) {
     const route = slug?.length ? `/${slug.join('/')}` : '/';

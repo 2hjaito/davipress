@@ -5,7 +5,7 @@ title: Trang chủ
 :::davi:hero
 title: Namikaze Minato
 description: Hokage Đệ Tứ của Làng Lá – "Tia Chớp Vàng" Làng Lá (Yellow Flash of the Hidden Leaf)
-social: github | https://github.com/2hjaito | GitHub
+social: github | https://github.com/2hjaito/davipress | GitHub
 social: linkedin | https://www.linkedin.com/in/tranhuudang | LinkedIn
 social: youtube | https://www.youtube.com/@2hjaito | YouTube
 social: facebook | [suspicious link removed] | Facebook
@@ -74,12 +74,12 @@ org: Uzumaki Clan Seal Knowledge
 date: Oct 10, 1987
 
 title: Chứng chỉ Tiên Thuật Lôi Đình & Tiên Nhân Mô Thức (Sage Mode Master)
-img: /images/cert/myoboku.png
+img: /images/cert/myoboku.jpg
 org: Diệu Mộc Sơn (Mount Myōboku)
 date: Sep 15, 1985
 
 title: Bằng Sáng chế & Đăng ký Cấm thuật Cấp S (Rasengan Creation)
-img: /images/cert/konoha.png
+img: /images/cert/konoha.jpg
 org: Hội đồng Làng Lá (Konoha High Council)
 date: Jul 03, 1982
 :::

@@ -9,7 +9,7 @@
     "clean": "davipress clean"
   },
   "dependencies": {
-    "davipress": "^0.1.10",
+    "davipress": "^0.1.11",
     "next": "^16.0.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

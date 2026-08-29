@@ -52,6 +52,10 @@ export interface DavipressConfig {
         url?: string;
         editLink?: string;
     };
+    github?: {
+        username?: string;
+        topic?: string;
+    };
     themeConfig?: {
         logo?: string;
         nav?: NavItem[];
@@ -83,5 +87,6 @@ export interface DavipressConfig {
         defaultImage?: string;
         twitterCard?: 'summary' | 'summary_large_image';
     };
+    [key: string]: unknown;
 }
 export declare function defineConfig(config: DavipressConfig): DavipressConfig;
