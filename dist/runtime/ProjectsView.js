@@ -1,7 +1,7 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
-import { FaRegStar } from 'react-icons/fa';
+import { FaStarRegular as FaRegStar } from 'davi-icons/fa';
 import { LangBadge } from './LangBadge.js';
 import { ToolsSection } from './ToolsSection.js';
 import { Footer } from './Footer.js';

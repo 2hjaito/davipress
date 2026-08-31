@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { SidebarItem } from '../config.js'
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { IoMdClose } from 'react-icons/io'
-import { MdOutlineFormatListBulleted } from 'react-icons/md'
+import { GiHamburgerMenu } from 'davi-icons/gi'
+import { IoClose as IoMdClose } from 'davi-icons/io'
+import { MdFormatListBulleted as MdOutlineFormatListBulleted } from 'davi-icons/md'
 import { resolveNavIcon } from './NavBar.js'
 
 type Heading = { id: string; text: string; level: number }

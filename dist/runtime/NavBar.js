@@ -2,18 +2,16 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import * as FaIcons from 'react-icons/fa';
-import * as Fa6Icons from 'react-icons/fa6';
-import * as FiIcons from 'react-icons/fi';
-import * as GiIcons from 'react-icons/gi';
-import * as IoIcons from 'react-icons/io';
-import * as Io5Icons from 'react-icons/io5';
-import * as LuIcons from 'react-icons/lu';
-import * as MdIcons from 'react-icons/md';
-import * as RiIcons from 'react-icons/ri';
-import * as SiIcons from 'react-icons/si';
-import * as TbIcons from 'react-icons/tb';
-import * as TiIcons from 'react-icons/ti';
+import * as FaIcons from 'davi-icons/fa';
+import * as FiIcons from 'davi-icons/fi';
+import * as GiIcons from 'davi-icons/gi';
+import * as IoIcons from 'davi-icons/io';
+import * as LuIcons from 'davi-icons/lu';
+import * as MdIcons from 'davi-icons/md';
+import * as RiIcons from 'davi-icons/ri';
+import * as SiIcons from 'davi-icons/si';
+import * as TbIcons from 'davi-icons/tb';
+import * as TiIcons from 'davi-icons/ti';
 import { Projects } from './Projects.js';
 const defaultItems = [
     { text: 'Home', link: '/', icon: 'FaUser' },
@@ -25,11 +23,9 @@ const defaultItems = [
 ];
 const iconMap = {
     ...FaIcons,
-    ...Fa6Icons,
     ...FiIcons,
     ...GiIcons,
     ...IoIcons,
-    ...Io5Icons,
     ...LuIcons,
     ...MdIcons,
     ...RiIcons,

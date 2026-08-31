@@ -1,4 +1,4 @@
-import { FaCode, FaRss } from 'react-icons/fa'
+import { FaCode, FaRss } from 'davi-icons/fa'
 import type { FooterConfig } from '../config.js'
 
 const footerIconMap = {

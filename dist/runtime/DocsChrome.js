@@ -2,9 +2,9 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { IoMdClose } from 'react-icons/io';
-import { MdOutlineFormatListBulleted } from 'react-icons/md';
+import { GiHamburgerMenu } from 'davi-icons/gi';
+import { IoClose as IoMdClose } from 'davi-icons/io';
+import { MdFormatListBulleted as MdOutlineFormatListBulleted } from 'davi-icons/md';
 import { resolveNavIcon } from './NavBar.js';
 function childItems(item) { return (item.items ?? item.children ?? []); }
 function normalizeLink(link) {

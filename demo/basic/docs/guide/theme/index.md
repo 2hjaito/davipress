@@ -59,7 +59,7 @@ nav: [
 ]
 ```
 
-Icon dùng tên export từ `react-icons`. Ví dụ `FaBook`, `FaGithub`, `SiNextdotjs`, `DiReact`.
+Icon dùng tên export từ [`davi-icons`](https://www.npmjs.com/package/davi-icons). Ví dụ `FaBook`, `FaGithubBrands`, `SiNextdotjs`, `DiReactOriginal`. Tra cứu và xem trước icon tại webview: **https://davi-icons.vercel.app/icons**.
 
 ## Sidebar
 

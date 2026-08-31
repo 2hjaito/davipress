@@ -1,5 +1,6 @@
-import type { IconType } from 'react-icons'
-import { FaJava, FaDocker } from 'react-icons/fa'
+import type { ComponentType } from 'react'
+import type { DaviIconProps } from 'davi-icons'
+import { FaJavaBrands as FaJava, FaDockerBrands as FaDocker } from 'davi-icons/fa'
 import {
   SiJavascript,
   SiTypescript,
@@ -20,12 +21,12 @@ import {
   SiVuedotjs,
   SiNextdotjs,
   SiTailwindcss
-} from 'react-icons/si'
-import { TbBrandMysql } from 'react-icons/tb'
-import { DiMsqlServer } from 'react-icons/di'
+} from 'davi-icons/si'
+import { TbBrandMysql } from 'davi-icons/tb'
+import { DiMicrosoftsqlserverPlain as DiMsqlServer } from 'davi-icons/di'
 
 type IconEntry = {
-  icon: IconType
+  icon: ComponentType<DaviIconProps>
   color?: string
 }
 

@@ -4,10 +4,9 @@ import { useState } from 'react';
 import { Footer } from './Footer.js';
 import { AvatarStack } from './AvatarStack.js';
 import { GithubContributions } from './GithubContributions.js';
-import { FiGithub, FiYoutube } from 'react-icons/fi';
-import { LuLinkedin, LuFacebook } from 'react-icons/lu';
-import { SiLeetcode } from 'react-icons/si';
-import { TbBrandHackerrank, TbBrandTiktok } from 'react-icons/tb';
+import { FiGithub, FiYoutube } from 'davi-icons/fi';
+import { TbBrandLinkedin as LuLinkedin, TbBrandFacebook as LuFacebook, TbBrandHackerrank, TbBrandTiktok } from 'davi-icons/tb';
+import { SiLeetcode } from 'davi-icons/si';
 const socialIcons = { github: FiGithub, leetcode: SiLeetcode, hackerrank: TbBrandHackerrank, linkedin: LuLinkedin, youtube: FiYoutube, facebook: LuFacebook, tiktok: TbBrandTiktok };
 function ExpandItem({ item }) {
     const [open, setOpen] = useState(false);

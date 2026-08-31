@@ -1,8 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { autoSidebar, loadPages } from '../core/content.js';
-import { FaUserEdit } from 'react-icons/fa';
-import { MdDateRange, MdHistory, MdRebaseEdit } from 'react-icons/md';
-import { IoTimerOutline } from 'react-icons/io5';
+import { FaUserPen as FaUserEdit } from 'davi-icons/fa';
+import { MdCalendarRange as MdDateRange, MdHistory, MdPencilOutline as MdRebaseEdit } from 'davi-icons/md';
+import { IoTimerOutline } from 'davi-icons/io';
 import { NavBar } from './NavBar.js';
 import { loadHome } from '../core/home.js';
 import { HomeView } from './HomeView.js';

@@ -4,6 +4,12 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.12] - 2026-08-31
+
+### Changed
+
+- **Breaking:** replace `react-icons` with `davi-icons` across all runtime components (navbar, sidebar, footer, tech badges, tools/projects sections). Icon name strings in theme config (`icon: 'FaBook'`, ...) must now match `davi-icons` export names, which differ from `react-icons` for some packs (notably `md`, `io`, and Font Awesome regular/brand variants).
+
 ## [0.1.10] - 2026-08-28
 
 ### Added

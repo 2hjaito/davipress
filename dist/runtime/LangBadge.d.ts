@@ -1,6 +1,7 @@
-import type { IconType } from 'react-icons';
+import type { ComponentType } from 'react';
+import type { DaviIconProps } from 'davi-icons';
 type IconEntry = {
-    icon: IconType;
+    icon: ComponentType<DaviIconProps>;
     color?: string;
 };
 export declare const techIconMap: Record<string, IconEntry>;

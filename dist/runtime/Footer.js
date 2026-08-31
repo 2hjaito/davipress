@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { FaCode, FaRss } from 'react-icons/fa';
+import { FaCode, FaRss } from 'davi-icons/fa';
 const footerIconMap = {
     source: FaCode,
     rss: FaRss,

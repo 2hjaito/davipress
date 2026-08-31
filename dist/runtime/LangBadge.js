@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { FaJava, FaDocker } from 'react-icons/fa';
-import { SiJavascript, SiTypescript, SiCplusplus, SiDart, SiCmake, SiSwift, SiKotlin, SiSass, SiPython, SiSharp, SiGo, SiRust, SiPhp, SiCss, SiHtml5, SiReact, SiVuedotjs, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
-import { TbBrandMysql } from 'react-icons/tb';
-import { DiMsqlServer } from 'react-icons/di';
+import { FaJavaBrands as FaJava, FaDockerBrands as FaDocker } from 'davi-icons/fa';
+import { SiJavascript, SiTypescript, SiCplusplus, SiDart, SiCmake, SiSwift, SiKotlin, SiSass, SiPython, SiSharp, SiGo, SiRust, SiPhp, SiCss, SiHtml5, SiReact, SiVuedotjs, SiNextdotjs, SiTailwindcss } from 'davi-icons/si';
+import { TbBrandMysql } from 'davi-icons/tb';
+import { DiMicrosoftsqlserverPlain as DiMsqlServer } from 'davi-icons/di';
 export const techIconMap = {
     mysql: { icon: TbBrandMysql, color: '#016089' },
     mssql: { icon: DiMsqlServer, color: '#E2302A' },

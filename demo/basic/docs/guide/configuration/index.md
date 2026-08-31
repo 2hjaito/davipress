@@ -56,7 +56,9 @@ themeConfig: {
 }
 ```
 
-`icon` nhận trực tiếp tên icon từ `react-icons`, ví dụ `FaBook`, `FaGithub`, `SiNextdotjs`, `DiNodejsSmall`. Chỉ cần tên đó tồn tại trong package `react-icons` đang cài.
+`icon` nhận trực tiếp tên icon từ [`davi-icons`](https://www.npmjs.com/package/davi-icons), ví dụ `FaBook`, `FaGithubBrands`, `SiNextdotjs`, `DiNodejsPlain`. Chỉ cần tên đó tồn tại trong package `davi-icons` đang cài.
+
+> **davi-icons là gì?** Một thư viện icon framework-agnostic, gộp 43.000+ icon từ nhiều bộ nguồn (Font Awesome, Simple Icons, Ionicons, Tabler, Lucide, Material Design...) dưới một import path duy nhất. Xem trước toàn bộ icon và copy tên export tại webview: **https://davi-icons.vercel.app/icons** — gõ từ khoá để tìm, bấm vào icon để lấy đúng tên component (vd `FaBook`) dán vào `icon: '...'`.
 
 Navbar nhiều cấp dùng `items`:
 

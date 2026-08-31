@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "davipress dev",
-    "build": "davipress build",
+    "build": "npm install davipress@latest && davipress build",
     "start": "davipress start",
-    "clean": "davipress clean"
+    "clean": "davipress clean",
+    "install:davipress": "npm install davipress@latest"
   },
   "dependencies": {
     "davipress": "^0.1.11",

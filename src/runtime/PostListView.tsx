@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import type { Page } from '../core/content.js'
-import { FaUserEdit } from 'react-icons/fa'
-import { MdDateRange } from 'react-icons/md'
+import { FaUserPen as FaUserEdit } from 'davi-icons/fa'
+import { MdCalendarRange as MdDateRange } from 'davi-icons/md'
 import Link from 'next/link'
 
 export function PostListView({ posts }: { posts: Page[] }) {
