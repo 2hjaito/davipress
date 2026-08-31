@@ -40,7 +40,10 @@ export async function compile(source, root = path.resolve(process.cwd(), 'docs')
     const first = parsed.content.match(/^#\s+(.+)$/m)?.[1]?.trim();
     const content = parsed.data.title ? parsed.content : parsed.content.replace(/^#\s+.+\n+(?:\n)*/m, '');
     const html = await markdownToHtml(content);
-    const headings = [...html.matchAll(/<h([1-6]) id="([^"]+)">(?:<a[^>]*>)?([^<]+)(?:<\/a>)?<\/h\1>/g)].map(match => ({ level: Number(match[1]), id: match[2], text: match[3] }));
+    const headings = [...html.matchAll(/<h([1-6])\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)].map(match => {
+        const text = match[3].replace(/<[^>]+>/g, '').trim();
+        return { level: Number(match[1]), id: match[2], text };
+    });
     return { route: resolveRoute(root, source), source, html, text: content.replace(/[#_*`>\-]/g, ''), frontmatter: { ...parsed.data, title: parsed.data.title ?? first }, headings };
 }
 export async function loadPages(root = path.resolve(process.cwd(), 'docs')) { return Promise.all(discover(root).map(item => compile(item.source, root))); }

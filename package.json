@@ -1,6 +1,6 @@
 {
   "name": "davipress",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "A Markdown documentation framework built on Next.js App Router",
   "license": "MIT",
   "type": "module",
@@ -37,7 +37,7 @@
     "clean": "davipress clean"
   },
   "dependencies": {
-    "davi-icons": "^0.1.4",
+    "davi-icons": "^0.2.1",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "katex": "^0.16.22",

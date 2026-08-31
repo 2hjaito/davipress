@@ -16,11 +16,11 @@ The default theme is designed for technical documentation and portfolio-style ho
 
 ### Light mode
 
-![Davipress home in light mode](demo/basic/public/home-light.png)
+![Davipress home in light mode](/public/home-light.png)
 
 ### Dark mode
 
-![Davipress home in dark mode](demo/basic/public/home-dark.png)
+![Davipress home in dark mode](/public/home-dark.png)
 
 The complete reference site is available in [`demo/basic`](demo/basic).
 

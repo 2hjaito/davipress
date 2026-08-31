@@ -65,7 +65,7 @@ export const navbarConfig = {
     {
       label: 'Guide',
       href: '/guide',
-      icon: 'GiRuleBook',
+      icon: 'DvAnkhWingsTome',
       items: [
         {
           text: "markdown",

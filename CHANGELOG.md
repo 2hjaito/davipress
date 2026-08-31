@@ -4,6 +4,22 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.13] - 2026-08-31
+
+### Added
+
+- Add automatic smooth hash-anchor scrolling (`useHashScroll`) on client-side route navigation and page load.
+- Add `scroll-padding-top` on root `html` and `scroll-margin-top` on heading tags (`h1-h6`) so anchor targets avoid navbar collision.
+
+### Fixed
+
+- Improve heading text and ID extraction in Markdown compiler when headings contain child elements.
+- Normalize `davi-icons` sizing across post metadata, post update links, repo star counts, and footer links (`1em` base).
+
+### Changed
+
+- Upgrade `davi-icons` dependency to `^0.2.1`.
+
 ## [0.1.12] - 2026-08-31
 
 ### Changed

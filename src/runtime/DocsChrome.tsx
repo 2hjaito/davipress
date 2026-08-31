@@ -3,13 +3,35 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { SidebarItem } from '../config.js'
-import { GiHamburgerMenu } from 'davi-icons/gi'
 import { IoClose as IoMdClose } from 'davi-icons/io'
 import { MdFormatListBulleted as MdOutlineFormatListBulleted } from 'davi-icons/md'
 import { resolveNavIcon } from './NavBar.js'
+import { TbMenu2FilledFilled } from 'davi-icons/tb'
 
 type Heading = { id: string; text: string; level: number }
 type SidebarNode = SidebarItem & { children?: readonly SidebarNode[]; collapsible?: boolean; icon?: string }
+
+function useHashScroll(dependency?: unknown) {
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash
+      if (!hash) return
+      const id = decodeURIComponent(hash.replace(/^#/, ''))
+      const target = document.getElementById(id)
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+
+    scrollToHash()
+    const timer = setTimeout(scrollToHash, 100)
+    window.addEventListener('hashchange', scrollToHash)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('hashchange', scrollToHash)
+    }
+  }, [dependency])
+}
 
 function childItems(item: SidebarNode) { return (item.items ?? item.children ?? []) as readonly SidebarNode[] }
 
@@ -148,6 +170,8 @@ export function PostChrome({ children, footer, headings, title, hasComments, rou
   const [progress, setProgress] = useState(0)
   const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4)
 
+  useHashScroll(route)
+
   useEffect(() => {
     const updateProgress = () => {
       const doc = document.documentElement
@@ -186,6 +210,8 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
   const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4)
   const SectionIcon = resolveNavIcon(sectionIcon) ?? resolveNavIcon('GiSpellBook')
 
+  useHashScroll(activeRoute)
+
   useEffect(() => {
     const updateProgress = () => {
       const doc = document.documentElement
@@ -220,7 +246,7 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
       <div className="dp-mobile-sidebar-inner"><SidebarTree items={sidebar as readonly SidebarNode[]} activeRoute={activeRoute} /></div>
     </div>}
     <main id="tutorial-main-content" className={reveal ? 'dp-tutorial-main' : undefined}>
-      {!mobileOpen && <button type="button" className="dp-mobile-sidebar-open" onClick={() => setMobileOpen(true)}><span><GiHamburgerMenu aria-hidden="true" /> {SectionIcon && <SectionIcon />} {sectionLabel}</span></button>}
+      {!mobileOpen && <button type="button" className="dp-mobile-sidebar-open" onClick={() => setMobileOpen(true)}><span><TbMenu2FilledFilled aria-hidden="true" /> {SectionIcon && <SectionIcon />} {sectionLabel}</span></button>}
       <div key={reveal ? activeRoute : undefined} className={reveal ? 'dp-page-reveal' : undefined}>
         {children}
         {footer}

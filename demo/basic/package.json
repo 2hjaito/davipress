@@ -10,10 +10,14 @@
     "install:davipress": "npm install davipress@latest"
   },
   "dependencies": {
-    "davipress": "^0.1.12",
+    "davi-icons": "^0.2.1",
+    "davipress": "^0.1.13",
     "next": "^16.0.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
+  },
+  "overrides": {
+    "davi-icons": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "^24",
