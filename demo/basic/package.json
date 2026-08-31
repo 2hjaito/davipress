@@ -4,13 +4,13 @@
   "type": "module",
   "scripts": {
     "dev": "davipress dev",
-    "build": "npm install davipress@latest && davipress build",
+    "build": "davipress build",
     "start": "davipress start",
     "clean": "davipress clean",
     "install:davipress": "npm install davipress@latest"
   },
   "dependencies": {
-    "davipress": "^0.1.11",
+    "davipress": "^0.1.12",
     "next": "^16.0.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
