@@ -125,7 +125,7 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
   const pages = await loadPages()
   if (page.route === '/') {
     const home = await loadHome()
-    return <div className="davipress-shell"><HomeView blocks={home.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
+    return <div className="davipress-shell"><HomeView blocks={home.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
   }
   const layout = String(page.frontmatter.layout ?? '').toLowerCase()
   const isPostList = layout === 'post-list'
@@ -134,23 +134,23 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
   const isPost = posts.some(post => post.source === page.source)
 
   if (isPostList) {
-    return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
+    return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
   }
 
   if (isProjectList) {
     const projectData = await loadProjects(page, config)
-    return <div className="davipress-shell"><ProjectsView blocks={projectData.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
+    return <div className="davipress-shell"><ProjectsView blocks={projectData.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
   }
 
   if (isPost) {
-    return <div className="davipress-shell"><PostView page={page} pages={posts} config={config} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
+    return <div className="davipress-shell"><PostView page={page} pages={posts} config={config} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
   }
 
   const sectionNav = [...nav].sort((a, b) => b.link.length - a.link.length).find(item => matchesNavRoute(page.route, item.link))
   const sidebar = sectionNav?.items ?? sidebarForPage(config, pages, page.route)
 
   if (sidebar.length === 0) {
-    return <div className="davipress-shell"><SimplePage page={page} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} /></div>
+    return <div className="davipress-shell"><SimplePage page={page} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
   }
 
   const ordered = flattenSidebarLinks(sidebar).map(link => pages.find(item => normalizeRoute(item.route) === link)).filter((item): item is Page => Boolean(item))
@@ -160,6 +160,6 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
     <DocsChrome sidebar={sidebar} headings={page.headings} activeRoute={page.route} title={String(page.frontmatter.title ?? page.headings[0]?.text ?? '')} hasComments={hasComments} sectionLabel={sectionNav?.text} sectionIcon={sectionNav?.icon} footer={null} reveal>
       <DocView page={page} config={config} previous={index > 0 ? ordered[index - 1] : undefined} next={index >= 0 ? ordered[index + 1] : undefined} />
     </DocsChrome>
-    <NavBar items={nav} navbar={config.themeConfig?.navbar} />
+    <NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} />
   </div>
 }

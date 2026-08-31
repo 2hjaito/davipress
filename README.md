@@ -1,5 +1,9 @@
 # Davipress
 
+<p align="center">
+  <img src="davipress-logo.svg" width="96" height="125" alt="Davipress logo" />
+</p>
+
 [![npm version](https://img.shields.io/npm/v/davipress.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/davipress)
 [![npm downloads](https://img.shields.io/npm/dm/davipress.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/davipress)
 [![npm package](https://img.shields.io/badge/npm-davipress-CB3837?style=flat-square&logo=npm)](https://www.npmjs.com/package/davipress)

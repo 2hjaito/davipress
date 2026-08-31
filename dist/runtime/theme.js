@@ -80,7 +80,7 @@ export async function DocsTheme({ page, config }) {
     const pages = await loadPages();
     if (page.route === '/') {
         const home = await loadHome();
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(HomeView, { blocks: home.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(HomeView, { blocks: home.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
     }
     const layout = String(page.frontmatter.layout ?? '').toLowerCase();
     const isPostList = layout === 'post-list';
@@ -88,22 +88,22 @@ export async function DocsTheme({ page, config }) {
     const posts = await loadPosts();
     const isPost = posts.some(post => post.source === page.source);
     if (isPostList) {
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostListView, { posts: posts }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostListView, { posts: posts }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
     }
     if (isProjectList) {
         const projectData = await loadProjects(page, config);
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(ProjectsView, { blocks: projectData.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(ProjectsView, { blocks: projectData.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
     }
     if (isPost) {
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostView, { page: page, pages: posts, config: config }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostView, { page: page, pages: posts, config: config }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
     }
     const sectionNav = [...nav].sort((a, b) => b.link.length - a.link.length).find(item => matchesNavRoute(page.route, item.link));
     const sidebar = sectionNav?.items ?? sidebarForPage(config, pages, page.route);
     if (sidebar.length === 0) {
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(SimplePage, { page: page, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(SimplePage, { page: page, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
     }
     const ordered = flattenSidebarLinks(sidebar).map(link => pages.find(item => normalizeRoute(item.route) === link)).filter((item) => Boolean(item));
     const index = ordered.findIndex(item => item.route === page.route);
     const hasComments = Boolean(config.giscus?.enabled && page.frontmatter.comments !== false);
-    return _jsxs("div", { className: "davipress-shell", children: [_jsx(DocsChrome, { sidebar: sidebar, headings: page.headings, activeRoute: page.route, title: String(page.frontmatter.title ?? page.headings[0]?.text ?? ''), hasComments: hasComments, sectionLabel: sectionNav?.text, sectionIcon: sectionNav?.icon, footer: null, reveal: true, children: _jsx(DocView, { page: page, config: config, previous: index > 0 ? ordered[index - 1] : undefined, next: index >= 0 ? ordered[index + 1] : undefined }) }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar })] });
+    return _jsxs("div", { className: "davipress-shell", children: [_jsx(DocsChrome, { sidebar: sidebar, headings: page.headings, activeRoute: page.route, title: String(page.frontmatter.title ?? page.headings[0]?.text ?? ''), hasComments: hasComments, sectionLabel: sectionNav?.text, sectionIcon: sectionNav?.icon, footer: null, reveal: true, children: _jsx(DocView, { page: page, config: config, previous: index > 0 ? ordered[index - 1] : undefined, next: index >= 0 ? ordered[index + 1] : undefined }) }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
 }

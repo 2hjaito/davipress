@@ -90,6 +90,8 @@ function generate() {
   /images/profile/1.svg
   /images/profile/2.svg
   /images/profile/3.svg
+  /images/profile/4.svg
+  /images/profile/5.svg
   :::
 
   Welcome to your new Davipress site. Replace this paragraph with a short introduction.
@@ -118,6 +120,8 @@ function generate() {
     writeIfMissing(path.join(cwd, 'public/images/profile/1.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#e2e6ee"/><circle cx="60" cy="44" r="25" fill="#377bb5"/><path d="M20 115c4-30 20-45 40-45s36 15 40 45" fill="#377bb5"/></svg>\n');
     writeIfMissing(path.join(cwd, 'public/images/profile/2.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#dbeafe"/><circle cx="60" cy="44" r="25" fill="#2563eb"/><path d="M20 115c4-30 20-45 40-45s36 15 40 45" fill="#2563eb"/></svg>\n');
     writeIfMissing(path.join(cwd, 'public/images/profile/3.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#dcfce7"/><circle cx="60" cy="44" r="25" fill="#16a34a"/><path d="M20 115c4-30 20-45 40-45s36 15 40 45" fill="#16a34a"/></svg>\n');
+    writeIfMissing(path.join(cwd, 'public/images/profile/4.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#fef3c7"/><circle cx="60" cy="44" r="25" fill="#d97706"/><path d="M20 115c4-30 20-45 40-45s36 15 40 45" fill="#d97706"/></svg>\n');
+    writeIfMissing(path.join(cwd, 'public/images/profile/5.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" fill="#fce7f3"/><circle cx="60" cy="44" r="25" fill="#db2777"/><path d="M20 115c4-30 20-45 40-45s36 15 40 45" fill="#db2777"/></svg>\n');
     writeIfMissing(path.join(cwd, 'public/images/cert/certification.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" fill="#e2e6ee"/><path d="M70 20l12 25 28 4-20 20 5 28-25-13-25 13 5-28-20-20 28-4z" fill="#377bb5"/></svg>\n');
     writeIfMissing(path.join(cwd, '.gitignore'), 'node_modules\n.next\n.davipress\n');
     const pkg = JSON.parse(fs.readFileSync(packageFile, 'utf8'));

@@ -23,6 +23,19 @@ export declare function docsMetadata({ slug, config }: {
         description: string | undefined;
         type: string;
     };
+    icons: {
+        icon: ({
+            url: string;
+            sizes?: undefined;
+            type?: undefined;
+        } | {
+            url: string;
+            sizes: string;
+            type: string;
+        })[];
+        apple: string;
+    };
+    manifest: string;
     metadataBase?: URL | undefined;
     alternates?: {
         canonical: string;

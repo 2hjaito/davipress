@@ -6,11 +6,12 @@ export type NavIcon = ComponentType<{
     'aria-hidden'?: boolean;
 }>;
 export declare function resolveNavIcon(icon?: string): NavIcon | undefined;
-export declare function NavBar({ items, navbar }: {
+export declare function NavBar({ items, navbar, logo }: {
     items?: readonly NavBarItem[];
     navbar?: {
         showThemeToggle?: boolean;
         showThemeSeparator?: boolean;
     };
+    logo?: string;
 }): import("react").JSX.Element;
 export {};

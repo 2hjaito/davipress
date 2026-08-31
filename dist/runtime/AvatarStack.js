@@ -1,7 +1,7 @@
 'use client';
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useRef, useState } from 'react';
-const defaultAvatars = ['/images/profile/1.png', '/images/profile/2.png', '/images/profile/3.png', '/images/profile/4.png', '/images/profile/5.png'];
+const defaultAvatars = ['/images/profile/1.svg', '/images/profile/2.svg', '/images/profile/3.svg', '/images/profile/4.svg', '/images/profile/5.svg'];
 const dragThreshold = 40;
 export function AvatarStack({ avatars = defaultAvatars }) {
     const [order, setOrder] = useState(avatars);

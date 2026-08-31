@@ -14,6 +14,8 @@ social: linkedin | https://www.linkedin.com/in/your-name | LinkedIn
 /images/profile/1.svg
 /images/profile/2.svg
 /images/profile/3.svg
+/images/profile/4.svg
+/images/profile/5.svg
 :::
 
 Welcome to your new Davipress site. Replace this paragraph with a short introduction.
