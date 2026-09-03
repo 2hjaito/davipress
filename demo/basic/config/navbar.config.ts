@@ -1,6 +1,7 @@
 export const navbarConfig = {
   items: [
     { label: 'Home', href: '/', icon: 'FaUser' },
+    // { label: 'Dự án', href: '/project', icon: 'GiFrogPrince' },
     { label: 'Dự án', href: '/project', icon: 'DvTerminalBlink' },
     // { label: 'Certs', href: '/cert', icon: 'FaCertificate' },
     {
@@ -75,6 +76,10 @@ export const navbarConfig = {
               text: "Markdown Syntax",
               link: "/guide/markdown/syntax",
             },
+            {
+              text: "Markdown nâng cao",
+              link: "/guide/markdown",
+            },
           ]
         },
         {
@@ -88,6 +93,18 @@ export const navbarConfig = {
             {
               text: "Tạo trang mới",
               link: "/guide/davipress/creating-pages",
+            },
+            {
+              text: "Cấu hình Davipress",
+              link: "/guide/configuration",
+            },
+            {
+              text: "Theme và giao diện",
+              link: "/guide/theme",
+            },
+            {
+              text: "Build và deploy",
+              link: "/guide/deployment",
             },
           ]
         }

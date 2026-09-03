@@ -1,4 +1,4 @@
-import { SITE_CONFIG } from '../config';
+import { SITE_CONFIG } from './config';
 
 export const footerConfig = {
   copyright: '© Davis 2025',
