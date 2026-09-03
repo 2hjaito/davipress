@@ -170,7 +170,7 @@ npm install davipress@0.1.3
 Clone the repository and install its dependencies:
 
 ```bash
-git clone https://github.com/danqth/davipress.git
+git clone https://github.com/2hjaito/davipress.git
 cd davipress
 npm install
 ```

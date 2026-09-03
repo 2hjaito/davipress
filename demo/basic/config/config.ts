@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
 export const GISCUS = {
   termPrefix: "davipress",
   id: "comments",
-  repo: "danqth/davipress" as `${string}/${string}`,
+  repo: "2hjaito/davipress" as `${string}/${string}`,
   repoId: "R_kgDOUGl8kA",
   category: "General", // đổi theo tên category bạn tạo trong Giscus
   categoryId: "", // điền ID category thực tế từ Giscus, ví dụ DIC_xxx...
