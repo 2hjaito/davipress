@@ -19,7 +19,6 @@ export default defineConfig({
   },
   themeConfig: {
     nav: navbarConfig.items.map(item => ({ text: item.label, link: item.href, icon: item.icon, items: 'items' in item ? item.items : undefined })),
-    logo: '/apple-touch-icon.png',
     navbar: {
       showThemeToggle: true,
       showThemeSeparator: true,

@@ -5,11 +5,29 @@ export function ImageZoomClient() {
     useEffect(() => {
         let activeClone = null;
         let activeOverlay = null;
+        let isClosing = false;
         const closeZoom = () => {
-            activeClone?.remove();
-            activeOverlay?.remove();
-            activeClone = null;
-            activeOverlay = null;
+            const clone = activeClone;
+            const overlay = activeOverlay;
+            if (!clone || !overlay || isClosing)
+                return;
+            isClosing = true;
+            clone.style.top = clone.dataset.originTop ?? clone.style.top;
+            clone.style.left = clone.dataset.originLeft ?? clone.style.left;
+            clone.style.width = clone.dataset.originWidth ?? clone.style.width;
+            clone.style.height = clone.dataset.originHeight ?? clone.style.height;
+            overlay.classList.add('dp-image-zoom-overlay-closing');
+            const finishClose = () => {
+                clone.remove();
+                overlay.remove();
+                if (activeClone === clone)
+                    activeClone = null;
+                if (activeOverlay === overlay)
+                    activeOverlay = null;
+                isClosing = false;
+            };
+            clone.addEventListener('transitionend', finishClose, { once: true });
+            window.setTimeout(finishClose, 350);
         };
         const openZoom = (image) => {
             closeZoom();
@@ -35,6 +53,10 @@ export function ImageZoomClient() {
             clone.style.left = `${bounds.left}px`;
             clone.style.width = `${bounds.width}px`;
             clone.style.height = `${bounds.height}px`;
+            clone.dataset.originTop = `${bounds.top}px`;
+            clone.dataset.originLeft = `${bounds.left}px`;
+            clone.dataset.originWidth = `${bounds.width}px`;
+            clone.dataset.originHeight = `${bounds.height}px`;
             clone.dataset.targetTop = `${(window.innerHeight - targetHeight) / 2}px`;
             clone.dataset.targetLeft = `${(window.innerWidth - targetWidth) / 2}px`;
             clone.dataset.targetWidth = `${targetWidth}px`;

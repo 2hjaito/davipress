@@ -1,3 +1,5 @@
 node_modules
 .next
 .davipress
+.DS_Store
+**/.DS_Store

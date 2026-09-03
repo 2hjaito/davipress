@@ -2,3 +2,15 @@ node_modules
 .next
 .davipress
 demo/local
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Copilot instructions
+.github/copilot-instructions.md
+
+# Editor
+.vscode/
+.idea/
+*.log

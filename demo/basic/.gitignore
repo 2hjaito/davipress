@@ -3,3 +3,5 @@ node_modules
 .davipress
 .env
 .env*.local
+.DS_Store
+**/.DS_Store
