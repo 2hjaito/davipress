@@ -103,6 +103,10 @@ export const navbarConfig = {
               link: "/guide/theme",
             },
             {
+              text: "Tích hợp Live2D (next-live2d)",
+              link: "/guide/live2d",
+            },
+            {
               text: "Build và deploy",
               link: "/guide/deployment",
             },

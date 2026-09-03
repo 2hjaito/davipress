@@ -348,6 +348,9 @@ Cấu hình chế độ sáng/tối, navbar, sidebar, bố cục responsive, ả
 ### [Build và deploy](./deployment/)
 Chạy máy chủ phát triển, build bản production, deploy lên Vercel và kiểm tra lỗi thường gặp.
 
+### [Tích hợp Live2D (next-live2d)](./live2d/)
+Gắn mascot Live2D ngẫu nhiên lên site bằng thư viện next-live2d, kèm link tài liệu để tìm hiểu sâu hơn.
+
 ## Cấu trúc ví dụ
 
 ```text
