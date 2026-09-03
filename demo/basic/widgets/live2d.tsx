@@ -1,10 +1,15 @@
 'use client'
 import { useState } from 'react'
 import { Live2DWidget } from 'next-live2d'
+import { getPluginOptions } from 'davipress/runtime/plugins'
+import config from '../davipress.config'
 
-const WIDGET_WIDTH = 200
-const WIDGET_HEIGHT = 300
-const MODEL_POOL = ['rem_2', 'xisitina', 'HK416-1-normal', 'HK416-2-destroy', 'Kar98k-normal', 'kp31']
+type Live2DOptions = { models?: string[]; width?: number; height?: number }
+
+const options = getPluginOptions(config, 'live2d') as Live2DOptions
+const MODEL_POOL = options.models?.length ? options.models : ['histoire']
+const WIDGET_WIDTH = options.width ?? 200
+const WIDGET_HEIGHT = options.height ?? 300
 
 function pickRandomModel() {
   return MODEL_POOL[Math.floor(Math.random() * MODEL_POOL.length)]!

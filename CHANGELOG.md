@@ -4,6 +4,14 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-09-03
+
+### Added
+
+- Add a `widgets/` (or `src/widgets/`) folder convention: any `.tsx` file placed there is auto-imported and rendered in the site layout on every `davipress dev`/`build`/`start`, so custom UI (chat widgets, mascots, banners, etc.) survives regeneration of `.davipress/app/layout.tsx` without touching the `davipress` package itself.
+- Add an optional `plugins` field to `davipress.config.ts` (`plugins: [[name, options], ...]`) plus a `getPluginOptions(config, name)` helper exported from `davipress/runtime/plugins`, letting `widgets/` components read their own configuration by name instead of hardcoding values in the component file.
+- Add `davipress/runtime/plugins` as a separate, Node-free export subpath so client components (`'use client'`) can read plugin options without accidentally bundling server-only code (`node:fs`) into the browser chunk.
+
 ## [0.1.13] - 2026-08-31
 
 ### Added

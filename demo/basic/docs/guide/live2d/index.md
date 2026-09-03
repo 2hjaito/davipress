@@ -1,6 +1,6 @@
 ---
 title: Tích hợp Live2D (next-live2d)
-description: Gắn mascot Live2D ngẫu nhiên lên site Davipress bằng thư viện next-live2d.
+description: Gắn mascot Live2D ngẫu nhiên lên site Davipress bằng thư viện next-live2d và cơ chế widgets/ + plugins của Davipress.
 sidebar_position: 7
 ---
 
@@ -8,7 +8,12 @@ sidebar_position: 7
 
 [next-live2d](https://next-live2d.vercel.app/docs) là thư viện React/Next.js giúp nhúng mascot Live2D (kiểu widget hay thấy ở các blog Nhật) vào website bằng một component duy nhất, chạy cách ly trong `iframe` nên không đụng chạm tới DOM của trang.
 
-Đây không phải tính năng lõi của Davipress — bạn có thể dùng thư viện này (hoặc bất kỳ thư viện React nào khác) trong site của mình theo cách dưới đây. Ai muốn tìm hiểu sâu hơn về props, danh sách model dựng sẵn hoặc cách tự host model riêng thì xem trực tiếp [tài liệu next-live2d](https://next-live2d.vercel.app/docs).
+Đây không phải tính năng lõi của Davipress — **Davipress không cài, không biết và không phụ thuộc vào `next-live2d`**. Site của bạn tự cài thư viện này như một dependency bình thường; Davipress chỉ cung cấp 2 cơ chế chung (không gắn cứng cho Live2D hay bất kỳ thư viện nào) để bạn gắn component tuỳ chỉnh vào layout một cách bền vững qua các lần build:
+
+1. **Thư mục `widgets/`**: mọi file `.tsx` đặt trong `widgets/` (hoặc `src/widgets/`) ở gốc site sẽ được Davipress tự động import và render vào `<body>` của layout, ở **mọi lần chạy** `davipress dev`/`build`/`start` — không cần sửa tay `.davipress/app/layout.tsx` (file này vốn bị sinh lại/ghi đè mỗi lần chạy).
+2. **`plugins` trong `davipress.config.ts`**: một mảng `[tên, options]` thuần dữ liệu để bạn khai báo cấu hình cho từng widget mà không cần hardcode trong file component. Component tự đọc options của mình bằng `getPluginOptions(config, tên)` (import từ `davipress/runtime/plugins`).
+
+Ai muốn tìm hiểu sâu hơn về props của `Live2DWidget`, danh sách model dựng sẵn hoặc cách tự host model riêng thì xem trực tiếp [tài liệu next-live2d](https://next-live2d.vercel.app/docs).
 
 ## Cài đặt
 
@@ -16,17 +21,36 @@ sidebar_position: 7
 npm install next-live2d
 ```
 
-## Tạo component hiển thị mascot
+## Khai báo options trong davipress.config.ts
 
-Tạo file component ở gốc site (ví dụ `widgets.tsx` hoặc `Live2DWidgets.tsx`), đánh dấu `'use client'` vì `Live2DWidget` là client component:
+```ts
+export default defineConfig({
+  // ...config khác
+  plugins: [
+    ['live2d', { models: ['rem_2', 'hibiki', 'HK416-1-normal'], width: 200, height: 300 }],
+  ],
+})
+```
+
+Mỗi phần tử là `[tên_plugin, options]`. Tên plugin (`'live2d'` ở đây) chỉ là một chuỗi tự đặt để component tra lại options của chính nó — Davipress không xử lý gì thêm với chuỗi này.
+
+## Tạo component trong widgets/
+
+Tạo `widgets/live2d.tsx` (bất kỳ tên file nào cũng được, miễn nằm trong thư mục `widgets/`), đánh dấu `'use client'` vì `Live2DWidget` là client component:
 
 ```tsx
 'use client'
 import { useState } from 'react'
 import { Live2DWidget } from 'next-live2d'
+import { getPluginOptions } from 'davipress/runtime/plugins'
+import config from '../davipress.config'
 
-// Chỉ chọn random trong danh sách này, không dùng toàn bộ BUILT_IN_MODELS.
-const MODEL_POOL = ['rem_2', 'hibiki', 'HK416-1-normal', 'HK416-2-destroy', 'Kar98k-normal', 'kp31']
+type Live2DOptions = { models?: string[]; width?: number; height?: number }
+
+const options = getPluginOptions(config, 'live2d') as Live2DOptions
+const MODEL_POOL = options.models?.length ? options.models : ['histoire']
+const WIDGET_WIDTH = options.width ?? 200
+const WIDGET_HEIGHT = options.height ?? 300
 
 function pickRandomModel() {
   return MODEL_POOL[Math.floor(Math.random() * MODEL_POOL.length)]!
@@ -36,40 +60,20 @@ export default function Live2DWidgets() {
   // Random 1 model mỗi khi component mount (mỗi lần reload trang).
   const [model] = useState(() => pickRandomModel())
 
-  return <Live2DWidget key={model} modelName={model} position="left" width={200} height={300} />
+  return <Live2DWidget key={model} modelName={model} position="left" width={WIDGET_WIDTH} height={WIDGET_HEIGHT} />
 }
 ```
 
 - Dùng `useState(() => ...)` (lazy initializer) để việc random chỉ chạy một lần khi mount, không random lại mỗi lần re-render.
 - Vì mỗi lần tải lại trang là một lần mount mới, model hiển thị sẽ tự đổi mỗi khi reload mà không cần thêm logic gì khác.
-- Muốn hiện nhiều mascot cùng lúc thay vì 1 con, render nhiều `Live2DWidget` với `key`/`modelName` khác nhau và truyền `style.left` riêng cho từng cái để chúng không chồng lên nhau.
+- Luôn import `getPluginOptions` từ `davipress/runtime/plugins` (không phải `davipress/runtime`) trong file `'use client'` — subpath này không phụ thuộc Node API (`fs`, ...) nên an toàn khi bundle cho trình duyệt. Import nhầm `davipress/runtime` vào 1 client component sẽ gây lỗi build kiểu "chunking context does not support external modules (request: node:fs)".
+- Muốn hiện nhiều mascot cùng lúc, thêm nhiều file khác trong `widgets/` (mỗi file 1 component riêng) hoặc render nhiều `Live2DWidget` với `key` khác nhau trong cùng component, truyền `style.left` riêng cho từng cái để không chồng lên nhau.
 
-## Gắn component vào layout
-
-Davipress sinh Next.js App Router từ `docs/` vào thư mục `.davipress/` mỗi khi chạy `davipress dev`, `build` hoặc `start` — bao gồm cả `.davipress/app/layout.tsx`. Vì file này được **sinh lại (ghi đè) ở mỗi lần chạy**, nên:
-
-1. Chạy `npm run dev` (hoặc `build`/`start`) trước để Davipress sinh `.davipress/app/layout.tsx`.
-2. Mở file đó và import component vừa tạo, render nó ngay trong `<body>` (trước `{children}`):
-
-```tsx
-import Live2DWidgets from '../../Live2DWidgets' // đường dẫn tới file component ở bước trên
-
-export default function Layout({ children }) {
-  return (
-    <html lang="en">
-      <body>
-        <Live2DWidgets />
-        {children}
-      </body>
-    </html>
-  )
-}
-```
-
-Trong lúc dev server đang chạy, Turbopack sẽ tự hot-reload theo thay đổi này. Lưu ý: mỗi lần bạn dừng rồi chạy lại `davipress dev`/`build`/`start`, `.davipress/app/layout.tsx` sẽ được sinh lại từ đầu và mất đoạn import/`<Live2DWidgets />` bạn vừa thêm — cần thêm lại thủ công sau khi lệnh chạy xong.
+Chạy `npm run dev`, Davipress sẽ tự phát hiện `widgets/live2d.tsx` và render nó vào layout — không cần đụng vào `.davipress/`.
 
 ## Tuỳ chỉnh thêm
 
-- Đổi số lượng model bằng cách truyền số khác cho `pickRandomModels(...)`.
-- Đổi vị trí/scale/độ mờ qua các prop `position`, `scale`, `opacity`, `hoverOpacity`, `bottomOffset` — xem đầy đủ trong [phần Props của tài liệu next-live2d](https://next-live2d.vercel.app/docs).
+- Đổi danh sách model, kích thước qua field `plugins` trong `davipress.config.ts`, không cần sửa component.
+- Đổi vị trí/scale/độ mờ qua các prop `position`, `scale`, `opacity`, `hoverOpacity`, `bottomOffset` của `Live2DWidget` — xem đầy đủ trong [phần Props của tài liệu next-live2d](https://next-live2d.vercel.app/docs).
 - Muốn dùng model tự host thay vì danh sách dựng sẵn, truyền `baseUrl` trỏ tới thư mục chứa các model của bạn (mỗi model có `model.json` riêng), cũng theo hướng dẫn trong tài liệu trên.
+

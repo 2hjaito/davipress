@@ -30,6 +30,8 @@ export interface DavipressConfig {
     lang?: string
   }
   seo?: { defaultImage?: string; twitterCard?: 'summary' | 'summary_large_image' }
+  /** Cấu hình cho các component tuỳ chỉnh đặt trong thư mục widgets/, tra bằng tên plugin. */
+  plugins?: Array<[name: string, options?: Record<string, unknown>]>
   [key: string]: unknown
 }
 

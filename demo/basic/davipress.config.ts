@@ -41,5 +41,8 @@ export default defineConfig({
   },
   seo: {
     twitterCard: 'summary_large_image'
-  }
+  },
+  plugins: [
+    ['live2d', { models: ['rem_2', 'xisitina', 'HK416-1-normal', 'HK416-2-destroy', 'Kar98k-normal', 'kp31'], width: 200, height: 300 }],
+  ],
 })

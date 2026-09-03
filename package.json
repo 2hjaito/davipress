@@ -1,6 +1,6 @@
 {
   "name": "davipress",
-  "version": "0.1.16",
+  "version": "0.2.0",
   "description": "A Markdown documentation framework built on Next.js App Router",
   "license": "MIT",
   "type": "module",
@@ -17,6 +17,10 @@
     "./runtime": {
       "types": "./dist/runtime/index.d.ts",
       "import": "./dist/runtime/index.js"
+    },
+    "./runtime/plugins": {
+      "types": "./dist/runtime/plugins.d.ts",
+      "import": "./dist/runtime/plugins.js"
     },
     "./theme/styles.css": "./dist/runtime/theme.css"
   },
