@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { DaviIconProps } from 'davi-icons';
+import type { IconProps as DaviIconProps } from './icon-base.js';
 type IconEntry = {
     icon: ComponentType<DaviIconProps>;
     color?: string;

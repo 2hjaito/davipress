@@ -12,6 +12,20 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
+function rehypeLazyImages() {
+    return (tree) => {
+        const visit = (node) => {
+            if (node.tagName === 'img') {
+                node.properties ??= {};
+                node.properties.loading ??= 'lazy';
+                node.properties.decoding ??= 'async';
+            }
+            for (const child of node.children ?? [])
+                visit(child);
+        };
+        visit(tree);
+    };
+}
 function files(dir) {
     if (!fs.existsSync(dir))
         return [];
@@ -31,7 +45,7 @@ function resolveRoute(root, file) {
 }
 export function discover(root = path.resolve(process.cwd(), 'docs')) { return files(root).map(source => ({ source, route: resolveRoute(root, source) })); }
 export async function markdownToHtml(content) {
-    const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeStringify, { allowDangerousHtml: true }).process(content);
+    const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(content);
     return result.toString();
 }
 export async function compile(source, root = path.resolve(process.cwd(), 'docs')) {

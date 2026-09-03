@@ -1,7 +1,8 @@
 import type { ComponentType } from 'react'
-import type { DaviIconProps } from 'davi-icons'
-import { FaJavaBrands as FaJava, FaDockerBrands as FaDocker } from 'davi-icons/fa'
+import type { IconProps as DaviIconProps } from './icon-base.js'
 import {
+  FaJavaBrands as FaJava,
+  FaDockerBrands as FaDocker,
   SiJavascript,
   SiTypescript,
   SiCplusplus,
@@ -20,10 +21,10 @@ import {
   SiReact,
   SiVuedotjs,
   SiNextdotjs,
-  SiTailwindcss
-} from 'davi-icons/si'
-import { TbBrandMysql } from 'davi-icons/tb'
-import { DiMicrosoftsqlserverPlain as DiMsqlServer } from 'davi-icons/di'
+  SiTailwindcss,
+  TbBrandMysql,
+  DiMicrosoftsqlserverPlain as DiMsqlServer
+} from './icon-set.js'
 
 type IconEntry = {
   icon: ComponentType<DaviIconProps>

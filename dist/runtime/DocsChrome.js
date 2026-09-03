@@ -2,10 +2,8 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { IoClose as IoMdClose } from 'davi-icons/io';
-import { MdFormatListBulleted as MdOutlineFormatListBulleted } from 'davi-icons/md';
-import { resolveNavIcon } from './NavBar.js';
-import { TbMenu2FilledFilled } from 'davi-icons/tb';
+import { IoClose as IoMdClose, MdFormatListBulleted as MdOutlineFormatListBulleted, GiSpellBook, TbMenu2FilledFilled } from './icon-set.js';
+import { Icon } from './icons.js';
 function useHashScroll(dependency) {
     useEffect(() => {
         const scrollToHash = () => {
@@ -34,8 +32,7 @@ function normalizeLink(link) {
     return link.replace(/\/$/, '') || '/';
 }
 function SidebarIcon({ icon }) {
-    const Icon = resolveNavIcon(icon);
-    return Icon ? _jsx(Icon, { className: "dp-sidebar-icon" }) : _jsx("span", { className: "dp-sidebar-icon" });
+    return _jsx(Icon, { name: icon, className: "dp-sidebar-icon" });
 }
 function openKeysForRoute(items, route, trail = []) {
     for (let index = 0; index < items.length; index++) {
@@ -152,7 +149,6 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
     const [stickyVisible, setStickyVisible] = useState(false);
     const [progress, setProgress] = useState(0);
     const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4);
-    const SectionIcon = resolveNavIcon(sectionIcon) ?? resolveNavIcon('GiSpellBook');
     useHashScroll(activeRoute);
     useEffect(() => {
         const updateProgress = () => {
@@ -176,5 +172,5 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
         observer.observe(firstHeading);
         return () => observer.disconnect();
     }, [activeRoute]);
-    return _jsxs("div", { className: `davipress-body${reveal ? ' dp-tutorial-chrome' : ''}`, children: [_jsx("div", { className: "dp-reading-progress", children: _jsx("div", { style: { transform: `scaleX(${progress})` } }) }), _jsx(FloatingToc, { headings: tocHeadings, hasComments: hasComments }), !reveal && stickyVisible && title && _jsx("div", { className: "dp-sticky-title", children: _jsx("p", { children: title }) }), _jsx("div", { className: "dp-sidebar-spacer" }), _jsx("aside", { className: "dp-sidebar", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) }), mobileOpen && _jsxs("div", { className: "dp-mobile-sidebar", children: [_jsx("button", { type: "button", className: "dp-mobile-sidebar-close", onClick: () => setMobileOpen(false), children: _jsxs("span", { children: [_jsx(IoMdClose, { "aria-hidden": "true" }), " ", SectionIcon && _jsx(SectionIcon, {}), " ", sectionLabel] }) }), _jsx("div", { className: "dp-mobile-sidebar-inner", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) })] }), _jsxs("main", { id: "tutorial-main-content", className: reveal ? 'dp-tutorial-main' : undefined, children: [!mobileOpen && _jsx("button", { type: "button", className: "dp-mobile-sidebar-open", onClick: () => setMobileOpen(true), children: _jsxs("span", { children: [_jsx(TbMenu2FilledFilled, { "aria-hidden": "true" }), " ", SectionIcon && _jsx(SectionIcon, {}), " ", sectionLabel] }) }), _jsxs("div", { className: reveal ? 'dp-page-reveal' : undefined, children: [children, footer] }, reveal ? activeRoute : undefined)] })] });
+    return _jsxs("div", { className: `davipress-body${reveal ? ' dp-tutorial-chrome' : ''}`, children: [_jsx("div", { className: "dp-reading-progress", children: _jsx("div", { style: { transform: `scaleX(${progress})` } }) }), _jsx(FloatingToc, { headings: tocHeadings, hasComments: hasComments }), !reveal && stickyVisible && title && _jsx("div", { className: "dp-sticky-title", children: _jsx("p", { children: title }) }), _jsx("div", { className: "dp-sidebar-spacer" }), _jsx("aside", { className: "dp-sidebar", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) }), mobileOpen && _jsxs("div", { className: "dp-mobile-sidebar", children: [_jsx("button", { type: "button", className: "dp-mobile-sidebar-close", onClick: () => setMobileOpen(false), children: _jsxs("span", { children: [_jsx(IoMdClose, { "aria-hidden": "true" }), " ", _jsx(Icon, { name: sectionIcon, fallback: GiSpellBook }), " ", sectionLabel] }) }), _jsx("div", { className: "dp-mobile-sidebar-inner", children: _jsx(SidebarTree, { items: sidebar, activeRoute: activeRoute }) })] }), _jsxs("main", { id: "tutorial-main-content", className: reveal ? 'dp-tutorial-main' : undefined, children: [!mobileOpen && _jsx("button", { type: "button", className: "dp-mobile-sidebar-open", onClick: () => setMobileOpen(true), children: _jsxs("span", { children: [_jsx(TbMenu2FilledFilled, { "aria-hidden": "true" }), " ", _jsx(Icon, { name: sectionIcon, fallback: GiSpellBook }), " ", sectionLabel] }) }), _jsxs("div", { className: reveal ? 'dp-page-reveal' : undefined, children: [children, footer] }, reveal ? activeRoute : undefined)] })] });
 }

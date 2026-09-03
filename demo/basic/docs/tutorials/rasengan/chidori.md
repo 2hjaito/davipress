@@ -5,7 +5,7 @@ slug: chidori-cap-2-chuyen-sau
 subtitle: Biến đổi thuộc tính chakra và kỹ thuật đâm xuyên tốc độ cao
 author: Minato Namikaze
 date: "2025-09-02"
-image: /images/post/chidori-tutorial/1.png
+image: /images/post/chidori-tutorial/1.webp
 tags:
   - Nhẫn thuật
   - Chidori
@@ -18,7 +18,7 @@ published: false
 
 Chidori (Thiên Điểu / Thiên Lôi Tặc) là nhẫn thuật `cấp A` được phát triển bởi Kakashi Hatake. Khác với Rasengan tập trung vào biến đổi hình thái, Chidori kết hợp giữa **biến đổi thuộc tính Lôi** và **bứt tốc cự ly ngắn**.
 
-![](/tutorial/rasengan/chidori.png)
+![](/tutorial/rasengan/chidori.webp)
 
 ## 1. Đặc tính của Chidori
 

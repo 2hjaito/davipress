@@ -3,10 +3,8 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { SidebarItem } from '../config.js'
-import { IoClose as IoMdClose } from 'davi-icons/io'
-import { MdFormatListBulleted as MdOutlineFormatListBulleted } from 'davi-icons/md'
-import { resolveNavIcon } from './NavBar.js'
-import { TbMenu2FilledFilled } from 'davi-icons/tb'
+import { IoClose as IoMdClose, MdFormatListBulleted as MdOutlineFormatListBulleted, GiSpellBook, TbMenu2FilledFilled } from './icon-set.js'
+import { Icon } from './icons.js'
 
 type Heading = { id: string; text: string; level: number }
 type SidebarNode = SidebarItem & { children?: readonly SidebarNode[]; collapsible?: boolean; icon?: string }
@@ -41,8 +39,7 @@ function normalizeLink(link?: string) {
 }
 
 function SidebarIcon({ icon }: { icon?: string }) {
-  const Icon = resolveNavIcon(icon)
-  return Icon ? <Icon className="dp-sidebar-icon" /> : <span className="dp-sidebar-icon" />
+  return <Icon name={icon} className="dp-sidebar-icon" />
 }
 
 function openKeysForRoute(items: readonly SidebarNode[], route: string, trail: string[] = []): string[] {
@@ -208,7 +205,6 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
   const [stickyVisible, setStickyVisible] = useState(false)
   const [progress, setProgress] = useState(0)
   const tocHeadings = headings.filter(heading => heading.level >= 2 && heading.level <= 4)
-  const SectionIcon = resolveNavIcon(sectionIcon) ?? resolveNavIcon('GiSpellBook')
 
   useHashScroll(activeRoute)
 
@@ -242,11 +238,11 @@ export function DocsChrome({ children, footer, headings, sidebar, activeRoute, t
     <div className="dp-sidebar-spacer" />
     <aside className="dp-sidebar"><SidebarTree items={sidebar as readonly SidebarNode[]} activeRoute={activeRoute} /></aside>
     {mobileOpen && <div className="dp-mobile-sidebar">
-      <button type="button" className="dp-mobile-sidebar-close" onClick={() => setMobileOpen(false)}><span><IoMdClose aria-hidden="true" /> {SectionIcon && <SectionIcon />} {sectionLabel}</span></button>
+      <button type="button" className="dp-mobile-sidebar-close" onClick={() => setMobileOpen(false)}><span><IoMdClose aria-hidden="true" /> <Icon name={sectionIcon} fallback={GiSpellBook} /> {sectionLabel}</span></button>
       <div className="dp-mobile-sidebar-inner"><SidebarTree items={sidebar as readonly SidebarNode[]} activeRoute={activeRoute} /></div>
     </div>}
     <main id="tutorial-main-content" className={reveal ? 'dp-tutorial-main' : undefined}>
-      {!mobileOpen && <button type="button" className="dp-mobile-sidebar-open" onClick={() => setMobileOpen(true)}><span><TbMenu2FilledFilled aria-hidden="true" /> {SectionIcon && <SectionIcon />} {sectionLabel}</span></button>}
+      {!mobileOpen && <button type="button" className="dp-mobile-sidebar-open" onClick={() => setMobileOpen(true)}><span><TbMenu2FilledFilled aria-hidden="true" /> <Icon name={sectionIcon} fallback={GiSpellBook} /> {sectionLabel}</span></button>}
       <div key={reveal ? activeRoute : undefined} className={reveal ? 'dp-page-reveal' : undefined}>
         {children}
         {footer}

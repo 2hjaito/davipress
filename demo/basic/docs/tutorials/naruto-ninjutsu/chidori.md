@@ -4,7 +4,7 @@ title: "Chidori — Đòn đánh tốc độ cực cao"
 slug: naruto-ninjutsu-chidori
 author: Minato Namikaze
 date: "2026-08-28"
-image: /images/post/naruto-ninjutsu/chidori.png
+image: /images/post/naruto-ninjutsu/chidori.webp
 tags:
   - Naruto
   - Chidori

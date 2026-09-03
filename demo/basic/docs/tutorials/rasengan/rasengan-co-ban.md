@@ -5,7 +5,7 @@ slug: rasengan-cap-1-co-ban
 subtitle: Quy trình 3 bước xoay, nén và cô đọng chakra trong lòng bàn tay
 author: Minato Namikaze
 date: "2025-09-01"
-image: /images/post/rasengan-tutorial/1.png
+image: /images/post/rasengan-tutorial/1.webp
 tags:
   - Nhẫn thuật
   - Rasengan
@@ -18,7 +18,7 @@ published: false
 
 Rasengan (Loa Toàn Hoàn) là nhẫn thuật cấp A do tôi sáng tạo ra dựa trên cơ chế nén chakra của Vĩ Thú Ngọc. Điểm đặc biệt của kỹ thuật này là **không cần niệm ấn**, hoàn toàn dựa vào khả năng kiểm soát chakra hình thái.
 
-![](/tutorial/rasengan/rasengan.png)
+![](/tutorial/rasengan/rasengan.webp)
 
 ## 1. Yêu cầu nền tảng
 

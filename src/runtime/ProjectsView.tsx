@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { FaStarRegular as FaRegStar } from 'davi-icons/fa'
+import { FaStarRegular as FaRegStar } from './icon-set.js'
 import { LangBadge } from './LangBadge.js'
 import { ToolsSection } from './ToolsSection.js'
 import { Footer } from './Footer.js'

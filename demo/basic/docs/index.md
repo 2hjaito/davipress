@@ -12,11 +12,11 @@ social: facebook | [suspicious link removed] | Facebook
 :::
 
 :::davi:avt
-/images/profile/7.png
-/images/profile/8.png
-/images/profile/9.png
-/images/profile/6.png
-/images/profile/10.png
+/images/profile/7.webp
+/images/profile/8.webp
+/images/profile/9.webp
+/images/profile/6.webp
+/images/profile/10.webp
 :::
 
 Là Hokage Đệ Tứ của Làng Lá, nổi tiếng khắp thế giới nhẫn giả với danh xưng **Tia Chớp Vàng**. Chuyên gia về Không - Thời Gian Thuật, sáng tạo ra Rasengan và là bậc thầy Phong Ấn Thuật. Luôn sẵn sàng chiến đấu và hy sinh để bảo vệ ngôi làng cùng thế hệ tương lai.
@@ -55,7 +55,7 @@ content: Quản lý toàn bộ hệ thống nhẫn giả, bảo vệ an ninh Là
 title: Học viện Nhẫn giả Làng Lá
 subtitle: Khoa Tốt nghiệp Thủ khoa & Đội Jiraiya
 meta: Xuất sắc – Tốt nghiệp sớm
-logo: /images/edu/konoha.png
+logo: /images/edu/konoha.webp
 content: Tốt nghiệp thủ khoa Học viện Nhẫn giả với điểm số cao nhất lịch sử. Học trò xuất sắc nhất của Tam Nin Huyền Thoại Jiraiya, tiếp thu Tiên thuật và triết lý hòa bình. Đảm nhận vị trí Hokage ở tuổi 22.
 :::
 
@@ -69,17 +69,17 @@ Mình đã hoàn thành và làm chủ các kỹ thuật, phong ấn cấp S tro
 
 :::davi:certifications
 title: Bằng Bậc Thầy Phong Ấn Thuật Tộc Uzumaki (Shiki Fūjin & Hakke no Fūjin Shiki)
-img: /images/cert/uzumaki.png
+img: /images/cert/uzumaki.webp
 org: Uzumaki Clan Seal Knowledge
 date: Oct 10, 1987
 
 title: Chứng chỉ Tiên Thuật Lôi Đình & Tiên Nhân Mô Thức (Sage Mode Master)
-img: /images/cert/myoboku.jpg
+img: /images/cert/myoboku.webp
 org: Diệu Mộc Sơn (Mount Myōboku)
 date: Sep 15, 1985
 
 title: Bằng Sáng chế & Đăng ký Cấm thuật Cấp S (Rasengan Creation)
-img: /images/cert/konoha.jpg
+img: /images/cert/konoha.webp
 org: Hội đồng Làng Lá (Konoha High Council)
 date: Jul 03, 1982
 :::

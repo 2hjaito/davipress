@@ -1,40 +1,6 @@
-import type { ComponentType } from 'react'
-import * as DiIcons from 'davi-icons/di'
-import * as DvIcons from 'davi-icons/dv'
-import * as FaIcons from 'davi-icons/fa'
-import * as FiIcons from 'davi-icons/fi'
-import * as GiIcons from 'davi-icons/gi'
-import * as IoIcons from 'davi-icons/io'
-import * as LuIcons from 'davi-icons/lu'
-import * as MdIcons from 'davi-icons/md'
-import * as RiIcons from 'davi-icons/ri'
-import * as SiIcons from 'davi-icons/si'
-import * as TbIcons from 'davi-icons/tb'
-import * as TiIcons from 'davi-icons/ti'
+import { TbBrandAdobe } from './icon-set.js'
+import { Icon } from './icons.js'
 import type { ToolItem } from '../core/projects.js'
-
-type ToolIcon = ComponentType<{ className?: string; 'aria-hidden'?: boolean }>
-
-const toolIconMap = {
-  ...DiIcons,
-  ...DvIcons,
-  ...FaIcons,
-  ...FiIcons,
-  ...GiIcons,
-  ...IoIcons,
-  ...LuIcons,
-  ...MdIcons,
-  ...RiIcons,
-  ...SiIcons,
-  ...TbIcons,
-  ...TiIcons,
-} as unknown as Record<string, ToolIcon>
-
-function resolveToolIcon(icon?: string): ToolIcon {
-  if (!icon) return TbIcons.TbBrandAdobe
-
-  return toolIconMap[icon] ?? toolIconMap[icon.toLowerCase()] ?? TbIcons.TbBrandAdobe
-}
 
 export function ToolsSection({ title = 'Tools', items }: { title?: string; items: ToolItem[] }) {
   return (
@@ -49,12 +15,10 @@ export function ToolsSection({ title = 'Tools', items }: { title?: string; items
 
         <div className="dp-tools-list">
           {items.map((tool) => {
-            const Icon = resolveToolIcon(tool.icon) ?? TbIcons.TbBrandAdobe
-
             return (
               <div key={tool.title} className="dp-tool-card">
                 <div className="dp-tool-icon-col">
-                  <Icon className="dp-tool-icon" aria-hidden={true} />
+                  <Icon name={tool.icon} className="dp-tool-icon" fallback={TbBrandAdobe} />
                 </div>
                 <div className="dp-tool-info-col">
                   <a

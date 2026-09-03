@@ -16,6 +16,22 @@ import type { DavipressFrontmatter, SidebarItem } from '../config.js'
 
 export interface Page { route: string; source: string; html: string; text: string; frontmatter: DavipressFrontmatter; headings: { id: string; text: string; level: number }[] }
 
+type HastNode = { tagName?: string; properties?: Record<string, unknown>; children?: HastNode[] }
+
+function rehypeLazyImages() {
+  return (tree: unknown) => {
+    const visit = (node: HastNode) => {
+      if (node.tagName === 'img') {
+        node.properties ??= {}
+        node.properties.loading ??= 'lazy'
+        node.properties.decoding ??= 'async'
+      }
+      for (const child of node.children ?? []) visit(child)
+    }
+    visit(tree as HastNode)
+  }
+}
+
 function files(dir: string): string[] {
   if (!fs.existsSync(dir)) return []
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? files(path.join(dir, entry.name)) : /\.mdx?$/.test(entry.name) ? [path.join(dir, entry.name)] : [])
@@ -33,7 +49,7 @@ function resolveRoute(root: string, file: string) {
 }
 export function discover(root = path.resolve(process.cwd(), 'docs')) { return files(root).map(source => ({ source, route: resolveRoute(root, source) })) }
 export async function markdownToHtml(content: string) {
-  const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeStringify, { allowDangerousHtml: true }).process(content)
+  const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(content)
   return result.toString()
 }
 export async function compile(source: string, root = path.resolve(process.cwd(), 'docs')): Promise<Page> {

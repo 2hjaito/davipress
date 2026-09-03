@@ -5,7 +5,7 @@ slug: rasenshuriken-cap-3-tuyet-ky
 subtitle: Sự kết hợp hoàn hảo giữa Biến đổi Hình thái và Thuộc tính Phong
 author: Minato Namikaze
 date: "2025-09-03"
-image: /images/post/rasenshuriken-tutorial/1.png
+image: /images/post/rasenshuriken-tutorial/1.webp
 tags:
   - Nhẫn thuật
   - Rasenshuriken
@@ -18,7 +18,7 @@ published: false
 
 Phong Độn: Rasenshuriken (Loa Toàn Thủ Lý Kiếm) là tuyệt kỹ được phát triển bởi Naruto Uzumaki, hoàn thành ước nguyện hợp nhất **biến đổi thuộc tính Phong vào Rasengan** mà tôi chưa kịp hoàn thiện.
 
-![](/tutorial/rasengan/rasensuriken.png)
+![](/tutorial/rasengan/rasensuriken.webp)
 
 ## 1. Cơ chế phá hủy cấp độ tế bào
 

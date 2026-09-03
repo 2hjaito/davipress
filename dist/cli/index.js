@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import { extractIcons, findIconNames } from '../core/iconExtract.js';
 const cwd = process.cwd();
 const generated = path.join(cwd, '.davipress');
 const require = createRequire(import.meta.url);
@@ -11,6 +13,17 @@ function writeIfMissing(file, content) {
         fs.mkdirSync(path.dirname(file), { recursive: true });
         fs.writeFileSync(file, content);
     }
+}
+// Inlines only the icons this site references, so no multi-megabyte davi-icons pack reaches the browser.
+function writeSiteIcons() {
+    const target = path.join(generated, 'app/site-icons.tsx');
+    let icons = {};
+    try {
+        const packsDir = path.dirname(fileURLToPath(import.meta.resolve('davi-icons/fa')));
+        icons = extractIcons(findIconNames(cwd), packsDir);
+    }
+    catch { /* davi-icons is optional: the built-in theme icon set still works. */ }
+    fs.writeFileSync(target, `'use client'\nimport { registerIcons } from 'davipress/runtime/icons'\nregisterIcons(${JSON.stringify(icons)})\nexport default function DavipressSiteIcons() { return null }\n`);
 }
 function linkPublicDir() {
     const source = path.join(cwd, 'public');
@@ -131,16 +144,25 @@ function generate() {
         pkg.scripts[name] ??= command;
     fs.writeFileSync(packageFile, `${JSON.stringify(pkg, null, 2)}\n`);
     fs.mkdirSync(generated, { recursive: true });
-    fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'] }\nexport default nextConfig\n");
+    fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'], experimental: { optimizePackageImports: ['davi-icons'] } }\nexport default nextConfig\n");
     const globalsCss = ['globals.css', 'src/globals.css'].find(file => fs.existsSync(path.join(cwd, file)));
     const globalsImport = globalsCss ? `\nimport '../../${globalsCss}'` : '';
     const widgetsDir = ['widgets', 'src/widgets'].find(dir => fs.existsSync(path.join(cwd, dir)) && fs.statSync(path.join(cwd, dir)).isDirectory());
     const widgetsFiles = widgetsDir ? fs.readdirSync(path.join(cwd, widgetsDir)).filter(file => /\.tsx$/.test(file)).sort() : [];
-    const widgetsImport = widgetsFiles.map((file, index) => `\nimport DavipressWidget${index} from '../../${widgetsDir}/${file.replace(/\.tsx$/, '')}'`).join('');
-    const widgetsElement = widgetsFiles.map((_, index) => `<DavipressWidget${index} />`).join('');
+    const widgetsImport = widgetsFiles.length > 0 ? "\nimport DavipressWidgets from './widgets'" : '';
+    const widgetsElement = widgetsFiles.length > 0 ? '<DavipressWidgets />' : '';
     fs.mkdirSync(path.join(generated, 'app'), { recursive: true });
     fs.mkdirSync(path.join(generated, 'app/[[...slug]]'), { recursive: true });
-    fs.writeFileSync(path.join(generated, 'app/layout.tsx'), `import 'davipress/theme/styles.css'${globalsImport}${widgetsImport}\nimport type { ReactNode } from 'react'\nimport Script from 'next/script'\nimport { CodeBlockControls, ImageZoomClient } from 'davipress/runtime'\nconst themeScript = \`(() => { const saved = localStorage.getItem('dark-mode'); const dark = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.classList.toggle('dark', dark); })()\`\nexport default function Layout({ children }: { children: ReactNode }) { return <html lang="en" suppressHydrationWarning><body suppressHydrationWarning><Script id="davipress-theme-bootstrap" strategy="beforeInteractive">{themeScript}</Script><CodeBlockControls /><ImageZoomClient />${widgetsElement}{children}</body></html> }\n`);
+    writeSiteIcons();
+    if (widgetsFiles.length > 0) {
+        // Widgets are client-only and often heavy (WebGL, CDN assets), so they are code-split and mounted after the page is idle.
+        const dynamicImports = widgetsFiles.map((file, index) => `const DavipressWidget${index} = dynamic(() => import('../../${widgetsDir}/${file.replace(/\.tsx$/, '')}'), { ssr: false })`).join('\n');
+        const elements = widgetsFiles.map((_, index) => `<DavipressWidget${index} key={${index}} />`).join('');
+        fs.writeFileSync(path.join(generated, 'app/widgets.tsx'), `'use client'\nimport dynamic from 'next/dynamic'\nimport { useEffect, useState } from 'react'\n${dynamicImports}\ntype IdleWindow = Window & { requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number; cancelIdleCallback?: (handle: number) => void }\nexport default function DavipressWidgets() {\n  const [ready, setReady] = useState(false)\n  useEffect(() => {\n    const idleWindow = window as IdleWindow\n    const show = () => setReady(true)\n    if (idleWindow.requestIdleCallback) { const handle = idleWindow.requestIdleCallback(show, { timeout: 4000 }); return () => idleWindow.cancelIdleCallback?.(handle) }\n    const handle = window.setTimeout(show, 2000)\n    return () => window.clearTimeout(handle)\n  }, [])\n  return ready ? <>${elements}</> : null\n}\n`);
+    }
+    else if (fs.existsSync(path.join(generated, 'app/widgets.tsx')))
+        fs.unlinkSync(path.join(generated, 'app/widgets.tsx'));
+    fs.writeFileSync(path.join(generated, 'app/layout.tsx'), `import 'davipress/theme/styles.css'${globalsImport}\nimport DavipressSiteIcons from './site-icons'${widgetsImport}\nimport type { ReactNode } from 'react'\nimport Script from 'next/script'\nimport { CodeBlockControls, ImageZoomClient } from 'davipress/runtime'\nconst themeScript = \`(() => { const saved = localStorage.getItem('dark-mode'); const dark = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.classList.toggle('dark', dark); })()\`\nexport default function Layout({ children }: { children: ReactNode }) { return <html lang="en" suppressHydrationWarning><body suppressHydrationWarning><Script id="davipress-theme-bootstrap" strategy="beforeInteractive">{themeScript}</Script><DavipressSiteIcons /><CodeBlockControls /><ImageZoomClient />${widgetsElement}{children}</body></html> }\n`);
     fs.writeFileSync(path.join(generated, 'app/not-found.tsx'), "import { NotFoundView } from 'davipress/runtime'\nexport const metadata = { title: '404 - Không tìm thấy trang', robots: { index: false, follow: false } }\nexport default function NotFound() { return <NotFoundView /> }\n");
     linkPublicDir();
     writeGeneratedRoutes();

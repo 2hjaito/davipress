@@ -5,7 +5,7 @@ slug: phi-loi-than-cap-1-dinh-vi-khong-gian
 subtitle: Khắc Thuật Thức & Cảm Nhận Tọa Độ Cự Ly Ngắn
 author: Minato Namikaze
 date: "2025-08-28"
-image: /images/post/hiraishin-level-1/1.png
+image: /images/post/hiraishin-level-1/1.webp
 tags:
   - Hiraishin
   - Level 1

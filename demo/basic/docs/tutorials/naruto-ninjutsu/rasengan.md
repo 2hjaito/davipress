@@ -4,7 +4,7 @@ title: "Rasengan — Đòn nhẫn thuật xoay chakra"
 slug: naruto-ninjutsu-rasengan
 author: Minato Namikaze
 date: "2026-08-28"
-image: /images/post/naruto-ninjutsu/rasengan.png
+image: /images/post/naruto-ninjutsu/rasengan.webp
 tags:
   - Naruto
   - Rasengan

@@ -5,7 +5,7 @@ slug: phi-loi-than-cap-3-lam-chu-chien-truong
 subtitle: Lập Trận Thế Đa Điểm & Kỹ Thuật Dịch Chuyển Vật Thể
 author: Minato Namikaze
 date: "2025-08-30"
-image: /images/post/hiraishin-level-3/1.png
+image: /images/post/hiraishin-level-3/1.webp
 tags:
   - Hiraishin
   - Level 3

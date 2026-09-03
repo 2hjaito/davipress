@@ -6,7 +6,7 @@ slug: rasengan-nghe-thuat-kiem-soat-chakra-den-dinh-cao-khong-can-ket-an
 subtitle: Sáng tạo Nhẫn thuật trong Giới Nhẫn Giả
 author: Minato Namikaze
 date: "2025-08-20"
-image: /post/2.png
+image: /post/2.webp
 tags:
   - Nhẫn thuật
   - Sáng chế Nhẫn thuật

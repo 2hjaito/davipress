@@ -26,6 +26,7 @@ export default function Live2DWidgets() {
       position="left"
       width={WIDGET_WIDTH}
       height={WIDGET_HEIGHT}
+      showOnMobile={false}
     />
   )
 }

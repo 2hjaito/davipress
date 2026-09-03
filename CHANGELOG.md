@@ -4,6 +4,12 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-09-03
+
+### Changed
+
+- Publish the `0.2.x` feature set with synchronized package release metadata.
+
 ## [0.2.0] - 2026-09-03
 
 ### Added

@@ -1,19 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import type { ComponentType } from 'react'
 import Link from 'next/link'
-import * as FaIcons from 'davi-icons/fa'
-import * as FiIcons from 'davi-icons/fi'
-import * as GiIcons from 'davi-icons/gi'
-import * as IoIcons from 'davi-icons/io'
-import * as LuIcons from 'davi-icons/lu'
-import * as MdIcons from 'davi-icons/md'
-import * as RiIcons from 'davi-icons/ri'
-import * as SiIcons from 'davi-icons/si'
-import * as TbIcons from 'davi-icons/tb'
-import * as TiIcons from 'davi-icons/ti'
-import * as DvIcons from 'davi-icons/dv'
+import { FaMoon, FaSun } from './icon-set.js'
+import { Icon, resolveIcon } from './icons.js'
+import type { DaviIcon } from './icons.js'
 import type { NavItem } from '../config.js'
 
 const defaultItems = [
@@ -26,21 +17,7 @@ const defaultItems = [
 ] as const
 
 type NavBarItem = readonly [string, string] | NavItem
-export type NavIcon = ComponentType<{ className?: string; 'aria-hidden'?: boolean }>
-
-const iconMap = {
-  ...FaIcons,
-  ...FiIcons,
-  ...GiIcons,
-  ...IoIcons,
-  ...LuIcons,
-  ...MdIcons,
-  ...RiIcons,
-  ...SiIcons,
-  ...TbIcons,
-  ...TiIcons,
-  ...DvIcons,
-} as unknown as Record<string, NavIcon>
+export type NavIcon = DaviIcon
 
 function navItemInfo(item: NavBarItem) {
   if ('text' in item) return { label: item.text, href: item.link, icon: item.icon }
@@ -48,7 +25,7 @@ function navItemInfo(item: NavBarItem) {
 }
 
 export function resolveNavIcon(icon?: string): NavIcon | undefined {
-  return icon ? iconMap[icon] : undefined
+  return resolveIcon(icon)
 }
 
 export function NavBar({ items = defaultItems, navbar, logo }: { items?: readonly NavBarItem[]; navbar?: { showThemeToggle?: boolean; showThemeSeparator?: boolean }; logo?: string }) {
@@ -67,5 +44,5 @@ export function NavBar({ items = defaultItems, navbar, logo }: { items?: readonl
   }, [])
   useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
   function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light') }
-  return <div className="dp-navbar"><div className="dp-navbar-items">{logo && <Link href="/" title="Home" className="dp-nav-item dp-nav-logo-item" onClick={() => setPathname('/')}><img src={logo} alt="" className="dp-nav-logo" /></Link>}{logo && <span className="dp-nav-separator" aria-hidden="true" />}{items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const Icon = resolveNavIcon(icon); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={`${href}-${index}`} href={href} title={label} aria-current={active ? 'page' : undefined} onClick={() => setPathname(href)} className={`dp-nav-item${active ? ' dp-nav-item-active' : ''}`}>{Icon && <Icon className="dp-nav-icon" aria-hidden={true} />}</Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaIcons.FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaIcons.FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
+  return <div className="dp-navbar"><div className="dp-navbar-items">{logo && <Link href="/" title="Home" className="dp-nav-item dp-nav-logo-item" onClick={() => setPathname('/')}><img src={logo} alt="" className="dp-nav-logo" width={28} height={28} decoding="async" /></Link>}{logo && <span className="dp-nav-separator" aria-hidden="true" />}{items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={`${href}-${index}`} href={href} title={label} aria-current={active ? 'page' : undefined} onClick={() => setPathname(href)} className={`dp-nav-item${active ? ' dp-nav-item-active' : ''}`}><Icon name={icon} className="dp-nav-icon" /></Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
 }

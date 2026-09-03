@@ -1,6 +1,6 @@
 {
   "name": "davipress",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A Markdown documentation framework built on Next.js App Router",
   "license": "MIT",
   "type": "module",
@@ -22,6 +22,10 @@
       "types": "./dist/runtime/plugins.d.ts",
       "import": "./dist/runtime/plugins.js"
     },
+    "./runtime/icons": {
+      "types": "./dist/runtime/icons.d.ts",
+      "import": "./dist/runtime/icons.js"
+    },
     "./theme/styles.css": "./dist/runtime/theme.css"
   },
   "files": [
@@ -33,6 +37,8 @@
     "LICENSE"
   ],
   "scripts": {
+    "icons": "node scripts/generate-icon-set.mjs",
+    "images": "node scripts/optimize-images.mjs",
     "build": "tsc && cp src/runtime/theme.css dist/runtime/theme.css && cp src/runtime/theme-dark.css dist/runtime/theme-dark.css",
     "test": "node --test test/*.test.mjs",
     "pack:check": "npm pack --dry-run",

@@ -5,7 +5,7 @@ slug: phi-loi-than-cap-2-phan-cong-sieu-toc
 subtitle: Kỹ Thuật Dịch Chuyển Tức Thời & Kết Hợp Đòn Dứt Điểm
 author: Minato Namikaze
 date: "2025-08-29"
-image: /images/post/hiraishin-level-2/1.png
+image: /images/post/hiraishin-level-2/1.webp
 tags:
   - Hiraishin
   - Level 2

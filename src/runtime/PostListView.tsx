@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import type { Page } from '../core/content.js'
-import { FaUserPen as FaUserEdit } from 'davi-icons/fa'
-import { MdCalendarRange as MdDateRange } from 'davi-icons/md'
+import { FaUserPen as FaUserEdit, MdCalendarRange as MdDateRange } from './icon-set.js'
 import Link from 'next/link'
 
 export function PostListView({ posts }: { posts: Page[] }) {
@@ -66,6 +65,8 @@ export function PostListView({ posts }: { posts: Page[] }) {
                   <img
                     src={String(post.frontmatter.image)}
                     alt={String(post.frontmatter.title ?? '')}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </Link>
               </div>

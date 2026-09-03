@@ -6,7 +6,7 @@ slug: phi-loi-than-thuat-cuoc-cach-mang-cho-nghe-thuat-chien-dau-nhan-gia
 subtitle: Không - Thời Gian Thuật trong Giới Nhẫn Giả
 author: Minato Namikaze
 date: "2025-08-15"
-image: /post/1.png
+image: /post/1.webp
 tags:
  Nhẫn thuật
  Lịch sử Làng Lá
