@@ -1,5 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as DiIcons from 'davi-icons/di';
+import * as DvIcons from 'davi-icons/dv';
 import * as FaIcons from 'davi-icons/fa';
 import * as FiIcons from 'davi-icons/fi';
 import * as GiIcons from 'davi-icons/gi';
@@ -12,6 +13,7 @@ import * as TbIcons from 'davi-icons/tb';
 import * as TiIcons from 'davi-icons/ti';
 const toolIconMap = {
     ...DiIcons,
+    ...DvIcons,
     ...FaIcons,
     ...FiIcons,
     ...GiIcons,

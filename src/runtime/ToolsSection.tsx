@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 import * as DiIcons from 'davi-icons/di'
+import * as DvIcons from 'davi-icons/dv'
 import * as FaIcons from 'davi-icons/fa'
 import * as FiIcons from 'davi-icons/fi'
 import * as GiIcons from 'davi-icons/gi'
@@ -16,6 +17,7 @@ type ToolIcon = ComponentType<{ className?: string; 'aria-hidden'?: boolean }>
 
 const toolIconMap = {
   ...DiIcons,
+  ...DvIcons,
   ...FaIcons,
   ...FiIcons,
   ...GiIcons,
