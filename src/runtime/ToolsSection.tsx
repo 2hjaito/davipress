@@ -1,6 +1,7 @@
 import { TbBrandAdobe } from './icon-set.js'
 import { Icon } from './icons.js'
 import type { ToolItem } from '../core/projects.js'
+import { RiArrowDropDownFill } from 'davi-icons/ri'
 
 export function ToolsSection({ title = 'Tools', items }: { title?: string; items: ToolItem[] }) {
   return (
@@ -9,7 +10,7 @@ export function ToolsSection({ title = 'Tools', items }: { title?: string; items
         <summary className="dp-tools-summary">
           <h2 className="dp-tools-title">{title}</h2>
           <span className="dp-tools-arrow" aria-hidden="true">
-            ▶
+            <RiArrowDropDownFill />
           </span>
         </summary>
 

@@ -130,19 +130,20 @@ Available blocks include `hero`, `avt`, `expand-list`, `github-contributions`, a
 
 ## Markdown and assets
 
-Both `.md` and `.mdx` files are discovered. A file's path becomes its route: `index.md` maps to the directory route, while other filenames become routes. Static assets use normal Markdown paths:
+Both `.md` and `.mdx` files are discovered as Markdown documents. The `.mdx` extension is accepted for compatibility, but JSX, imports, and exports are not evaluated. A file's path becomes its route: `index.md` maps to the directory route, while other filenames become routes. Static assets use normal Markdown paths:
 
 ```md
 ![Diagram](/images/diagram.png)
 ```
 
-Davipress supports GitHub-flavored Markdown, tables, task lists, fenced code blocks, math delimiters, raw HTML, heading IDs, anchor links, KaTeX, server-side syntax highlighting, and click-to-zoom images.
+Davipress supports GitHub-flavored Markdown, tables, task lists, fenced code blocks, math delimiters, sanitized raw HTML, heading IDs, anchor links, KaTeX, server-side syntax highlighting, and click-to-zoom images. Unsafe elements, attributes, and URL schemes are removed during compilation.
 
 ## Generated files
 
 During `dev`, `build`, and `start`, Davipress generates:
 
 - `/rss.xml` from published files in `docs/posts`
+- `/sitemap.xml` from discovered documentation pages
 - `/robots.txt` with the configured site URL and sitemap
 
 Set `url` in `davipress.config.ts` to generate production-ready absolute links.

@@ -37,8 +37,10 @@ function linkPublicDir() {
 function writeGeneratedRoutes() {
   const rssRoute = path.join(generated, 'app/rss.xml/route.ts')
   const robotsRoute = path.join(generated, 'app/robots.txt/route.ts')
+  const sitemapRoute = path.join(generated, 'app/sitemap.ts')
   fs.mkdirSync(path.dirname(rssRoute), { recursive: true })
   fs.mkdirSync(path.dirname(robotsRoute), { recursive: true })
+  fs.mkdirSync(path.dirname(sitemapRoute), { recursive: true })
   fs.writeFileSync(rssRoute, `import config from '../../../davipress.config'
 import { loadPosts } from 'davipress/runtime'
 
@@ -60,6 +62,15 @@ export async function GET() {
   }).join('')
   const xml = \`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>\${escapeXml(String(config.title ?? 'Davipress'))}</title><description>\${escapeXml(String(config.description ?? ''))}</description><link>\${escapeXml(baseUrl)}</link><lastBuildDate>\${new Date().toUTCString()}</lastBuildDate><language>\${escapeXml(String(config.lang ?? 'en'))}</language>\${items}</channel></rss>\`
   return new Response(xml, { headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' } })
+}
+`)
+  fs.writeFileSync(sitemapRoute, `import config from '../../davipress.config'
+import { loadPages } from 'davipress/runtime'
+
+export default async function sitemap() {
+  const baseUrl = String(config.url ?? 'http://localhost:3000').replace(/\\\/$/, '')
+  const pages = await loadPages()
+  return pages.map(page => ({ url: baseUrl + page.route, lastModified: page.frontmatter.updated ?? page.frontmatter.date }))
 }
 `)
   fs.writeFileSync(robotsRoute, `import config from '../../../davipress.config'

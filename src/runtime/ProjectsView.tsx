@@ -7,6 +7,7 @@ import { ToolsSection } from './ToolsSection.js'
 import { Footer } from './Footer.js'
 import type { ProjectBlock, ProjectItem } from '../core/projects.js'
 import type { FooterConfig } from '../config.js'
+import { formatDate } from './date.js'
 
 function RepoCard({
   name,
@@ -23,7 +24,7 @@ function RepoCard({
   selectedTag?: string
   onSelectTag?: (tag: string) => void
 }) {
-  const formattedDate = new Date(lastUpdate).toLocaleDateString('vi-VN')
+  const formattedDate = formatDate(lastUpdate)
 
   return (
     <div className="dp-project-card">

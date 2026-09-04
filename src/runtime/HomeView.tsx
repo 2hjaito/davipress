@@ -7,6 +7,7 @@ import type { FooterConfig } from '../config.js'
 import { AvatarStack } from './AvatarStack.js'
 import { GithubContributions } from './GithubContributions.js'
 import { FiGithub, FiYoutube, TbBrandLinkedin as LuLinkedin, TbBrandFacebook as LuFacebook, TbBrandHackerrank, TbBrandTiktok, SiLeetcode } from './icon-set.js'
+import { formatDate } from './date.js'
 
 const socialIcons: Record<string, React.ComponentType<{ size?: number }>> = { github: FiGithub, leetcode: SiLeetcode, hackerrank: TbBrandHackerrank, linkedin: LuLinkedin, youtube: FiYoutube, facebook: LuFacebook, tiktok: TbBrandTiktok }
 
@@ -32,7 +33,7 @@ export function HomeView({ blocks, footer }: { blocks: HomeBlock[]; footer?: str
       : <div className="dp-expand-group" key={index}>{block.items.map(item => <ExpandItem key={`${item.title}-${item.meta}`} item={item} />)}</div>
     if (block.type === 'github-contributions') return <section className="dp-home-section dp-github-section" key={index}>{block.title && <h2>{block.title}</h2>}{githubUsername ? <GithubContributions username={githubUsername} /> : <div className="dp-github-placeholder">GitHub contributions</div>}</section>
     if (block.type === 'avt') return null
-    if (block.type === 'certifications') { const certifications = block as Extract<HomeBlock, { type: 'certifications' }>; return <section className="dp-home-section dp-certifications" key={index}><h2>{certifications.title}</h2><div className="dp-cert-grid">{certifications.items.map(item => { const imageSrc = item.img.startsWith('/') ? item.img : `/images/cert/${item.img}`; return <div className="dp-certification" key={item.title}><div className="dp-cert-image"><img src={imageSrc} alt={item.title} loading="lazy" decoding="async" /></div><strong>{item.title}</strong><span>{item.org}</span><small>{item.date}</small></div> })}</div></section> }
+    if (block.type === 'certifications') { const certifications = block as Extract<HomeBlock, { type: 'certifications' }>; return <section className="dp-home-section dp-certifications" key={index}><h2>{certifications.title}</h2><div className="dp-cert-grid">{certifications.items.map(item => { const imageSrc = item.img.startsWith('/') ? item.img : `/images/cert/${item.img}`; return <div className="dp-certification" key={item.title}><div className="dp-cert-image"><img src={imageSrc} alt={item.title} loading="lazy" decoding="async" /></div><strong>{item.title}</strong><span>{item.org}</span><small>{formatDate(item.date)}</small></div> })}</div></section> }
     return null
   })}<Footer footer={footer} /></div>
 }

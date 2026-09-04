@@ -5,8 +5,9 @@ import { FaStarRegular as FaRegStar } from './icon-set.js';
 import { LangBadge } from './LangBadge.js';
 import { ToolsSection } from './ToolsSection.js';
 import { Footer } from './Footer.js';
+import { formatDate } from './date.js';
 function RepoCard({ name, description, url, stars, lastUpdate, techs, topics = [], license, selectedTag, onSelectTag }) {
-    const formattedDate = new Date(lastUpdate).toLocaleDateString('vi-VN');
+    const formattedDate = formatDate(lastUpdate);
     return (_jsx("div", { className: "dp-project-card", children: _jsxs("div", { className: "dp-project-card-inner", children: [_jsxs("div", { className: "dp-project-header", children: [_jsx("a", { href: url || '#', target: "_blank", rel: "noopener noreferrer", className: "dp-project-name", children: name }), _jsxs("span", { className: "dp-project-stars", children: [_jsx(FaRegStar, { className: "dp-project-star-icon" }), " ", stars] })] }), _jsx("p", { className: "dp-project-desc", children: description || 'Không có mô tả' }), techs.length > 0 && (_jsx("div", { className: "dp-project-techs", children: techs.map((tech) => (_jsx("button", { type: "button", onClick: () => onSelectTag?.(tech.toLowerCase() === selectedTag?.toLowerCase() ? '' : tech), className: `dp-project-tag-button${tech.toLowerCase() === selectedTag?.toLowerCase() ? ' dp-project-tag-active' : ''}`, title: `Lọc theo ${tech}`, children: _jsx(LangBadge, { lang: tech }) }, tech))) })), topics && topics.length > 0 && (_jsx("div", { className: "dp-project-topics", children: topics.map((topic) => (_jsxs("button", { type: "button", onClick: () => onSelectTag?.(topic.toLowerCase() === selectedTag?.toLowerCase() ? '' : topic), className: `dp-project-topic-badge${topic.toLowerCase() === selectedTag?.toLowerCase() ? ' dp-project-topic-active' : ''}`, title: `Lọc theo #${topic}`, children: ["#", topic] }, topic))) })), _jsxs("div", { className: "dp-project-meta", children: [license && _jsx("span", { className: "dp-project-license", children: license }), _jsxs("span", { className: "dp-project-updated", children: ["Last updated ", formattedDate] })] })] }) }));
 }
 function ProjectsSection({ title, items }) {

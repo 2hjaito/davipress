@@ -14,12 +14,7 @@ import { Footer } from './Footer.js';
 import Link from 'next/link';
 import './theme.css';
 import './theme-dark.css';
-function formatDate(value) {
-    if (!value)
-        return '';
-    const date = new Date(String(value));
-    return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString();
-}
+import { formatDate } from './date.js';
 function editLink(config, source) {
     const base = config.repository?.editLink?.replace(/\/$/, '');
     if (!base)

@@ -186,6 +186,26 @@ sidebar_position: 1
       text-align: center;
     }
 
+    .guide-home-hero__copy {
+      display: contents;
+    }
+
+    .guide-home-hero__title {
+      order: 1;
+    }
+
+    .guide-home-hero__subtitle {
+      order: 2;
+    }
+
+    .guide-home-hero__art {
+      order: 3;
+    }
+
+    .guide-home-hero__actions {
+      order: 4;
+    }
+
     .guide-home-hero__subtitle,
     .guide-home-hero__actions {
       justify-content: center;

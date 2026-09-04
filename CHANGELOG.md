@@ -4,6 +4,22 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.2] - 2026-09-04
+
+### Added
+
+- Add sitemap generation, cross-platform CI, tagged npm publishing, and GitHub Releases.
+- Add integration coverage for CLI initialization, generated routes, widgets, and package contents.
+
+### Fixed
+
+- Remove the accidental self-dependency from the package dependency tree.
+- Make page compilation caching invalidate when Markdown files change.
+- Reject duplicate content routes during discovery.
+- Sanitize rendered Markdown HTML while preserving supported admonitions and SVG icons.
+- Standardize displayed dates as `dd/mm/YYYY`.
+- Refine admonition icons and dark-mode post separators.
+
 ## [0.2.1] - 2026-09-03
 
 ### Changed

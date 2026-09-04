@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { discover, compile, autoSidebar } from '../dist/core/content.js'
+import { discover, compile, loadPages, markdownToHtml, autoSidebar } from '../dist/core/content.js'
 
 test('maps index and nested markdown routes', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'davipress-'))
@@ -16,4 +16,27 @@ test('maps index and nested markdown routes', async () => {
   assert.match(page.html, /id="start"/)
   assert.match(page.html, /answer/)
   assert.equal(autoSidebar([page])[0].link, '/guide/start')
+})
+
+test('refreshes cached pages when a document changes', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'davipress-cache-'))
+  const source = path.join(root, 'index.md')
+  fs.writeFileSync(source, '---\ntitle: First\n---\nContent')
+  assert.equal((await loadPages(root))[0].frontmatter.title, 'First')
+  fs.writeFileSync(source, '---\ntitle: Second\n---\nUpdated content')
+  assert.equal((await loadPages(root))[0].frontmatter.title, 'Second')
+})
+
+test('rejects duplicate content routes', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'davipress-duplicate-'))
+  fs.writeFileSync(path.join(root, 'guide.md'), '# Guide')
+  fs.writeFileSync(path.join(root, 'other.md'), '---\nslug: guide\n---\n# Other')
+  assert.throws(() => discover(root), /Duplicate content route "\/guide"/)
+})
+
+test('sanitizes unsafe HTML while preserving supported content', async () => {
+  const html = await markdownToHtml('<script>alert(1)</script>\n\n[unsafe](javascript:alert(1))')
+  assert.doesNotMatch(html, /<script|javascript:/i)
+  assert.match(await markdownToHtml('> [!NOTE] Safe note'), /class="admonition note"/)
+  assert.match(await markdownToHtml('<span class="custom">Safe</span>'), /class="custom"/)
 })

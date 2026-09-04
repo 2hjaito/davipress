@@ -5,6 +5,7 @@ import { Footer } from './Footer.js';
 import { AvatarStack } from './AvatarStack.js';
 import { GithubContributions } from './GithubContributions.js';
 import { FiGithub, FiYoutube, TbBrandLinkedin as LuLinkedin, TbBrandFacebook as LuFacebook, TbBrandHackerrank, TbBrandTiktok, SiLeetcode } from './icon-set.js';
+import { formatDate } from './date.js';
 const socialIcons = { github: FiGithub, leetcode: SiLeetcode, hackerrank: TbBrandHackerrank, linkedin: LuLinkedin, youtube: FiYoutube, facebook: LuFacebook, tiktok: TbBrandTiktok };
 function ExpandItem({ item }) {
     const [open, setOpen] = useState(false);
@@ -31,7 +32,7 @@ export function HomeView({ blocks, footer }) {
                     return null;
                 if (block.type === 'certifications') {
                     const certifications = block;
-                    return _jsxs("section", { className: "dp-home-section dp-certifications", children: [_jsx("h2", { children: certifications.title }), _jsx("div", { className: "dp-cert-grid", children: certifications.items.map(item => { const imageSrc = item.img.startsWith('/') ? item.img : `/images/cert/${item.img}`; return _jsxs("div", { className: "dp-certification", children: [_jsx("div", { className: "dp-cert-image", children: _jsx("img", { src: imageSrc, alt: item.title, loading: "lazy", decoding: "async" }) }), _jsx("strong", { children: item.title }), _jsx("span", { children: item.org }), _jsx("small", { children: item.date })] }, item.title); }) })] }, index);
+                    return _jsxs("section", { className: "dp-home-section dp-certifications", children: [_jsx("h2", { children: certifications.title }), _jsx("div", { className: "dp-cert-grid", children: certifications.items.map(item => { const imageSrc = item.img.startsWith('/') ? item.img : `/images/cert/${item.img}`; return _jsxs("div", { className: "dp-certification", children: [_jsx("div", { className: "dp-cert-image", children: _jsx("img", { src: imageSrc, alt: item.title, loading: "lazy", decoding: "async" }) }), _jsx("strong", { children: item.title }), _jsx("span", { children: item.org }), _jsx("small", { children: formatDate(item.date) })] }, item.title); }) })] }, index);
                 }
                 return null;
             }), _jsx(Footer, { footer: footer })] });

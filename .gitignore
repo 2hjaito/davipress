@@ -6,6 +6,7 @@ demo/local
 # macOS
 .DS_Store
 **/.DS_Store
+.feat
 
 # Copilot instructions
 .github/copilot-instructions.md

@@ -11,6 +11,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 function rehypeLazyImages() {
     return (tree) => {
@@ -26,6 +27,18 @@ function rehypeLazyImages() {
         visit(tree);
     };
 }
+const sanitizeSchema = {
+    ...defaultSchema,
+    tagNames: [...(defaultSchema.tagNames ?? []), 'svg', 'circle', 'path'],
+    attributes: {
+        ...defaultSchema.attributes,
+        div: [...(defaultSchema.attributes?.div ?? []), 'className'],
+        span: [...(defaultSchema.attributes?.span ?? []), 'className'],
+        svg: ['aria-hidden', 'className', 'viewBox'],
+        circle: ['cx', 'cy', 'r', 'fill', 'fillOpacity', 'stroke', 'strokeWidth'],
+        path: ['d', 'fill'],
+    },
+};
 function files(dir) {
     if (!fs.existsSync(dir))
         return [];
@@ -43,9 +56,19 @@ function resolveRoute(root, file) {
         return fileRoute;
     return `${path.posix.dirname(fileRoute)}/${data.slug}`.replace(/\/+/g, '/');
 }
-export function discover(root = path.resolve(process.cwd(), 'docs')) { return files(root).map(source => ({ source, route: resolveRoute(root, source) })); }
+export function discover(root = path.resolve(process.cwd(), 'docs')) {
+    const entries = files(root).map(source => ({ source, route: resolveRoute(root, source) }));
+    const routes = new Map();
+    for (const entry of entries) {
+        const previous = routes.get(entry.route);
+        if (previous)
+            throw new Error(`Duplicate content route "${entry.route}" in ${previous} and ${entry.source}`);
+        routes.set(entry.route, entry.source);
+    }
+    return entries;
+}
 export async function markdownToHtml(content) {
-    const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(content);
+    const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeSanitize, sanitizeSchema).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(content);
     return result.toString();
 }
 export async function compile(source, root = path.resolve(process.cwd(), 'docs')) {
@@ -60,7 +83,20 @@ export async function compile(source, root = path.resolve(process.cwd(), 'docs')
     });
     return { route: resolveRoute(root, source), source, html, text: content.replace(/[#_*`>\-]/g, ''), frontmatter: { ...parsed.data, title: parsed.data.title ?? first }, headings };
 }
-export async function loadPages(root = path.resolve(process.cwd(), 'docs')) { return Promise.all(discover(root).map(item => compile(item.source, root))); }
+const pagesCache = new Map();
+export function loadPages(root = path.resolve(process.cwd(), 'docs')) {
+    const entries = discover(root);
+    const fingerprint = entries.map(item => {
+        const stat = fs.statSync(item.source);
+        return `${item.source}:${stat.size}:${stat.mtimeMs}`;
+    }).join('|');
+    const cached = pagesCache.get(root);
+    if (cached?.fingerprint === fingerprint)
+        return cached.pages;
+    const pages = Promise.all(entries.map(item => compile(item.source, root)));
+    pagesCache.set(root, { fingerprint, pages });
+    return pages;
+}
 export function autoSidebar(pages) {
     return [...pages].sort((a, b) => (Number(a.frontmatter.sidebar_position ?? 9999) - Number(b.frontmatter.sidebar_position ?? 9999)) || a.route.localeCompare(b.route)).map(page => ({ text: String((page.frontmatter.sidebar_label ?? page.frontmatter.title ?? page.route.slice(1)) || 'Home'), link: page.route }));
 }

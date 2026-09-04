@@ -119,6 +119,10 @@
   border-color: hsl(0 0% 100% / 33%);
 }
 
+.dark .dp-post-card {
+  border-bottom-color: #4b5563;
+}
+
 .dark .dp-projects-title,
 .dark .dp-project-name,
 .dark .dp-tools-title,

@@ -1,4 +1,5 @@
 import type { DavipressConfig } from '../config.js';
+export { loadPages } from '../core/content.js';
 export { loadPosts } from '../core/posts.js';
 export { loadProjects } from '../core/projects.js';
 export { CodeBlockControls } from './CodeBlockControls.js';

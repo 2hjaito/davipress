@@ -1,5 +1,6 @@
 import { compile, discover } from '../core/content.js';
 import { DocsTheme } from './theme.js';
+export { loadPages } from '../core/content.js';
 export { loadPosts } from '../core/posts.js';
 export { loadProjects } from '../core/projects.js';
 export { CodeBlockControls } from './CodeBlockControls.js';

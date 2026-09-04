@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import type { Page } from '../core/content.js'
 import { FaUserPen as FaUserEdit, MdCalendarRange as MdDateRange } from './icon-set.js'
+import { formatDate } from './date.js'
 import Link from 'next/link'
 
 export function PostListView({ posts }: { posts: Page[] }) {
@@ -96,7 +97,7 @@ export function PostListView({ posts }: { posts: Page[] }) {
                 {Boolean(post.frontmatter.date) && (
                   <span>
                     <MdDateRange />
-                    {String(post.frontmatter.date)}
+                    {formatDate(post.frontmatter.date)}
                   </span>
                 )}
               </div>
