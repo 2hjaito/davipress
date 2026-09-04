@@ -11,7 +11,7 @@ export default defineConfig({
   url: SITE_CONFIG.url,
   repository: {
     url: SITE_CONFIG.githubRepo,
-    editLink: `${SITE_CONFIG.githubRepo}/edit/${SITE_CONFIG.githubBranch}`,
+    editLink: `${SITE_CONFIG.githubRepo}/edit/${SITE_CONFIG.githubBranch}/demo/basic`,
   },
   github: {
     username: '2hjaito',
