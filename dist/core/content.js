@@ -32,7 +32,11 @@ const sanitizeSchema = {
     tagNames: [...(defaultSchema.tagNames ?? []), 'svg', 'circle', 'path'],
     attributes: {
         ...defaultSchema.attributes,
+        a: [...(defaultSchema.attributes?.a ?? []).filter(attribute => (Array.isArray(attribute) ? attribute[0] : attribute) !== 'className'), 'className'],
         div: [...(defaultSchema.attributes?.div ?? []), 'className'],
+        h1: [...(defaultSchema.attributes?.h1 ?? []), 'className'],
+        img: [...(defaultSchema.attributes?.img ?? []), 'className'],
+        p: [...(defaultSchema.attributes?.p ?? []), 'className'],
         span: [...(defaultSchema.attributes?.span ?? []), 'className'],
         svg: ['aria-hidden', 'className', 'viewBox'],
         circle: ['cx', 'cy', 'r', 'fill', 'fillOpacity', 'stroke', 'strokeWidth'],

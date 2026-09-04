@@ -4,6 +4,12 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.3] - 2026-09-04
+
+### Fixed
+
+- Preserve custom CSS classes on Markdown headings, paragraphs, links, and images.
+
 ## [0.2.2] - 2026-09-04
 
 ### Added
