@@ -24,6 +24,12 @@ function navItemInfo(item: NavBarItem) {
   return { label: item[0], href: item[1], icon: undefined }
 }
 
+function navKey(href: string) {
+  const source = href.split('/').filter(Boolean).pop() ?? 'home'
+  const normalized = source.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+  return normalized.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item'
+}
+
 export function resolveNavIcon(icon?: string): NavIcon | undefined {
   return resolveIcon(icon)
 }
@@ -44,5 +50,5 @@ export function NavBar({ items = defaultItems, navbar, logo }: { items?: readonl
   }, [])
   useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
   function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light') }
-  return <div className="dp-navbar"><div className="dp-navbar-items">{logo && <Link href="/" title="Home" className="dp-nav-item dp-nav-logo-item" onClick={() => setPathname('/')}><img src={logo} alt="" className="dp-nav-logo" width={28} height={28} decoding="async" /></Link>}{logo && <span className="dp-nav-separator" aria-hidden="true" />}{items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={`${href}-${index}`} href={href} title={label} aria-current={active ? 'page' : undefined} onClick={() => setPathname(href)} className={`dp-nav-item${active ? ' dp-nav-item-active' : ''}`}><Icon name={icon} className="dp-nav-icon" /></Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item">{dark ? <FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
+  return <div className="dp-navbar"><div className="dp-navbar-items">{logo && <Link href="/" title="Home" className="dp-nav-item dp-nav-logo-item nav-logo" onClick={() => setPathname('/')}><img src={logo} alt="" className="dp-nav-logo" width={28} height={28} decoding="async" /></Link>}{logo && <span className="dp-nav-separator" aria-hidden="true" />}{items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={`${href}-${index}`} href={href} title={label} aria-current={active ? 'page' : undefined} onClick={() => setPathname(href)} className={`dp-nav-item nav-${navKey(href)}${active ? ' dp-nav-item-active' : ''}`}><Icon name={icon} className="dp-nav-icon" /></Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item nav-theme-toggle">{dark ? <FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
 }

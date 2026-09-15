@@ -1400,8 +1400,8 @@ a {
 }
 
 .dp-nav-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
   color: currentColor;
   fill: currentColor;
 }
@@ -1421,7 +1421,7 @@ a {
 .dp-nav-item:hover {
   z-index: 1;
   margin: 0 .35rem;
-  transform: scale(1.35) translateY(-.35rem);
+  transform: scale(1.25) translateY(-.25rem);
 }
 
 .dp-site-footer {
