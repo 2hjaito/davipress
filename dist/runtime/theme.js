@@ -66,7 +66,7 @@ function flattenSidebarLinks(items) {
     return items.flatMap(item => [...(item.link ? [normalizeRoute(item.link)] : []), ...flattenSidebarLinks(item.items ?? item.children ?? [])]);
 }
 function SimplePage({ page, footer }) {
-    return _jsxs("div", { className: "dp-home-view dp-simple-page", children: [_jsx("article", { className: "markdown-body dp-home-content", dangerouslySetInnerHTML: { __html: page.html } }), _jsx(Footer, { footer: footer })] });
+    return _jsxs("div", { className: `dp-home-view dp-simple-page${page.route === '/gallery' ? ' dp-gallery-page' : ''}`, children: [_jsx("article", { className: "markdown-body dp-home-content", dangerouslySetInnerHTML: { __html: page.html } }), _jsx(Footer, { footer: footer })] });
 }
 export async function DocsTheme({ page, config }) {
     const nav = config.themeConfig?.nav ?? [];

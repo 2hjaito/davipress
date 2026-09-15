@@ -110,7 +110,7 @@ function flattenSidebarLinks(items: readonly SidebarItem[]): string[] {
 }
 
 function SimplePage({ page, footer }: { page: Page; footer?: string | import('../config.js').FooterConfig }) {
-  return <div className="dp-home-view dp-simple-page"><article className="markdown-body dp-home-content" dangerouslySetInnerHTML={{ __html: page.html }} /><Footer footer={footer} /></div>
+  return <div className={`dp-home-view dp-simple-page${page.route === '/gallery' ? ' dp-gallery-page' : ''}`}><article className="markdown-body dp-home-content" dangerouslySetInnerHTML={{ __html: page.html }} /><Footer footer={footer} /></div>
 }
 
 export async function DocsTheme({ page, config }: { page: Page; config: DavipressConfig }) {

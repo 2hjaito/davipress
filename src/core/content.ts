@@ -14,6 +14,8 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeStringify from 'rehype-stringify'
 import type { DavipressFrontmatter, SidebarItem } from '../config.js'
+import { certificationGroupsHtml, parseCertificationDirective } from './certifications.js'
+import { galleryHtml, parseGalleryDirective } from './gallery.js'
 
 export interface Page { route: string; source: string; html: string; text: string; frontmatter: DavipressFrontmatter; headings: { id: string; text: string; level: number }[] }
 
@@ -44,6 +46,11 @@ const sanitizeSchema = {
     img: [...(defaultSchema.attributes?.img ?? []), 'className'],
     p: [...(defaultSchema.attributes?.p ?? []), 'className'],
     span: [...(defaultSchema.attributes?.span ?? []), 'className'],
+    section: [...(defaultSchema.attributes?.section ?? []), 'className'],
+    header: [...(defaultSchema.attributes?.header ?? []), 'className'],
+    article: [...(defaultSchema.attributes?.article ?? []), 'className'],
+    h3: [...(defaultSchema.attributes?.h3 ?? []), 'className'],
+    small: [...(defaultSchema.attributes?.small ?? []), 'className'],
     svg: ['aria-hidden', 'className', 'viewBox'],
     circle: ['cx', 'cy', 'r', 'fill', 'fillOpacity', 'stroke', 'strokeWidth'],
     path: ['d', 'fill'],
@@ -76,7 +83,16 @@ export function discover(root = path.resolve(process.cwd(), 'docs')) {
   return entries
 }
 export async function markdownToHtml(content: string) {
-  const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeSanitize, sanitizeSchema).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(content)
+  const transformed = content
+    .replace(/^:::davi:cert-groups(?:[ \t]+[^\n]+)?\n[\s\S]*?^:::\s*$/gm, block => {
+      const directive = parseCertificationDirective(block)
+      return directive ? certificationGroupsHtml(directive.title, directive.groups) : block
+    })
+    .replace(/^:::davi:gallery(?:[ \t]+[^\n]+)?\n[\s\S]*?^:::\s*$/gm, block => {
+      const directive = parseGalleryDirective(block)
+      return directive ? galleryHtml(directive.title, directive.items) : block
+    })
+  const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeSanitize, sanitizeSchema).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(transformed)
   return result.toString()
 }
 export async function compile(source: string, root = path.resolve(process.cwd(), 'docs')): Promise<Page> {

@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-const imageSelector = '.markdown-body img, .dp-home-markdown img, .dp-cert-image img';
+const imageSelector = '.markdown-body img, .dp-home-markdown img, .dp-cert-image img, .dp-cert-card-image img, .dp-gallery-showcase-image img';
 export function ImageZoomClient() {
     useEffect(() => {
         let activeClone = null;
@@ -78,7 +78,12 @@ export function ImageZoomClient() {
                 if (image.dataset.zoomBound === 'true')
                     return;
                 image.dataset.zoomBound = 'true';
-                image.addEventListener('click', () => openZoom(image));
+                image.addEventListener('click', event => {
+                    const anchor = image.closest('a');
+                    if (anchor)
+                        event.preventDefault();
+                    openZoom(image);
+                });
             });
         };
         const observer = new MutationObserver(bindImages);

@@ -3,7 +3,7 @@ export const navbarConfig = {
     { label: 'Home', href: '/', icon: 'FaUser' },
     // { label: 'Dự án', href: '/project', icon: 'GiFrogPrince' },
     { label: 'Dự án', href: '/project', icon: 'DvTerminalBlink' },
-    // { label: 'Certs', href: '/cert', icon: 'FaCertificate' },
+    { label: 'Gallery', href: '/gallery', icon: 'FaCertificate' },
     {
       label: 'Tutorials',
       href: '/tutorials',
