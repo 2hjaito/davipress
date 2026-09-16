@@ -4,6 +4,16 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.3.1] - 2026-09-16
+
+### Added
+
+- Add a per-item `nav-<slug>` custom class to each navbar link (derived from its `href`) so sites can target individual nav items in CSS without patching the framework.
+
+### Changed
+
+- Shrink navbar icons from `1.5rem` to `1.25rem` and soften the hover scale/lift effect for a less oversized, jumpy navigation feel.
+
 ## [0.2.3] - 2026-09-04
 
 ### Fixed
