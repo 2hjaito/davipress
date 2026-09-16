@@ -3,7 +3,7 @@ export const navbarConfig = {
     { label: 'Home', href: '/', icon: 'FaUser' },
     // { label: 'Dự án', href: '/project', icon: 'GiFrogPrince' },
     { label: 'Dự án', href: '/project', icon: 'DvTerminalBlink' },
-    { label: 'Gallery', href: '/gallery', icon: 'FaCertificate' },
+    { label: 'Gallery', href: '/gallery', icon: 'IoImages' },
     {
       label: 'Tutorials',
       href: '/tutorials',
@@ -64,8 +64,8 @@ export const navbarConfig = {
       ]
     },
     {
-      label: 'Guide',
-      href: '/guide',
+      label: 'Tài liệu',
+      href: '/docs',
       icon: 'DvAnkhWingsTome',
       items: [
         {
@@ -74,11 +74,11 @@ export const navbarConfig = {
           children: [
             {
               text: "Markdown Syntax",
-              link: "/guide/markdown/syntax",
+              link: "/docs/markdown/syntax",
             },
             {
               text: "Markdown nâng cao",
-              link: "/guide/markdown",
+              link: "/docs/markdown",
             },
           ]
         },
@@ -88,27 +88,27 @@ export const navbarConfig = {
           children: [
             {
               text: "Bắt đầu với Davipress",
-              link: "/guide/davipress/getting-started",
+              link: "/docs/davipress/getting-started",
             },
             {
               text: "Tạo trang mới",
-              link: "/guide/davipress/creating-pages",
+              link: "/docs/davipress/creating-pages",
             },
             {
               text: "Cấu hình Davipress",
-              link: "/guide/configuration",
+              link: "/docs/configuration",
             },
             {
               text: "Theme và giao diện",
-              link: "/guide/theme",
+              link: "/docs/theme",
             },
             {
               text: "Tích hợp Live2D (next-live2d)",
-              link: "/guide/live2d",
+              link: "/docs/live2d",
             },
             {
               text: "Build và deploy",
-              link: "/guide/deployment",
+              link: "/docs/deployment",
             },
           ]
         }

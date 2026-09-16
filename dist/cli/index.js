@@ -156,6 +156,26 @@ function generate() {
     fs.writeFileSync(packageFile, `${JSON.stringify(pkg, null, 2)}\n`);
     fs.mkdirSync(generated, { recursive: true });
     fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'], experimental: { optimizePackageImports: ['davi-icons'] } }\nexport default nextConfig\n");
+    fs.writeFileSync(path.join(generated, 'tsconfig.json'), JSON.stringify({
+        compilerOptions: {
+            target: 'ES2017',
+            lib: ['dom', 'dom.iterable', 'esnext'],
+            allowJs: true,
+            skipLibCheck: true,
+            strict: false,
+            noEmit: true,
+            incremental: true,
+            module: 'esnext',
+            esModuleInterop: true,
+            moduleResolution: 'bundler',
+            resolveJsonModule: true,
+            isolatedModules: true,
+            jsx: 'react-jsx',
+            plugins: [{ name: 'next' }],
+        },
+        include: ['next-env.d.ts', '.next/types/**/*.ts', '**/*.mts', '**/*.ts', '**/*.tsx'],
+        exclude: ['node_modules'],
+    }, null, 2) + '\n');
     const globalsCss = ['globals.css', 'src/globals.css'].find(file => fs.existsSync(path.join(cwd, file)));
     const globalsImport = globalsCss ? `\nimport '../../${globalsCss}'` : '';
     const widgetsDir = ['widgets', 'src/widgets'].find(dir => fs.existsSync(path.join(cwd, dir)) && fs.statSync(path.join(cwd, dir)).isDirectory());
@@ -178,8 +198,6 @@ function generate() {
     linkPublicDir();
     writeGeneratedRoutes();
     fs.writeFileSync(path.join(generated, 'app/[[...slug]]/page.tsx'), "import config from '../../../davipress.config'\nimport { notFound } from 'next/navigation'\nimport { DocsPage, docsMetadata, generateStaticParams as getParams } from 'davipress/runtime'\nexport const generateStaticParams = getParams\nexport async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }) { return docsMetadata({ ...(await params), config }) }\nexport default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) { const content = await DocsPage({ ...(await params), config }); return content ?? notFound() }\n");
-    if (fs.existsSync(path.join(generated, 'tsconfig.json')))
-        fs.unlinkSync(path.join(generated, 'tsconfig.json'));
     writeIfMissing(path.join(generated, 'generated.json'), JSON.stringify({ davipressVersion: '0.1.0', generatorVersion: '1' }, null, 2));
 }
 function runNext(command, args) {

@@ -1,6 +1,7 @@
 node_modules
 .next
 .davipress
+*.tgz
 demo/local
 
 # macOS

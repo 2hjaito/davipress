@@ -159,6 +159,17 @@ npm run clean    # Remove generated files
 
 The same commands are available as `npx davipress <command>`.
 
+## Release
+
+Push a version tag to run the release workflow. It builds and tests the package, publishes it to npm, and creates a GitHub Release with the generated tarball:
+
+```bash
+npm version patch
+git push origin main --follow-tags
+```
+
+Configure an `NPM_TOKEN` repository secret before the first release.
+
 To run a specific published version:
 
 ```bash
