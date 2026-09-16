@@ -1,5 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import path from 'node:path';
 import { autoSidebar, loadPages } from '../core/content.js';
+import { parseLocale } from '../core/i18n.js';
 import { FaUserPen as FaUserEdit, MdCalendarRange as MdDateRange, MdHistory, MdPencilOutline as MdRebaseEdit, IoTimerOutline } from './icon-set.js';
 import { NavBar } from './NavBar.js';
 import { loadHome } from '../core/home.js';
@@ -71,32 +73,37 @@ function SimplePage({ page, footer }) {
 export async function DocsTheme({ page, config }) {
     const nav = config.themeConfig?.nav ?? [];
     const pages = await loadPages();
-    if (page.route === '/') {
-        const home = await loadHome();
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(HomeView, { blocks: home.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
+    const localeHome = config.i18n?.locales.find(locale => locale !== config.i18n?.defaultLocale && page.route === `/${locale}`);
+    if (page.route === '/' || localeHome) {
+        const home = await loadHome(localeHome ? path.resolve(process.cwd(), 'docs', localeHome) : undefined);
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(HomeView, { blocks: home.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo, config: config })] });
     }
+    const { locale: currentLocale, path: logicalRoute } = config.i18n ? parseLocale(page.route, config) : { locale: undefined, path: page.route };
+    const localePrefix = currentLocale && currentLocale !== config.i18n?.defaultLocale ? currentLocale : undefined;
     const layout = String(page.frontmatter.layout ?? '').toLowerCase();
     const isPostList = layout === 'post-list';
-    const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || page.route === '/project' || page.route === '/projects';
-    const posts = await loadPosts();
+    const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || logicalRoute === '/project' || logicalRoute === '/projects';
+    const rawPosts = await loadPosts(localePrefix ? path.resolve(process.cwd(), 'docs', localePrefix) : undefined);
+    // Routes discovered under docs/<locale> lose the locale segment, so re-attach it here.
+    const posts = localePrefix ? rawPosts.map(post => ({ ...post, route: `/${localePrefix}${post.route === '/' ? '' : post.route}` })) : rawPosts;
     const isPost = posts.some(post => post.source === page.source);
     if (isPostList) {
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostListView, { posts: posts }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostListView, { posts: posts }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo, config: config })] });
     }
     if (isProjectList) {
         const projectData = await loadProjects(page, config);
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(ProjectsView, { blocks: projectData.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(ProjectsView, { blocks: projectData.blocks, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo, config: config })] });
     }
     if (isPost) {
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostView, { page: page, pages: posts, config: config }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(PostView, { page: page, pages: posts, config: config }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo, config: config })] });
     }
     const sectionNav = [...nav].sort((a, b) => b.link.length - a.link.length).find(item => matchesNavRoute(page.route, item.link));
     const sidebar = sectionNav?.items ?? sidebarForPage(config, pages, page.route);
     if (sidebar.length === 0) {
-        return _jsxs("div", { className: "davipress-shell", children: [_jsx(SimplePage, { page: page, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
+        return _jsxs("div", { className: "davipress-shell", children: [_jsx(SimplePage, { page: page, footer: config.themeConfig?.footer }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo, config: config })] });
     }
     const ordered = flattenSidebarLinks(sidebar).map(link => pages.find(item => normalizeRoute(item.route) === link)).filter((item) => Boolean(item));
     const index = ordered.findIndex(item => item.route === page.route);
     const hasComments = Boolean(config.giscus?.enabled && page.frontmatter.comments !== false);
-    return _jsxs("div", { className: "davipress-shell", children: [_jsx(DocsChrome, { sidebar: sidebar, headings: page.headings, activeRoute: page.route, title: String(page.frontmatter.title ?? page.headings[0]?.text ?? ''), hasComments: hasComments, sectionLabel: sectionNav?.text, sectionIcon: sectionNav?.icon, footer: null, reveal: true, children: _jsx(DocView, { page: page, config: config, previous: index > 0 ? ordered[index - 1] : undefined, next: index >= 0 ? ordered[index + 1] : undefined }) }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo })] });
+    return _jsxs("div", { className: "davipress-shell", children: [_jsx(DocsChrome, { sidebar: sidebar, headings: page.headings, activeRoute: page.route, title: String(page.frontmatter.title ?? page.headings[0]?.text ?? ''), hasComments: hasComments, sectionLabel: sectionNav?.text, sectionIcon: sectionNav?.icon, footer: null, reveal: true, children: _jsx(DocView, { page: page, config: config, previous: index > 0 ? ordered[index - 1] : undefined, next: index >= 0 ? ordered[index + 1] : undefined }) }), _jsx(NavBar, { items: nav, navbar: config.themeConfig?.navbar, logo: config.themeConfig?.logo, config: config })] });
 }

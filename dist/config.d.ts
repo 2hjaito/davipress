@@ -43,11 +43,18 @@ export interface FooterConfig {
         external?: boolean;
     }>;
 }
+/** locales: mã locale hợp lệ (vd 'en', 'zh'); defaultLocale không xuất hiện trong URL. */
+export interface I18nConfig {
+    defaultLocale: string;
+    locales: string[];
+    localeLabels?: Record<string, string>;
+}
 export interface DavipressConfig {
     title?: string;
     description?: string;
     url?: string;
     lang?: string;
+    i18n?: I18nConfig;
     repository?: {
         url?: string;
         editLink?: string;

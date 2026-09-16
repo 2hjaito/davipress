@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { FaMoon, FaSun } from './icon-set.js'
 import { Icon, resolveIcon } from './icons.js'
 import type { DaviIcon } from './icons.js'
-import type { NavItem } from '../config.js'
+import type { DavipressConfig, NavItem } from '../config.js'
+import { LOCALE_STORAGE_KEY, localizePath, parseLocale } from '../core/i18n.js'
 
 const defaultItems = [
   { text: 'Home', link: '/', icon: 'FaUser' },
@@ -34,21 +36,25 @@ export function resolveNavIcon(icon?: string): NavIcon | undefined {
   return resolveIcon(icon)
 }
 
-export function NavBar({ items = defaultItems, navbar, logo }: { items?: readonly NavBarItem[]; navbar?: { showThemeToggle?: boolean; showThemeSeparator?: boolean }; logo?: string }) {
+export function NavBar({ items = defaultItems, navbar, logo, config }: { items?: readonly NavBarItem[]; navbar?: { showThemeToggle?: boolean; showThemeSeparator?: boolean }; logo?: string; config?: DavipressConfig }) {
   const [dark, setDark] = useState(false)
-  const [pathname, setPathname] = useState('')
+  const pathname = usePathname() ?? '/'
+  const router = useRouter()
   useEffect(() => {
     const saved = localStorage.getItem('dark-mode')
     const enabled = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches)
     setDark(enabled); document.documentElement.classList.toggle('dark', enabled)
   }, [])
-  useEffect(() => {
-    const syncPathname = () => setPathname(window.location.pathname)
-    syncPathname()
-    window.addEventListener('popstate', syncPathname)
-    return () => window.removeEventListener('popstate', syncPathname)
-  }, [])
   useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
   function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light') }
-  return <div className="dp-navbar"><div className="dp-navbar-items">{logo && <Link href="/" title="Home" className="dp-nav-item dp-nav-logo-item nav-logo" onClick={() => setPathname('/')}><img src={logo} alt="" className="dp-nav-logo" width={28} height={28} decoding="async" /></Link>}{logo && <span className="dp-nav-separator" aria-hidden="true" />}{items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={`${href}-${index}`} href={href} title={label} aria-current={active ? 'page' : undefined} onClick={() => setPathname(href)} className={`dp-nav-item nav-${navKey(href)}${active ? ' dp-nav-item-active' : ''}`}><Icon name={icon} className="dp-nav-icon" /></Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item nav-theme-toggle">{dark ? <FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
+  const activePath = config ? parseLocale(pathname, config).path : pathname
+  const currentLocale = config ? parseLocale(pathname, config).locale : undefined
+  const localize = (href: string) => config && currentLocale ? localizePath(href, currentLocale, config) : href
+  // Trên mount và mỗi lần route đổi (kể cả nút back/forward), nếu locale đã lưu khác locale trong URL thì điều hướng lại theo locale đã lưu — giống cơ chế dark-mode.
+  useEffect(() => {
+    if (!config?.i18n || !currentLocale) return
+    const saved = localStorage.getItem(LOCALE_STORAGE_KEY)
+    if (saved && config.i18n.locales.includes(saved) && saved !== currentLocale) router.replace(localizePath(activePath, saved, config))
+  }, [pathname])
+  return <div className="dp-navbar"><div className="dp-navbar-items">{logo && <Link href={localize('/')} title="Home" className="dp-nav-item dp-nav-logo-item nav-logo"><img src={logo} alt="" className="dp-nav-logo" width={28} height={28} decoding="async" /></Link>}{logo && <span className="dp-nav-separator" aria-hidden="true" />}{items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? activePath === '/' : activePath === href || activePath.startsWith(`${href.replace(/\/$/, '')}/`); return <Link key={`${href}-${index}`} href={localize(href)} title={label} aria-current={active ? 'page' : undefined} className={`dp-nav-item nav-${navKey(href)}${active ? ' dp-nav-item-active' : ''}`}><Icon name={icon} className="dp-nav-icon" /></Link> })}{navbar?.showThemeToggle !== false && <>{navbar?.showThemeSeparator !== false && <span className="dp-nav-separator" aria-hidden="true" />}<button type="button" onClick={toggle} title="Toggle theme" className="dp-nav-item nav-theme-toggle">{dark ? <FaMoon className="dp-nav-icon" aria-hidden="true" /> : <FaSun className="dp-nav-icon" aria-hidden="true" />}</button></>}</div></div>
 }

@@ -4,6 +4,22 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-09-16
+
+### Added
+
+- Add `i18n` config (`defaultLocale`, `locales`, `localeLabels`) to `davipress.config.ts`.
+- Add `parseLocale`/`localizePath` helpers and a `LocaleSwitcher` runtime component (exported from the node-free `davipress/runtime/i18n` subpath) for locale-prefixed routing (default locale has no URL prefix).
+- Persist the user's chosen locale to `localStorage`, so back/forward navigation and page reloads re-apply it automatically, mirroring the existing dark-mode behavior.
+
+### Fixed
+
+- Render the home page's `:::davi:` directive blocks correctly on locale-prefixed home routes (e.g. `/ja`), instead of leaking them as raw text.
+- Make the navbar's active-item state and link targets locale-aware, and keep the current locale when navigating between sections.
+- Make post listings and detail pages read from the correct `docs/<locale>/posts` folder instead of always falling back to the default locale.
+- Replace manual `window.location`/`popstate` pathname tracking in `NavBar`/`LocaleSwitcher` with Next.js's `usePathname()`, fixing stale routes after client-side `<Link>` navigation.
+- Avoid the locale switcher/mobile sidebar toggle overlapping on small and large screens.
+
 ## [0.3.1] - 2026-09-16
 
 ### Added

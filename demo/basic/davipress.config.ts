@@ -8,6 +8,11 @@ export default defineConfig({
   title: typeof layoutMetadata.title === 'object' && layoutMetadata.title && 'default' in layoutMetadata.title ? String(layoutMetadata.title.default) : 'Davipress UI Demo',
   description: layoutMetadata.description ?? 'A visual test site for the Davipress default theme.',
   lang: 'vi',
+  i18n: {
+    defaultLocale: 'vi',
+    locales: ['vi', 'en', 'ja'],
+    localeLabels: { vi: 'VI', en: 'EN', ja: 'JA' },
+  },
   url: SITE_CONFIG.url,
   repository: {
     url: SITE_CONFIG.githubRepo,

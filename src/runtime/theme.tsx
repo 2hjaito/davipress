@@ -1,6 +1,8 @@
 import type { DavipressConfig, SidebarItem } from '../config.js'
+import path from 'node:path'
 import { autoSidebar, loadPages } from '../core/content.js'
 import type { Page } from '../core/content.js'
+import { parseLocale } from '../core/i18n.js'
 import { FaUserPen as FaUserEdit, MdCalendarRange as MdDateRange, MdHistory, MdPencilOutline as MdRebaseEdit, IoTimerOutline } from './icon-set.js'
 import { NavBar } from './NavBar.js'
 import { loadHome } from '../core/home.js'
@@ -116,34 +118,39 @@ function SimplePage({ page, footer }: { page: Page; footer?: string | import('..
 export async function DocsTheme({ page, config }: { page: Page; config: DavipressConfig }) {
   const nav = config.themeConfig?.nav ?? []
   const pages = await loadPages()
-  if (page.route === '/') {
-    const home = await loadHome()
-    return <div className="davipress-shell"><HomeView blocks={home.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
+  const localeHome = config.i18n?.locales.find(locale => locale !== config.i18n?.defaultLocale && page.route === `/${locale}`)
+  if (page.route === '/' || localeHome) {
+    const home = await loadHome(localeHome ? path.resolve(process.cwd(), 'docs', localeHome) : undefined)
+    return <div className="davipress-shell"><HomeView blocks={home.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} config={config} /></div>
   }
+  const { locale: currentLocale, path: logicalRoute } = config.i18n ? parseLocale(page.route, config) : { locale: undefined, path: page.route }
+  const localePrefix = currentLocale && currentLocale !== config.i18n?.defaultLocale ? currentLocale : undefined
   const layout = String(page.frontmatter.layout ?? '').toLowerCase()
   const isPostList = layout === 'post-list'
-  const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || page.route === '/project' || page.route === '/projects'
-  const posts = await loadPosts()
+  const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || logicalRoute === '/project' || logicalRoute === '/projects'
+  const rawPosts = await loadPosts(localePrefix ? path.resolve(process.cwd(), 'docs', localePrefix) : undefined)
+  // Routes discovered under docs/<locale> lose the locale segment, so re-attach it here.
+  const posts = localePrefix ? rawPosts.map(post => ({ ...post, route: `/${localePrefix}${post.route === '/' ? '' : post.route}` })) : rawPosts
   const isPost = posts.some(post => post.source === page.source)
 
   if (isPostList) {
-    return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
+    return <div className="davipress-shell"><PostListView posts={posts} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} config={config} /></div>
   }
 
   if (isProjectList) {
     const projectData = await loadProjects(page, config)
-    return <div className="davipress-shell"><ProjectsView blocks={projectData.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
+    return <div className="davipress-shell"><ProjectsView blocks={projectData.blocks} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} config={config} /></div>
   }
 
   if (isPost) {
-    return <div className="davipress-shell"><PostView page={page} pages={posts} config={config} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
+    return <div className="davipress-shell"><PostView page={page} pages={posts} config={config} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} config={config} /></div>
   }
 
   const sectionNav = [...nav].sort((a, b) => b.link.length - a.link.length).find(item => matchesNavRoute(page.route, item.link))
   const sidebar = sectionNav?.items ?? sidebarForPage(config, pages, page.route)
 
   if (sidebar.length === 0) {
-    return <div className="davipress-shell"><SimplePage page={page} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} /></div>
+    return <div className="davipress-shell"><SimplePage page={page} footer={config.themeConfig?.footer} /><NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} config={config} /></div>
   }
 
   const ordered = flattenSidebarLinks(sidebar).map(link => pages.find(item => normalizeRoute(item.route) === link)).filter((item): item is Page => Boolean(item))
@@ -153,6 +160,6 @@ export async function DocsTheme({ page, config }: { page: Page; config: Davipres
     <DocsChrome sidebar={sidebar} headings={page.headings} activeRoute={page.route} title={String(page.frontmatter.title ?? page.headings[0]?.text ?? '')} hasComments={hasComments} sectionLabel={sectionNav?.text} sectionIcon={sectionNav?.icon} footer={null} reveal>
       <DocView page={page} config={config} previous={index > 0 ? ordered[index - 1] : undefined} next={index >= 0 ? ordered[index + 1] : undefined} />
     </DocsChrome>
-    <NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} />
+    <NavBar items={nav} navbar={config.themeConfig?.navbar} logo={config.themeConfig?.logo} config={config} />
   </div>
 }

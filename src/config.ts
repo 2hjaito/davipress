@@ -8,8 +8,11 @@ export interface DavipressFrontmatter {
 export interface SidebarItem { text: string; link?: string; icon?: string; items?: readonly SidebarItem[]; children?: readonly SidebarItem[]; collapsed?: boolean; collapsible?: boolean }
 export interface NavItem { text: string; link: string; icon?: string; items?: readonly SidebarItem[] }
 export interface FooterConfig { copyright: string; attribution?: { label: string; text: string; href: string; external?: boolean }; links?: ReadonlyArray<{ type: 'source' | 'rss'; label: string; href: string; ariaLabel: string; external?: boolean }> }
+/** locales: mã locale hợp lệ (vd 'en', 'zh'); defaultLocale không xuất hiện trong URL. */
+export interface I18nConfig { defaultLocale: string; locales: string[]; localeLabels?: Record<string, string> }
 export interface DavipressConfig {
   title?: string; description?: string; url?: string; lang?: string
+  i18n?: I18nConfig
   repository?: { url?: string; editLink?: string }
   github?: { username?: string; topic?: string }
   themeConfig?: { logo?: string; nav?: NavItem[]; sidebar?: 'auto' | Record<string, SidebarItem[]>; socialLinks?: Record<string, string>; footer?: string | FooterConfig; navbar?: { showThemeToggle?: boolean; showThemeSeparator?: boolean } }
