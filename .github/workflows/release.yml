@@ -28,7 +28,7 @@ jobs:
         run: test "${GITHUB_REF_NAME#v}" = "$(node -p "require('./package.json').version")"
 
       - name: Pack release artifact
-        run: echo "PACKAGE_TARBALL=$(npm pack --silent)" >> "$GITHUB_ENV"
+        run: echo "PACKAGE_TARBALL=$(npm pack --ignore-scripts --silent)" >> "$GITHUB_ENV"
 
       - name: Publish to npm
         run: npm publish --provenance
