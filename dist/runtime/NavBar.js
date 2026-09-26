@@ -24,6 +24,28 @@ function navKey(href) {
     const normalized = source.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
     return normalized.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
 }
+const cssLength = (value) => typeof value === 'number' ? `${value}px` : value;
+// Maps navbar config to the CSS custom properties theme.css reads, so unset options keep the stylesheet defaults
+function navbarStyle(navbar) {
+    if (!navbar)
+        return undefined;
+    const vars = {};
+    if (navbar.itemSize !== undefined)
+        vars['--dp-nav-item-size'] = cssLength(navbar.itemSize);
+    if (navbar.iconSize !== undefined)
+        vars['--dp-nav-icon-size'] = cssLength(navbar.iconSize);
+    if (navbar.gap !== undefined)
+        vars['--dp-nav-gap'] = cssLength(navbar.gap);
+    if (navbar.hoverScale !== undefined)
+        vars['--dp-nav-hover-scale'] = Math.max(1, navbar.hoverScale);
+    if (navbar.hoverLift !== undefined)
+        vars['--dp-nav-hover-lift'] = cssLength(navbar.hoverLift);
+    if (navbar.neighborScale !== undefined)
+        vars['--dp-nav-neighbor-scale'] = Math.max(1, navbar.neighborScale);
+    if (navbar.hoverDuration !== undefined)
+        vars['--dp-nav-hover-duration'] = `${Math.max(0, navbar.hoverDuration)}ms`;
+    return vars;
+}
 export function resolveNavIcon(icon) {
     return resolveIcon(icon);
 }
@@ -37,7 +59,8 @@ export function NavBar({ items = defaultItems, navbar, logo, config }) {
         setDark(enabled);
         document.documentElement.classList.toggle('dark', enabled);
     }, []);
-    useEffect(() => { let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY; }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll); }, []);
+    useEffect(() => { if (navbar?.autoHide === false)
+        return; let lastY = 0; const onScroll = () => { const goingDown = window.scrollY > lastY; document.querySelector('.dp-navbar')?.classList.toggle('dp-nav-hide', goingDown); lastY = window.scrollY; }; window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll); }, [navbar?.autoHide]);
     function toggle() { const next = !dark; setDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('dark-mode', next ? 'dark' : 'light'); }
     const activePath = config ? parseLocale(pathname, config).path : pathname;
     const currentLocale = config ? parseLocale(pathname, config).locale : undefined;
@@ -50,5 +73,5 @@ export function NavBar({ items = defaultItems, navbar, logo, config }) {
         if (saved && config.i18n.locales.includes(saved) && saved !== currentLocale)
             router.replace(localizePath(activePath, saved, config));
     }, [pathname]);
-    return _jsx("div", { className: "dp-navbar", children: _jsxs("div", { className: "dp-navbar-items", children: [logo && _jsx(Link, { href: localize('/'), title: "Home", className: "dp-nav-item dp-nav-logo-item nav-logo", children: _jsx("img", { src: logo, alt: "", className: "dp-nav-logo", width: 28, height: 28, decoding: "async" }) }), logo && _jsx("span", { className: "dp-nav-separator", "aria-hidden": "true" }), items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? activePath === '/' : activePath === href || activePath.startsWith(`${href.replace(/\/$/, '')}/`); return _jsx(Link, { href: localize(href), title: label, "aria-current": active ? 'page' : undefined, className: `dp-nav-item nav-${navKey(href)}${active ? ' dp-nav-item-active' : ''}`, children: _jsx(Icon, { name: icon, className: "dp-nav-icon" }) }, `${href}-${index}`); }), navbar?.showThemeToggle !== false && _jsxs(_Fragment, { children: [navbar?.showThemeSeparator !== false && _jsx("span", { className: "dp-nav-separator", "aria-hidden": "true" }), _jsx("button", { type: "button", onClick: toggle, title: "Toggle theme", className: "dp-nav-item nav-theme-toggle", children: dark ? _jsx(FaMoon, { className: "dp-nav-icon", "aria-hidden": "true" }) : _jsx(FaSun, { className: "dp-nav-icon", "aria-hidden": "true" }) })] })] }) });
+    return _jsx("div", { className: "dp-navbar", style: navbarStyle(navbar), children: _jsxs("div", { className: "dp-navbar-items", children: [logo && _jsx(Link, { href: localize('/'), title: "Home", className: "dp-nav-item dp-nav-logo-item nav-logo", children: _jsx("img", { src: logo, alt: "", className: "dp-nav-logo", width: 28, height: 28, decoding: "async" }) }), logo && _jsx("span", { className: "dp-nav-separator", "aria-hidden": "true" }), items.map((item, index) => { const { label, href, icon } = navItemInfo(item); const active = href === '/' ? activePath === '/' : activePath === href || activePath.startsWith(`${href.replace(/\/$/, '')}/`); return _jsx(Link, { href: localize(href), title: label, "aria-current": active ? 'page' : undefined, className: `dp-nav-item nav-${navKey(href)}${active ? ' dp-nav-item-active' : ''}`, children: _jsx(Icon, { name: icon, className: "dp-nav-icon" }) }, `${href}-${index}`); }), navbar?.showThemeToggle !== false && _jsxs(_Fragment, { children: [navbar?.showThemeSeparator !== false && _jsx("span", { className: "dp-nav-separator", "aria-hidden": "true" }), _jsx("button", { type: "button", onClick: toggle, title: "Toggle theme", className: "dp-nav-item nav-theme-toggle", children: dark ? _jsx(FaMoon, { className: "dp-nav-icon", "aria-hidden": "true" }) : _jsx(FaSun, { className: "dp-nav-icon", "aria-hidden": "true" }) })] })] }) });
 }

@@ -43,6 +43,28 @@ export interface FooterConfig {
         external?: boolean;
     }>;
 }
+/** CSS lengths accept a number (px) or any CSS length string (e.g. '2.75rem'). */
+export type CssLength = number | string;
+export interface NavbarConfig {
+    showThemeToggle?: boolean;
+    showThemeSeparator?: boolean;
+    /** Button size (default '2.75rem'). */
+    itemSize?: CssLength;
+    /** Icon size inside each button (default '1.25rem'). */
+    iconSize?: CssLength;
+    /** Space between buttons (default '.5rem'). */
+    gap?: CssLength;
+    /** Scale of the hovered button; 1 disables the magnify effect (default 1.25). */
+    hoverScale?: number;
+    /** How far the hovered button rises (default '.25rem'). */
+    hoverLift?: CssLength;
+    /** Scale of the buttons next to the hovered one, for a macOS-dock feel; 1 disables it (default 1). */
+    neighborScale?: number;
+    /** Hover animation duration in ms (default 300). */
+    hoverDuration?: number;
+    /** Hide the navbar while scrolling down (default true). */
+    autoHide?: boolean;
+}
 /** locales: mã locale hợp lệ (vd 'en', 'zh'); defaultLocale không xuất hiện trong URL. */
 export interface I18nConfig {
     defaultLocale: string;
@@ -69,10 +91,7 @@ export interface DavipressConfig {
         sidebar?: 'auto' | Record<string, SidebarItem[]>;
         socialLinks?: Record<string, string>;
         footer?: string | FooterConfig;
-        navbar?: {
-            showThemeToggle?: boolean;
-            showThemeSeparator?: boolean;
-        };
+        navbar?: NavbarConfig;
     };
     giscus?: {
         enabled: boolean;

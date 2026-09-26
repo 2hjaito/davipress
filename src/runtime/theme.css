@@ -1396,7 +1396,7 @@ a {
 .dp-navbar-items {
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: var(--dp-nav-gap, .5rem);
   padding: .5rem 1rem;
   border: 1px solid var(--navbar-border);
   border-radius: 1rem;
@@ -1404,10 +1404,19 @@ a {
   box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
 }
 
+.dp-navbar {
+  --dp-nav-item-size: 2.75rem;
+  --dp-nav-icon-size: 1.25rem;
+  --dp-nav-hover-scale: 1.25;
+  --dp-nav-hover-lift: .25rem;
+  --dp-nav-neighbor-scale: 1;
+  --dp-nav-hover-duration: .3s;
+}
+
 .dp-nav-item {
   display: flex;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: var(--dp-nav-item-size);
+  height: var(--dp-nav-item-size);
   align-items: center;
   justify-content: center;
   border: 0;
@@ -1415,12 +1424,12 @@ a {
   background: var(--nav-item-background);
   color: var(--nav-item-color);
   text-decoration: none;
-  transition: transform .3s ease, margin .3s ease, background-color .2s ease, color .2s ease;
+  transition: transform var(--dp-nav-hover-duration) ease, margin var(--dp-nav-hover-duration) ease, background-color .2s ease, color .2s ease;
 }
 
 .dp-nav-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--dp-nav-icon-size);
+  height: var(--dp-nav-icon-size);
   color: currentColor;
   fill: currentColor;
 }
@@ -1439,8 +1448,22 @@ a {
 
 .dp-nav-item:hover {
   z-index: 1;
-  margin: 0 .35rem;
-  transform: scale(1.25) translateY(-.25rem);
+  /* Reserve the extra width the scaled button takes so it does not overlap its neighbours */
+  margin: 0 calc((var(--dp-nav-hover-scale) - 1) * var(--dp-nav-item-size) / 2);
+  transform: scale(var(--dp-nav-hover-scale)) translateY(calc(-1 * var(--dp-nav-hover-lift)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dp-navbar {
+    --dp-nav-hover-duration: 0s;
+  }
+}
+
+/* Dock effect: buttons next to the hovered one grow a little too (off while neighborScale is 1) */
+.dp-nav-item:hover + .dp-nav-item,
+.dp-nav-item:has(+ .dp-nav-item:hover) {
+  margin: 0 calc((var(--dp-nav-neighbor-scale) - 1) * var(--dp-nav-item-size) / 2);
+  transform: scale(var(--dp-nav-neighbor-scale)) translateY(calc(-1 * var(--dp-nav-hover-lift) * (var(--dp-nav-neighbor-scale) - 1) / max(var(--dp-nav-hover-scale) - 1, .01)));
 }
 
 .dp-locale-switcher {
@@ -1838,16 +1861,13 @@ html.dark,
   }
 
   .dp-navbar-items {
-    gap: .2rem;
+    gap: var(--dp-nav-gap, .2rem);
     padding: .4rem;
   }
 
-  .dp-nav-item {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  .dp-nav-item:hover {
+  .dp-nav-item:hover,
+  .dp-nav-item:hover + .dp-nav-item,
+  .dp-nav-item:has(+ .dp-nav-item:hover) {
     margin: 0;
     transform: none;
   }
@@ -2776,14 +2796,14 @@ html.dark,
   }
 
   .dp-navbar-items {
-    gap: .5rem;
+    gap: var(--dp-nav-gap, .5rem);
     padding: .5rem 1rem;
     border-radius: 1rem;
   }
 
   .dp-nav-item {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: var(--dp-nav-item-size);
+    height: var(--dp-nav-item-size);
   }
 
   .dp-post-article,

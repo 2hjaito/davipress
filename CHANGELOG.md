@@ -4,6 +4,17 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Add navbar customization options under `themeConfig.navbar`: `itemSize`, `iconSize`, `gap`, `hoverScale`, `hoverLift`, `neighborScale` (macOS-dock-style magnify of adjacent buttons), `hoverDuration` and `autoHide`. They map to `--dp-nav-*` CSS custom properties that sites can also override directly.
+- Export the `NavbarConfig` and `CssLength` types.
+
+### Fixed
+
+- Fix the release workflow's pack step, which captured `prepack` output in the tarball name.
+
 ## [0.4.2] - 2026-09-26
 
 ### Added

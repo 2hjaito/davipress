@@ -138,6 +138,36 @@ themeConfig: {
 - `showThemeToggle`: hiển thị nút đổi sáng/tối.
 - `showThemeSeparator`: hiển thị vạch ngăn trước cụm theme.
 
+## Tuỳ chỉnh kích thước và hiệu ứng navbar
+
+```ts
+themeConfig: {
+  navbar: {
+    itemSize: '2.75rem',  // kích thước mỗi nút (số = px)
+    iconSize: 20,         // kích thước icon trong nút
+    gap: '.5rem',         // khoảng cách giữa các nút
+    hoverScale: 1.4,      // độ phóng to khi hover, 1 = tắt
+    hoverLift: 6,         // nút nhô lên bao nhiêu khi hover
+    neighborScale: 1.15,  // các nút kề bên cũng phóng nhẹ như dock macOS, 1 = tắt
+    hoverDuration: 250,   // thời gian hiệu ứng (ms)
+    autoHide: false,      // không ẩn navbar khi cuộn xuống
+  },
+}
+```
+
+| Tuỳ chọn | Mặc định | Ý nghĩa |
+| --- | --- | --- |
+| `itemSize` | `'2.75rem'` | Kích thước nút. Nhận số (px) hoặc chuỗi CSS. |
+| `iconSize` | `'1.25rem'` | Kích thước icon. |
+| `gap` | `'.5rem'` | Khoảng cách giữa các nút. |
+| `hoverScale` | `1.25` | Tỉ lệ phóng to nút đang hover. |
+| `hoverLift` | `'.25rem'` | Độ nhô lên của nút đang hover. |
+| `neighborScale` | `1` | Tỉ lệ phóng của hai nút kề bên (hiệu ứng dock). |
+| `hoverDuration` | `300` | Thời gian chuyển động (ms). |
+| `autoHide` | `true` | Ẩn navbar khi cuộn xuống. |
+
+Các tuỳ chọn được đưa vào navbar dưới dạng biến CSS (`--dp-nav-item-size`, `--dp-nav-icon-size`, `--dp-nav-gap`, `--dp-nav-hover-scale`, `--dp-nav-hover-lift`, `--dp-nav-neighbor-scale`, `--dp-nav-hover-duration`), nên cũng có thể ghi đè trực tiếp trong CSS của site. Trên màn hình nhỏ (≤ 800px) hiệu ứng hover được tắt.
+
 ## Footer
 
 Footer có thể là chuỗi đơn giản:
