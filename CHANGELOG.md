@@ -4,6 +4,22 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Highlight every highlight.js language in fenced code blocks (plus `vue`/`svelte`/`astro`, `mdx` and `jsonc` aliases), with a built-in light/dark token theme, per-language refinements (shell, JSON/YAML/TOML, SQL, CSS, Markdown, diff) and a language label tinted with each language's colour.
+
+- Add a per-button `social-<icon>` class (plus a shared `dp-social` class) to each home page social link (e.g. `social-github`, `social-linkedin`) so sites can style individual buttons in CSS.
+
+### Changed
+
+- Give the home page social buttons the navbar's dock-style magnify on hover/focus, growing upward from a fixed bottom edge.
+
+### Fixed
+
+- Keep the GitHub contributions calendar scrolled to the latest week (today) after it loads or resizes.
+
 ## [0.4.0] - 2026-09-16
 
 ### Added

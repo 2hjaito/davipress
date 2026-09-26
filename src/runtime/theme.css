@@ -87,6 +87,7 @@ a {
 .dp-socials {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-end;
   gap: .5rem;
   margin-top: 1.5rem;
 }
@@ -101,11 +102,29 @@ a {
   background: #e2e6ee;
   color: var(--contact-bc-dark);
   text-decoration: none;
-  transition: background-color .2s ease-out;
+  transform-origin: bottom center;
+  transition: transform .3s ease, margin .3s ease, background-color .2s ease-out;
 }
 
-.dp-socials a:hover {
+/* Dock-style magnify: grows upward from a fixed bottom edge, pushing neighbours aside */
+.dp-socials a:hover,
+.dp-socials a:focus-visible {
+  z-index: 1;
+  margin: 0 .25rem;
   background: #d8dee8;
+  transform: scale(1.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dp-socials a {
+    transition: background-color .2s ease-out;
+  }
+
+  .dp-socials a:hover,
+  .dp-socials a:focus-visible {
+    margin: 0;
+    transform: none;
+  }
 }
 
 .dp-home-markdown {
@@ -2371,6 +2390,301 @@ html.dark,
   background: rgb(55 65 81 / .9);
   color: #e5e7eb;
 }
+
+/* ---------- Syntax highlighting (highlight.js token classes, Davipress palette) ---------- */
+
+.markdown-body pre code.hljs {
+  display: block;
+  background: transparent;
+  color: inherit;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6a737d;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-doctag,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  color: #d73a49;
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  color: #6f42c1;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: #005cc5;
+}
+
+.hljs-regexp,
+.hljs-string,
+.hljs-meta .hljs-string {
+  color: #032f62;
+}
+
+.hljs-built_in,
+.hljs-symbol {
+  color: #e36209;
+}
+
+.hljs-name,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+  color: #22863a;
+}
+
+.hljs-tag {
+  color: #6a737d;
+}
+
+.hljs-subst,
+.hljs-params {
+  color: inherit;
+}
+
+.hljs-section {
+  color: #005cc5;
+  font-weight: 700;
+}
+
+.hljs-bullet {
+  color: #735c0f;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+.hljs-link {
+  color: #032f62;
+  text-decoration: underline;
+}
+
+.hljs-addition {
+  display: inline-block;
+  width: 100%;
+  background: #e6ffed;
+  color: #22863a;
+}
+
+.hljs-deletion {
+  display: inline-block;
+  width: 100%;
+  background: #ffeef0;
+  color: #b31d28;
+}
+
+.hljs-char.escape_,
+.hljs-code {
+  color: #22863a;
+}
+
+/* Language-specific refinements */
+
+.dp-code-frame[data-lang="bash"] .hljs-built_in,
+.dp-code-frame[data-lang="sh"] .hljs-built_in,
+.dp-code-frame[data-lang="shell"] .hljs-built_in,
+.dp-code-frame[data-lang="zsh"] .hljs-built_in,
+.dp-code-frame[data-lang="powershell"] .hljs-built_in {
+  color: #6f42c1;
+}
+
+.dp-code-frame[data-lang="bash"] .hljs-variable,
+.dp-code-frame[data-lang="sh"] .hljs-variable,
+.dp-code-frame[data-lang="zsh"] .hljs-variable {
+  color: #e36209;
+}
+
+.dp-code-frame[data-lang="json"] .hljs-attr,
+.dp-code-frame[data-lang="jsonc"] .hljs-attr,
+.dp-code-frame[data-lang="yaml"] .hljs-attr,
+.dp-code-frame[data-lang="yml"] .hljs-attr,
+.dp-code-frame[data-lang="toml"] .hljs-attr,
+.dp-code-frame[data-lang="ini"] .hljs-attr {
+  color: #22863a;
+}
+
+.dp-code-frame[data-lang="sql"] .hljs-keyword,
+.dp-code-frame[data-lang="mysql"] .hljs-keyword,
+.dp-code-frame[data-lang="pgsql"] .hljs-keyword,
+.dp-code-frame[data-lang="tsql"] .hljs-keyword {
+  font-weight: 600;
+}
+
+.dp-code-frame[data-lang="css"] .hljs-attribute,
+.dp-code-frame[data-lang="scss"] .hljs-attribute,
+.dp-code-frame[data-lang="sass"] .hljs-attribute,
+.dp-code-frame[data-lang="less"] .hljs-attribute {
+  color: #005cc5;
+}
+
+.dp-code-frame[data-lang="md"] .hljs-section,
+.dp-code-frame[data-lang="markdown"] .hljs-section,
+.dp-code-frame[data-lang="mdx"] .hljs-section {
+  color: #d73a49;
+}
+
+.dp-code-frame[data-lang="diff"] .hljs-meta {
+  color: #6f42c1;
+}
+
+/* Language label tinted with the language's brand colour */
+
+.dp-code-frame .dp-code-language {
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.dp-code-frame:is([data-lang="ts"], [data-lang="typescript"], [data-lang="tsx"]) .dp-code-language { color: #3178c6; }
+.dp-code-frame:is([data-lang="js"], [data-lang="javascript"], [data-lang="jsx"], [data-lang="mjs"]) .dp-code-language { color: #c9a800; }
+.dp-code-frame:is([data-lang="py"], [data-lang="python"]) .dp-code-language { color: #3572a5; }
+.dp-code-frame:is([data-lang="java"]) .dp-code-language { color: #b07219; }
+.dp-code-frame:is([data-lang="kotlin"], [data-lang="kt"]) .dp-code-language { color: #7f52ff; }
+.dp-code-frame:is([data-lang="go"], [data-lang="golang"]) .dp-code-language { color: #00add8; }
+.dp-code-frame:is([data-lang="rust"], [data-lang="rs"]) .dp-code-language { color: #b7410e; }
+.dp-code-frame:is([data-lang="c"], [data-lang="cpp"], [data-lang="c++"], [data-lang="h"]) .dp-code-language { color: #f34b7d; }
+.dp-code-frame:is([data-lang="cs"], [data-lang="csharp"]) .dp-code-language { color: #178600; }
+.dp-code-frame:is([data-lang="php"]) .dp-code-language { color: #4f5d95; }
+.dp-code-frame:is([data-lang="rb"], [data-lang="ruby"]) .dp-code-language { color: #cc342d; }
+.dp-code-frame:is([data-lang="swift"]) .dp-code-language { color: #f05138; }
+.dp-code-frame:is([data-lang="dart"]) .dp-code-language { color: #00b4ab; }
+.dp-code-frame:is([data-lang="html"], [data-lang="xml"], [data-lang="svg"]) .dp-code-language { color: #e34c26; }
+.dp-code-frame:is([data-lang="vue"]) .dp-code-language { color: #41b883; }
+.dp-code-frame:is([data-lang="svelte"]) .dp-code-language { color: #ff3e00; }
+.dp-code-frame:is([data-lang="css"]) .dp-code-language { color: #663399; }
+.dp-code-frame:is([data-lang="scss"], [data-lang="sass"]) .dp-code-language { color: #cd6799; }
+.dp-code-frame:is([data-lang="json"], [data-lang="jsonc"]) .dp-code-language { color: #8a6d00; }
+.dp-code-frame:is([data-lang="yaml"], [data-lang="yml"], [data-lang="toml"]) .dp-code-language { color: #cb171e; }
+.dp-code-frame:is([data-lang="sql"], [data-lang="mysql"], [data-lang="pgsql"], [data-lang="tsql"]) .dp-code-language { color: #016089; }
+.dp-code-frame:is([data-lang="bash"], [data-lang="sh"], [data-lang="shell"], [data-lang="zsh"], [data-lang="powershell"]) .dp-code-language { color: #3a8a3a; }
+.dp-code-frame:is([data-lang="dockerfile"], [data-lang="docker"]) .dp-code-language { color: #2496ed; }
+.dp-code-frame:is([data-lang="md"], [data-lang="markdown"], [data-lang="mdx"]) .dp-code-language { color: #6a737d; }
+
+/* Dark palette */
+
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: #8b949e;
+}
+
+.dark .hljs-keyword,
+.dark .hljs-doctag,
+.dark .hljs-meta .hljs-keyword,
+.dark .hljs-template-tag,
+.dark .hljs-template-variable,
+.dark .hljs-type,
+.dark .hljs-variable.language_ {
+  color: #ff7b72;
+}
+
+.dark .hljs-title,
+.dark .hljs-title.class_,
+.dark .hljs-title.class_.inherited__,
+.dark .hljs-title.function_ {
+  color: #d2a8ff;
+}
+
+.dark .hljs-attr,
+.dark .hljs-attribute,
+.dark .hljs-literal,
+.dark .hljs-meta,
+.dark .hljs-number,
+.dark .hljs-operator,
+.dark .hljs-variable,
+.dark .hljs-selector-attr,
+.dark .hljs-selector-class,
+.dark .hljs-selector-id,
+.dark .hljs-section {
+  color: #79c0ff;
+}
+
+.dark .hljs-regexp,
+.dark .hljs-string,
+.dark .hljs-meta .hljs-string,
+.dark .hljs-link {
+  color: #a5d6ff;
+}
+
+.dark .hljs-built_in,
+.dark .hljs-symbol {
+  color: #ffa657;
+}
+
+.dark .hljs-name,
+.dark .hljs-selector-tag,
+.dark .hljs-selector-pseudo,
+.dark .hljs-char.escape_,
+.dark .hljs-code {
+  color: #7ee787;
+}
+
+.dark .hljs-tag {
+  color: #8b949e;
+}
+
+.dark .hljs-bullet {
+  color: #f2cc60;
+}
+
+.dark .hljs-addition {
+  background: rgb(46 160 67 / .18);
+  color: #aff5b4;
+}
+
+.dark .hljs-deletion {
+  background: rgb(248 81 73 / .18);
+  color: #ffdcd7;
+}
+
+.dark .dp-code-frame:is([data-lang="bash"], [data-lang="sh"], [data-lang="shell"], [data-lang="zsh"], [data-lang="powershell"]) .hljs-built_in,
+.dark .dp-code-frame[data-lang="diff"] .hljs-meta {
+  color: #d2a8ff;
+}
+
+.dark .dp-code-frame:is([data-lang="bash"], [data-lang="sh"], [data-lang="zsh"]) .hljs-variable {
+  color: #ffa657;
+}
+
+.dark .dp-code-frame:is([data-lang="json"], [data-lang="jsonc"], [data-lang="yaml"], [data-lang="yml"], [data-lang="toml"], [data-lang="ini"]) .hljs-attr {
+  color: #7ee787;
+}
+
+.dark .dp-code-frame:is([data-lang="md"], [data-lang="markdown"], [data-lang="mdx"]) .hljs-section {
+  color: #ff7b72;
+}
+
+.dark .dp-code-frame:is([data-lang="js"], [data-lang="javascript"], [data-lang="jsx"], [data-lang="mjs"]) .dp-code-language { color: #f1e05a; }
+.dark .dp-code-frame:is([data-lang="ts"], [data-lang="typescript"], [data-lang="tsx"]) .dp-code-language { color: #6ea8ff; }
+.dark .dp-code-frame:is([data-lang="py"], [data-lang="python"]) .dp-code-language { color: #6fa8dc; }
+.dark .dp-code-frame:is([data-lang="json"], [data-lang="jsonc"]) .dp-code-language { color: #e3c567; }
+.dark .dp-code-frame:is([data-lang="sql"], [data-lang="mysql"], [data-lang="pgsql"], [data-lang="tsql"]) .dp-code-language { color: #4fb3d9; }
+.dark .dp-code-frame:is([data-lang="bash"], [data-lang="sh"], [data-lang="shell"], [data-lang="zsh"], [data-lang="powershell"]) .dp-code-language { color: #7ee787; }
+.dark .dp-code-frame:is([data-lang="md"], [data-lang="markdown"], [data-lang="mdx"]) .dp-code-language { color: #9ca3af; }
+.dark .dp-code-frame:is([data-lang="css"]) .dp-code-language { color: #a784d6; }
+.dark .dp-code-frame:is([data-lang="php"]) .dp-code-language { color: #8892bf; }
 
 .dp-not-found {
   display: grid;

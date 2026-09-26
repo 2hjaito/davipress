@@ -9,6 +9,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
+import { all as highlightLanguages } from 'lowlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -78,6 +79,8 @@ export function discover(root = path.resolve(process.cwd(), 'docs')) {
     }
     return entries;
 }
+// Highlighting runs at build time, so register every highlight.js grammar plus aliases for common fence names it lacks
+const highlightOptions = { languages: highlightLanguages, aliases: { xml: ['vue', 'svelte', 'astro'], markdown: ['mdx'], json: ['jsonc'] } };
 export async function markdownToHtml(content) {
     const transformed = content
         .replace(/^:::davi:cert-groups(?:[ \t]+[^\n]+)?\n[\s\S]*?^:::\s*$/gm, block => {
@@ -88,7 +91,7 @@ export async function markdownToHtml(content) {
         const directive = parseGalleryDirective(block);
         return directive ? galleryHtml(directive.title, directive.items) : block;
     });
-    const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeSanitize, sanitizeSchema).use(rehypeKatex, { strict: false }).use(rehypeHighlight).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(transformed);
+    const result = await remark().use(remarkGfm).use(remarkMath).use(remarkAdmonition).use(remarkRehype, { allowDangerousHtml: true }).use(rehypeRaw).use(rehypeSanitize, sanitizeSchema).use(rehypeKatex, { strict: false }).use(rehypeHighlight, highlightOptions).use(rehypeSlug).use(rehypeAutolinkHeadings, { behavior: 'wrap' }).use(rehypeLazyImages).use(rehypeStringify, { allowDangerousHtml: true }).process(transformed);
     return result.toString();
 }
 export async function compile(source, root = path.resolve(process.cwd(), 'docs')) {

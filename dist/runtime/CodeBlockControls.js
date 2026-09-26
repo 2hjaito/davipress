@@ -64,6 +64,7 @@ export function CodeBlockControls() {
                 frame.appendChild(controls);
                 const language = Array.from(pre.querySelector('code')?.classList ?? []).find(value => value.startsWith('language-'))?.replace('language-', '');
                 if (language) {
+                    frame.dataset.lang = language;
                     const label = document.createElement('span');
                     label.className = 'dp-code-language';
                     label.textContent = language === 'typescript' ? 'ts' : language;
