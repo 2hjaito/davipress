@@ -4,6 +4,12 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.4.5] - 2026-10-05
+
+### Fixed
+
+- Fix a type error in the generated RSS route when `davipress.config.ts` is not wrapped in `defineConfig`. 0.4.4 was never published because of it.
+
 ## [0.4.4] - 2026-10-05
 
 ### Added
