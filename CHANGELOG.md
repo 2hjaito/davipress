@@ -4,6 +4,17 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.4.4] - 2026-10-05
+
+### Added
+
+- Add a `postDir` config option to choose the posts directory (relative to `docs/`).
+
+### Changed
+
+- Read posts from `docs/post` by default, falling back to `docs/posts` when `docs/post` does not exist.
+- Point the default navbar links to `/post` and `/tutorial`. Sites relying on the default nav with `docs/posts` or `docs/tutorials` should set `themeConfig.nav` explicitly.
+
 ## [0.4.3] - 2026-09-26
 
 ### Added
