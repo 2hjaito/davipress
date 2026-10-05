@@ -1,6 +1,6 @@
 {
   "name": "davipress",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "description": "A Markdown documentation framework built on Next.js App Router",
   "license": "MIT",
   "keywords": [
