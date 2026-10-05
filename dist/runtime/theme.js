@@ -83,7 +83,7 @@ export async function DocsTheme({ page, config }) {
     const layout = String(page.frontmatter.layout ?? '').toLowerCase();
     const isPostList = layout === 'post-list';
     const isProjectList = layout === 'project-list' || layout === 'projects' || layout === 'project' || logicalRoute === '/project' || logicalRoute === '/projects';
-    const rawPosts = await loadPosts(localePrefix ? path.resolve(process.cwd(), 'docs', localePrefix) : undefined);
+    const rawPosts = await loadPosts(localePrefix ? path.resolve(process.cwd(), 'docs', localePrefix) : undefined, config.postDir);
     // Routes discovered under docs/<locale> lose the locale segment, so re-attach it here.
     const posts = localePrefix ? rawPosts.map(post => ({ ...post, route: `/${localePrefix}${post.route === '/' ? '' : post.route}` })) : rawPosts;
     const isPost = posts.some(post => post.source === page.source);

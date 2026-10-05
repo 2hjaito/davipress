@@ -10,8 +10,8 @@ const defaultItems = [
     { text: 'Home', link: '/', icon: 'FaUser' },
     { text: 'Projects', link: '/project', icon: 'DvTerminalBlink' },
     { text: 'Certs', link: '/cert', icon: 'FaCertificate' },
-    { text: 'Tutorials', link: '/tutorials', icon: 'GiEvilBook' },
-    { text: 'Posts', link: '/posts', icon: 'GiMagicPortal' },
+    { text: 'Tutorials', link: '/tutorial', icon: 'GiEvilBook' },
+    { text: 'Posts', link: '/post', icon: 'GiMagicPortal' },
     { text: 'Docs', link: '/docs', icon: 'GiSpellBook' },
 ];
 function navItemInfo(item) {

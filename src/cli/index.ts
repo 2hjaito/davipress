@@ -54,7 +54,7 @@ function siteUrl() {
 
 export async function GET() {
   const baseUrl = siteUrl()
-  const posts = await loadPosts()
+  const posts = await loadPosts(undefined, config.postDir)
   const items = posts.map(post => {
     const url = baseUrl + post.route
     const date = String(post.frontmatter.updated ?? post.frontmatter.date ?? new Date().toISOString())

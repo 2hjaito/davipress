@@ -85,6 +85,8 @@ export interface DavipressConfig {
         username?: string;
         topic?: string;
     };
+    /** Thư mục bài viết, tính từ docs/. Mặc định `post`, không có thì dùng `posts`. */
+    postDir?: string;
     themeConfig?: {
         logo?: string;
         nav?: NavItem[];

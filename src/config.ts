@@ -36,6 +36,8 @@ export interface DavipressConfig {
   i18n?: I18nConfig
   repository?: { url?: string; editLink?: string }
   github?: { username?: string; topic?: string }
+  /** Thư mục bài viết, tính từ docs/. Mặc định `post`, không có thì dùng `posts`. */
+  postDir?: string
   themeConfig?: { logo?: string; nav?: NavItem[]; sidebar?: 'auto' | Record<string, SidebarItem[]>; socialLinks?: Record<string, string>; footer?: string | FooterConfig; navbar?: NavbarConfig }
   giscus?: {
     enabled: boolean

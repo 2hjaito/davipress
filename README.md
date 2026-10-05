@@ -142,7 +142,7 @@ Davipress supports GitHub-flavored Markdown, tables, task lists, fenced code blo
 
 During `dev`, `build`, and `start`, Davipress generates:
 
-- `/rss.xml` from published files in `docs/posts`
+- `/rss.xml` from published files in `docs/post` (falls back to `docs/posts`; override with `postDir`)
 - `/sitemap.xml` from discovered documentation pages
 - `/robots.txt` with the configured site URL and sitemap
 
