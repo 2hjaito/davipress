@@ -62,8 +62,27 @@ function files(dir: string): string[] {
   if (!fs.existsSync(dir)) return []
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? files(path.join(dir, entry.name)) : /\.mdx?$/.test(entry.name) ? [path.join(dir, entry.name)] : [])
 }
+// Default is `post`; `posts` is still read when `post` is missing so older sites keep working.
+export function resolvePostDir(root: string, postDir?: string) {
+  if (postDir) return path.join(root, postDir)
+  const singular = path.join(root, 'post')
+  return fs.existsSync(singular) ? singular : path.join(root, 'posts')
+}
+const localeSegment = /^[a-z]{2}(?:-[A-Za-z]{2,4})?$/
+// Posts live at the site root (`/<slug>`), so drop the post directory from routes under `docs/post` or `docs/<locale>/post`.
+function withoutPostDir(root: string, segments: string[]) {
+  for (const at of [0, 1]) {
+    if (at >= segments.length - 1 || (at === 1 && !localeSegment.test(segments[0]))) continue
+    const base = path.join(root, ...segments.slice(0, at))
+    if (path.join(base, segments[at]) !== resolvePostDir(base)) continue
+    const stripped = [...segments.slice(0, at), ...segments.slice(at + 1)]
+    // `post/index.md` would collide with the home page, so it keeps its route.
+    return stripped.length === at + 1 && stripped[at] === 'index' ? segments : stripped
+  }
+  return segments
+}
 function routeFor(root: string, file: string) {
-  const relative = path.relative(root, file).replace(/\\/g, '/').replace(/\.mdx?$/, '')
+  const relative = withoutPostDir(root, path.relative(root, file).replace(/\\/g, '/').replace(/\.mdx?$/, '').split('/')).join('/')
   const route = relative === 'index' ? '' : relative.endsWith('/index') ? relative.slice(0, -6) : relative
   return `/${route}`.replace(/\/+/g, '/') || '/'
 }

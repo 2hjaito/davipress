@@ -155,7 +155,7 @@ function generate() {
         pkg.scripts[name] ??= command;
     fs.writeFileSync(packageFile, `${JSON.stringify(pkg, null, 2)}\n`);
     fs.mkdirSync(generated, { recursive: true });
-    fs.writeFileSync(path.join(generated, 'next.config.mjs'), "const nextConfig = { transpilePackages: ['davipress'], experimental: { optimizePackageImports: ['davi-icons'] } }\nexport default nextConfig\n");
+    fs.writeFileSync(path.join(generated, 'next.config.mjs'), "// Posts used to live under /post/<slug> (or /posts/<slug>); keep those links working.\nconst postRedirects = ['post', 'posts'].flatMap(dir => [\n  { source: `/${dir}/:path+`, destination: '/:path+', permanent: true },\n  { source: `/:locale([a-z]{2}|[a-z]{2}-[A-Za-z]{2,4})/${dir}/:path+`, destination: '/:locale/:path+', permanent: true },\n])\nconst nextConfig = { transpilePackages: ['davipress'], experimental: { optimizePackageImports: ['davi-icons'] }, async redirects() { return postRedirects } }\nexport default nextConfig\n");
     fs.writeFileSync(path.join(generated, 'tsconfig.json'), JSON.stringify({
         compilerOptions: {
             target: 'ES2017',

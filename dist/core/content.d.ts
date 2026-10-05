@@ -11,6 +11,7 @@ export interface Page {
         level: number;
     }[];
 }
+export declare function resolvePostDir(root: string, postDir?: string): string;
 export declare function discover(root?: string): {
     source: string;
     route: string;

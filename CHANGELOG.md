@@ -4,6 +4,17 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2026-10-05
+
+### Changed
+
+- **Breaking:** serve posts at the site root: `docs/post/<file>.md` is now `/<slug>` instead of `/post/<slug>`, and `docs/<locale>/post` posts are `/<locale>/<slug>`. A post whose slug matches another page now fails with a duplicate route error. A custom `postDir` keeps its directory in the URL.
+- Give the table of contents a thin 4px scrollbar.
+
+### Added
+
+- Redirect `/post/<path>` and `/posts/<path>` (plus their locale-prefixed forms) to the new post URLs with a permanent redirect.
+
 ## [0.4.5] - 2026-10-05
 
 ### Fixed
