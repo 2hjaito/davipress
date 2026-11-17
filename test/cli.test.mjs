@@ -69,7 +69,7 @@ test('build generates RSS, sitemap, and widget runtime for a fixture site', (con
 })
 
 test('package tarball contains runtime entrypoints without a nested Davipress package', () => {
-  const result = spawnSync('npm', ['pack', '--ignore-scripts', '--dry-run', '--json', '--loglevel', 'silent'], { cwd: root, encoding: 'utf8' })
+  const result = spawnSync('npm', ['pack', '--ignore-scripts', '--dry-run', '--json', '--loglevel', 'silent'], { cwd: root, encoding: 'utf8', shell: process.platform === 'win32' })
   assert.equal(result.status, 0, result.stderr)
   const [{ files }] = JSON.parse(result.stdout)
   assert.ok(files.some(file => file.path === 'dist/runtime/index.js'))
