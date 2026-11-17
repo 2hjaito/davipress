@@ -4,6 +4,19 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.5.1] - 2026-11-17
+
+### Fixed
+
+- Stop the post title style (32px, no margin) from applying to every `h2` inside post content; it now targets only `#post-main-title`.
+- Style `hr` as a faint 1px rule with 3em spacing instead of the browser default inset border.
+
+### Changed
+
+- Refine post typography: spacing and sizes for paragraphs, headings (adds `h4`), lists, tables and blockquotes.
+- Use a neutral inline code style and a `ui-monospace` font stack for code.
+- Style centered italic image captions (`<p align="center"><em>…</em></p>`) as small muted text.
+
 ## [0.5.0] - 2026-10-05
 
 ### Changed
