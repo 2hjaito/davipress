@@ -105,7 +105,7 @@
 }
 
 .dark .dp-post,
-.dark .dp-post h2 {
+.dark .dp-post #post-main-title {
   color: var(--text-color-dark);
 }
 

@@ -857,12 +857,17 @@ a {
   background: var(--background-color);
   color: var(--text-color);
   font-size: 18px;
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .markdown-body p {
-  margin: 20px 0;
-  line-height: 1.55;
+  margin: 1.25em 0;
+  line-height: 1.6;
+}
+
+.markdown-body :is(h1, h2, h3, h4) {
+  color: inherit;
+  border: 0;
 }
 
 .markdown-body h1 {
@@ -873,7 +878,7 @@ a {
 }
 
 .markdown-body h2 {
-  margin: 2.4em 0 1em;
+  margin: 2em 0 .8em;
   font-size: 1.5em;
   font-weight: 700;
   line-height: 1.33;
@@ -883,10 +888,32 @@ a {
   margin: 1.6em 0 .6em;
   font-size: 1.25em;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
-.markdown-body ul {
+.markdown-body h4 {
+  margin: 1.5em 0 .5em;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.markdown-body :is(h2, h3, h4) + :is(p, ul, ol) {
+  margin-top: 0;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 3em auto;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, .08);
+}
+
+.markdown-body hr + :is(h2, h3, h4) {
+  margin-top: 0;
+}
+
+.markdown-body :is(ul, ol) {
   margin: 1.25em 0;
   padding-left: 1.625em;
 }
@@ -895,9 +922,18 @@ a {
   margin: .5em 0;
 }
 
+.markdown-body li > :is(ul, ol) {
+  margin: .5em 0;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
 .markdown-body a {
   color: var(--primary-color);
   text-decoration: none;
+  text-underline-offset: 4px;
 }
 
 .markdown-body a:hover {
@@ -916,51 +952,64 @@ a {
   margin: .5rem auto;
 }
 
+.markdown-body p[align="center"]:has(> em:only-child) {
+  margin-top: .5em;
+  color: #6b7280;
+  font-size: .85em;
+  line-height: 1.5;
+}
+
 .markdown-body pre {
   max-width: 100%;
-  margin: 1.5rem 0;
+  margin: 1.75em 0;
   overflow-x: auto;
-  padding: 2.5rem 1rem 1rem;
+  padding: 2.5rem 1.15rem 1rem;
   border: 1px solid #e5e7eb;
-  border-radius: .5rem;
-  background: #f5f5f5;
+  border-radius: .375rem;
+  background: #f7f7f8;
   color: #1e1e1e;
-  font-family: "Fira Code", "Courier New", monospace;
-  font-size: .9rem;
-  line-height: 1.6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .875rem;
+  line-height: 1.7;
 }
 
 .markdown-body code:not(pre code) {
   margin: 0;
   overflow-wrap: break-word;
-  padding: .25rem .5rem;
-  border-radius: 3px;
-  background: #f9f2f4;
-  color: #c52950;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 23.12px;
+  padding: .15em .4em;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, .05);
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .85em;
+  font-weight: 500;
 }
 
 .markdown-body table {
   display: block;
   max-width: 100%;
+  margin: 1.5em 0;
   overflow-x: auto;
   border-collapse: collapse;
+  font-size: .9em;
 }
 
 .markdown-body th,
 .markdown-body td {
-  padding: .5rem;
-  border: 1px solid #ccc;
+  padding: .5rem .75rem;
+  border: 1px solid #e5e7eb;
   text-align: left;
 }
 
+.markdown-body th {
+  font-weight: 600;
+}
+
 .markdown-body blockquote {
-  margin-left: 0;
-  padding-left: 1rem;
-  border-left: 4px solid var(--primary-color);
-  color: #666;
+  margin: 1.6em 0;
+  padding-left: 1em;
+  border-left: 3px solid #d1d5db;
+  color: #555;
 }
 
 .dp-toc-backdrop {
@@ -1708,14 +1757,31 @@ html.dark,
 }
 
 .dark .markdown-body pre {
-  background: #343f50;
-  border-color: #4b5563;
+  background: #262b33;
+  border-color: #3a414c;
   color: #d4d4d4;
 }
 
 .dark .markdown-body code:not(pre code) {
-  background: #334674;
-  color: #aed2f4;
+  background: rgba(255, 255, 255, .1);
+  color: inherit;
+}
+
+.dark .markdown-body hr {
+  border-top-color: rgba(255, 255, 255, .12);
+}
+
+.dark .markdown-body :is(th, td) {
+  border-color: #3a414c;
+}
+
+.dark .markdown-body blockquote {
+  border-left-color: #4b5563;
+  color: #b8bec8;
+}
+
+.dark .markdown-body p[align="center"]:has(> em:only-child) {
+  color: #9ca3af;
 }
 
 .dark .dp-expand-heading small,
@@ -2020,7 +2086,7 @@ html.dark,
   line-height: 1.65;
 }
 
-.dp-post h2 {
+.dp-post #post-main-title {
   margin: 0;
   color: inherit;
   font-size: 32px;
@@ -2161,7 +2227,7 @@ html.dark,
 }
 
 .dark .dp-post,
-.dark .dp-post h2 {
+.dark .dp-post #post-main-title {
   color: var(--text-color-dark);
 }
 
@@ -2184,7 +2250,7 @@ html.dark,
     width: min(100% - 2rem, 768px);
   }
 
-  .dp-post h2 {
+  .dp-post #post-main-title {
     font-size: 28px;
   }
 }
