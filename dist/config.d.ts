@@ -10,6 +10,7 @@ export interface DavipressFrontmatter {
     keywords?: string[];
     layout?: string;
     comments?: boolean;
+    views?: boolean;
     [key: string]: unknown;
 }
 export interface SidebarItem {
@@ -110,6 +111,19 @@ export interface DavipressConfig {
         lightTheme?: string;
         darkTheme?: string;
         lang?: string;
+    };
+    /**
+     * Đếm lượt xem bài viết và tutorial bằng API tương thích Profilyze (`POST {path}` → `{ views }`).
+     * Đếm phía client nên chạy đúng cả khi chuyển trang kiểu SPA. Tắt cho một trang bằng frontmatter `views: false`.
+     */
+    views?: {
+        enabled: boolean;
+        /** URL API đếm view, vd 'https://profilyze.vercel.app/api/views'. */
+        endpoint: string;
+        /** Hiện số lượt xem cạnh ngày đăng (mặc định true). `false`: vẫn đếm nhưng không hiện. */
+        show?: boolean;
+        /** Gộp lượt xem các bản dịch của cùng một bài (mặc định true). */
+        mergeLocales?: boolean;
     };
     seo?: {
         defaultImage?: string;

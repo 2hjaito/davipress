@@ -13,11 +13,20 @@ import { loadProjects } from '../core/projects.js'
 import { ProjectsView } from './ProjectsView.js'
 import { DocsChrome, PostChrome } from './DocsChrome.js'
 import { GiscusComments } from './GiscusComments.js'
+import { PageViews } from './PageViews.js'
 import { Footer } from './Footer.js'
 import Link from 'next/link'
 import './theme.css'
 import './theme-dark.css'
 import { formatDate } from './date.js'
+
+/** Lượt xem cho trang, hoặc null khi tắt (config.views hoặc frontmatter `views: false`). */
+function pageViews(page: Page, config: DavipressConfig) {
+  const views = config.views
+  if (!views?.enabled || !views.endpoint || page.frontmatter.views === false) return null
+  const path = views.mergeLocales === false ? page.route : parseLocale(page.route, config).path
+  return <PageViews key={path} endpoint={views.endpoint} path={path} show={views.show !== false} />
+}
 
 function editLink(config: DavipressConfig, source: string) {
   const base = config.repository?.editLink?.replace(/\/$/, '')
@@ -47,6 +56,7 @@ function PostView({ page, pages, config }: { page: Page; pages: Page[]; config: 
           {Boolean(page.frontmatter.author) && <span><FaUserEdit aria-hidden="true" />{String(page.frontmatter.author)}</span>}
           {Boolean(page.frontmatter.date) && <span><MdDateRange aria-hidden="true" />{formatDate(page.frontmatter.date)}</span>}
           <span><IoTimerOutline aria-hidden="true" />{readingTime} phút đọc</span>
+          {pageViews(page, config)}
         </div>
         <div className="dp-post-content" dangerouslySetInnerHTML={{ __html: contentHtml }} />
         <div className="dp-post-update">
@@ -77,6 +87,7 @@ function DocView({ page, config, previous, next }: { page: Page; config: Davipre
         {Boolean(page.frontmatter.author) && <span><FaUserEdit aria-hidden="true" />{String(page.frontmatter.author)}</span>}
         {Boolean(page.frontmatter.date) && <span><MdDateRange aria-hidden="true" />{formatDate(page.frontmatter.date)}</span>}
         <span><IoTimerOutline aria-hidden="true" />{readingTime} phút đọc</span>
+        {pageViews(page, config)}
       </div>
       <div className="dp-post-content" dangerouslySetInnerHTML={{ __html: contentHtml }} />
       <div className="dp-post-update">

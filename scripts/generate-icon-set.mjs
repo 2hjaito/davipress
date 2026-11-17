@@ -16,7 +16,7 @@ const names = [
   'GiEvilBook', 'GiFrogPrince', 'GiMagicPortal', 'GiSpellBook',
   'DvAnkhWingsTome', 'DvTerminalBlink',
   'MdCalendarRange', 'MdFormatListBulleted', 'MdHistory', 'MdPencilOutline',
-  'IoClose', 'IoTimerOutline',
+  'IoClose', 'IoTimerOutline', 'IoEyeOutline',
   'FiGithub', 'FiYoutube',
   'TbBrandAdobe', 'TbBrandFacebook', 'TbBrandHackerrank', 'TbBrandLinkedin', 'TbBrandMysql',
   'TbBrandTiktok', 'TbMenu2FilledFilled',

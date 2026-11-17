@@ -4,6 +4,12 @@ All notable changes to Davipress are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Add a `views` option that counts page views for posts and tutorials through a Profilyze-compatible API and shows the total next to the post date. `show: false` counts without showing it, `mergeLocales` controls whether translations share a total, and frontmatter `views: false` skips a page.
+
 ## [0.5.1] - 2026-11-17
 
 ### Fixed

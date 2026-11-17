@@ -98,11 +98,30 @@ export default defineConfig({
     repoId: 'repository-id',
     category: 'Announcements',
     categoryId: 'category-id'
+  },
+  views: {
+    enabled: true,
+    endpoint: 'https://profilyze.vercel.app/api/views'
   }
 })
 ```
 
-Use `sidebar_position` and `sidebar_label` in frontmatter to control an automatic sidebar. An explicit sidebar can be supplied as a path map. Supported frontmatter includes `title`, `description`, `date`, `updated`, `draft`, `image`, `keywords`, `layout`, and `comments`.
+Use `sidebar_position` and `sidebar_label` in frontmatter to control an automatic sidebar. An explicit sidebar can be supplied as a path map. Supported frontmatter includes `title`, `description`, `date`, `updated`, `draft`, `image`, `keywords`, `layout`, `comments`, and `views`.
+
+### Page views
+
+`views` counts how many times each post and tutorial page is read. The count runs in the browser when the page opens, so it also counts pages reached through client-side navigation. Leave `views` out, or set `enabled: false`, to turn it off.
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `enabled` | — | Turns counting on. |
+| `endpoint` | — | The counter API. [Profilyze](https://github.com/2hjaito/profilyze) provides one at `https://profilyze.vercel.app/api/views`. |
+| `show` | `true` | Shows the total next to the post date. Set `false` to count without showing it. |
+| `mergeLocales` | `true` | Counts every translation of a page as the same page, so `/en/my-post` and `/my-post` share one total. |
+
+Set `views: false` in a page's frontmatter to skip that page.
+
+The endpoint receives `POST` with the text body `{"path":"/my-post"}` and answers `{"views": 123}`. Profilyze takes the site from the browser's `Origin` header, counts each visitor once per 30 minutes, and never counts `localhost`. Any API that follows the same contract works.
 
 ## Home blocks
 

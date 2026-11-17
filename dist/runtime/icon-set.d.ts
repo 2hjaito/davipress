@@ -27,6 +27,7 @@ export declare const MdHistory: ({ size, width, height, title, ...rest }: import
 export declare const MdPencilOutline: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
 export declare const IoClose: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
 export declare const IoTimerOutline: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
+export declare const IoEyeOutline: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
 export declare const FiGithub: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
 export declare const FiYoutube: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
 export declare const TbBrandAdobe: ({ size, width, height, title, ...rest }: import("./icon-base.js").IconProps) => import("react").ReactSVGElement;
