@@ -51,7 +51,7 @@
     "icons": "node scripts/generate-icon-set.mjs",
     "images": "node scripts/optimize-images.mjs",
     "build": "tsc && node scripts/copy-runtime-assets.mjs",
-    "test": "node --test",
+    "test": "node scripts/run-tests.mjs",
     "pack:check": "npm pack --dry-run",
     "prepack": "npm run build && npm test",
     "publish:patch": "npm version patch && npm publish",
